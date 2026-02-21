@@ -15,24 +15,36 @@ import {
     CreditCard,
     LogOut
 } from "lucide-react";
+import Link from "next/link";
 
 
-const menuItems = [
+type MenuItem = {
+    label: string;
+    icon: React.ComponentType<{ size?: number; className?: string }>;
+    to?: string;
+};
+
+
+const menuItems: MenuItem[] = [
     {
         label: "Profile",
         icon: User,
+        to: "/provider/profile/personal-information",
     },
     {
         label: "Settings",
         icon: Settings,
+        to: "/provider/settings",
     },
     {
         label: "Help",
         icon: HelpCircle,
+        to: "/provider/help",
     },
     {
         label: "Payments",
         icon: CreditCard,
+        to: "/provider/payments",
     },
     {
         label: "Logout",
@@ -43,12 +55,10 @@ const menuItems = [
 
 
 export default function ProviderHeader() {
-    // Example user and wallet data (replace with real data as needed)
     const userName = "Sullivan Amadike";
     const walletBalance = 1200.5;
 
     const handleAddFunds = () => {
-        // Implement add funds logic/modal here
         alert("Add funds clicked!");
     };
 
@@ -57,8 +67,6 @@ export default function ProviderHeader() {
             <div className="flex items-center gap-3">
                 <span className="text-2xl font-bold text-[#0C287B] tracking-tight">Hello, {userName}</span>
             </div>
-
-
             <div className="flex items-center gap-6">
                 <div className="flex items-center bg-gray-100 rounded px-3 py-1">
                     <span className="text-gray-700 font-medium mr-2">Wallet:</span>
@@ -87,17 +95,26 @@ export default function ProviderHeader() {
                             <PopoverTitle>Account menu</PopoverTitle>
                         </PopoverHeader>
                         <div>
-                            {menuItems.map(({ label, icon: Icon }, index) => (
+                            {menuItems.map(({ label, icon: Icon, to }, index) => (
                                 <div key={label}>
-                                    <div className="flex items-center gap-3 py-3 cursor-pointer hover:bg-gray-100 transition">
-                                        <Icon size={18} className="text-[#0C287B]" />
-                                        <span className="text-sm font-medium text-gray-700">
-                                            {label}
-                                        </span>
-                                    </div>
+                                    {to ? (
+                                        <>
+                                            <Link href={to} className="flex items-center gap-3 py-3 cursor-pointer hover:bg-gray-100 transition">
+                                                <Icon size={18} className="text-[#0C287B]" />
+                                                <span className="text-sm font-medium text-gray-700">
+                                                    {label}
+                                                </span>
 
-                                    {index !== menuItems.length - 1 && (
-                                        <hr className="border-gray-200 mx-4" />
+                                            </Link>
+                                            <hr className="border-gray-200 mx-4" />
+                                        </>
+                                    ) : (
+                                        <button className="flex items-center gap-3 py-3 w-full cursor-pointer hover:bg-gray-100 transition border-none outline-none bg-transparent" onClick={() => alert('Logout clicked!')}>
+                                            <Icon size={18} className="text-[#0C287B]" />
+                                            <span className="text-sm font-medium text-gray-700">
+                                                {label}
+                                            </span>
+                                        </button>
                                     )}
                                 </div>
                             ))}

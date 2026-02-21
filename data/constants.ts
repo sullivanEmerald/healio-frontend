@@ -1,4 +1,4 @@
-import { Briefcase, Users, BarChart2, CreditCard, MessageCircle } from "lucide-react";
+import { Briefcase, Users, BarChart2, CreditCard, MessageCircle, User, Building2, FileText, Settings } from "lucide-react";
 
 export const PROVIDERS_MAIN_NAV = [
     {
@@ -44,44 +44,43 @@ export const PROVIDERS_MAIN_NAV = [
 
 export const PROVIDERS_PROFILE_NAV = [
     {
-        title: "General",
-        items: [
-            { label: "Company Profile", to: "/profile/company" },
-            {
-                label: "Tax Information",
-                to: "/profile/tax-information",
-                paths: [
-                    "/profile/tax-information/identity-verification",
-                    "/profile/tax-information/information-protection",
-                ],
-            },
-            { label: "Tax Documentation", to: "/profile/tax-documentation" },
+        label: "Personal Information",
+        icon: User,
+        to: "/provider/profile/personal-information",
+        paths: [
+            '/provider/support/suggestions'
         ],
     },
     {
-        title: "Payment Management",
-        items: [
-            { label: "Payment Method", to: "/profile/payment-method" },
-            { label: "Spending Limit", to: "/profile/spending-limit" },
+        label: "Payment Management",
+        icon: CreditCard,
+        to: "/provider/profile/payment-management",
+        paths: [
+            '/provider/support/suggestions'
         ],
     },
     {
-        title: "User Management",
-        items: [{ label: "Manage Members", to: "/profile/manage-members" }],
-    },
-    {
-        title: "Company Settings",
-        items: [
-            { label: "Roles and Permissions", to: "/profile/roles-permissions" },
-            { label: "Activity Log", to: "/profile/activity-log" },
-            { label: "Integrations", to: "/profile/integrations" },
+        label: "User Management",
+        icon: Users,
+        to: "/provider/profile/user-management",
+        paths: [
+            '/provider/support/suggestions'
         ],
     },
     {
-        title: "Addtional Background",
-        items: [
-            { label: "Screenings", to: "/profile/screenings" },
-            { label: "Screenings Status", to: "/profile/screenings/status" },
+        label: "Company Settings",
+        icon: Building2,
+        to: "/provider/profile/company-settings",
+        paths: [
+            '/provider/support/suggestions'
+        ],
+    },
+    {
+        label: "Additional Background",
+        icon: FileText,
+        to: "/provider/profile/additional-background",
+        paths: [
+            '/provider/support/suggestions'
         ],
     },
 ];
@@ -89,11 +88,11 @@ export const PROVIDERS_PROFILE_NAV = [
 
 export const PROVIDER_SETTINGS_NAV = [
     {
-        title: "Account Settings",
-        items: [
-            { label: "Notifications", to: "/settings/notifications" },
-            { label: "Password", to: "/settings/password" },
-            { label: "Security", to: "/settings/security" },
+        icon: Settings,
+        label: "Account Settings",
+        to: "/provider/settings",
+        paths: [
+            '/provider/support/suggestions'
         ],
     },
 ];

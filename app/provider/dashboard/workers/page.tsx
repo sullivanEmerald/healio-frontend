@@ -1,18 +1,22 @@
 "use client";
-
 import Avatar from "react-avatar";
 import { Card } from "@/components/ui/card";
-import { Badge } from "react-bootstrap";
+import Button from "@/components/common/button";
+import { useState } from "react";
+import WorkerProfile from "@/components/provider/workerProfile";
+import { Worker } from "@/types/workers";
+import Rating from "@/components/common/rating";
 
-const ProvidersPool = [
+const ProvidersPool: Worker[] = [
     {
         name: "Michelle Amadike",
         skills: ["JavaScript", "Python", "PHP"],
-        isAvailable: true,
+        isAvailable: false,
         status: "active",
         country: "London",
         state: "Liverpool",
         jobsCompleted: 15,
+        rating: 5.0,
     },
     {
         name: "Sullivan Amadike",
@@ -22,6 +26,7 @@ const ProvidersPool = [
         country: "London",
         state: "Liverpool",
         jobsCompleted: 15,
+        rating: 4.9,
     },
     {
         name: "Brandon Emerald",
@@ -31,6 +36,7 @@ const ProvidersPool = [
         country: "London",
         state: "Newcastle",
         jobsCompleted: 10,
+        rating: 4.2,
     },
     {
         name: "Joshua Emerald",
@@ -40,6 +46,7 @@ const ProvidersPool = [
         country: "London",
         state: "Newcastle",
         jobsCompleted: 10,
+        rating: 4.5,
     },
     {
         name: "Precious Awuzu",
@@ -49,6 +56,7 @@ const ProvidersPool = [
         country: "London",
         state: "Newcastle",
         jobsCompleted: 10,
+        rating: 2.8,
     },
 
     {
@@ -59,11 +67,14 @@ const ProvidersPool = [
         country: "London",
         state: "Newcastle",
         jobsCompleted: 10,
+        rating: 3.6,
     },
 
 ];
 
 export default function MyWorkers() {
+    const [selectedWorker, setSelectedWorker] = useState<Worker | null>(null);
+    const [showProfile, setShowProfile] = useState(false);
     return (
         <div className="space-y-6">
             {/* Header */}
@@ -72,14 +83,14 @@ export default function MyWorkers() {
                 <span className="h-3 w-3 rounded-full bg-green-600 animate-pulse" />
             </div>
 
-            <hr className="border-[#0C287B]/20" />
+            <hr className="border-primary/20" />
 
             {/* Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {ProvidersPool.map((worker, idx) => (
                     <Card
                         key={idx}
-                        className="border border-[#0C287B]/30 rounded-2xl p-4
+                        className="border border-primary/30 rounded-2xl p-4
                        hover:shadow-lg transition-shadow duration-300"
                     >
                         {/* Top section */}
@@ -126,9 +137,26 @@ export default function MyWorkers() {
                                 ))}
                             </div>
                         )}
+                        {/* Rating */}
+                        <div className="mt-4 flex items-center gap-2">
+                            <span className="text-sm text-gray-600">Rating:</span>
+                            <Rating value={worker.rating} />
+                        </div>
+                        <Button
+                            className="mt-4 w-full bg-primary text-white py-2 font-semibold hover:bg-primary/90 transition"
+                            onClick={() => {
+                                setSelectedWorker(worker);
+                                setShowProfile(true);
+                            }}
+                        >
+                            View
+                        </Button>
                     </Card>
                 ))}
             </div>
+            {showProfile && selectedWorker && (
+                <WorkerProfile show={showProfile} worker={selectedWorker} onHide={() => setShowProfile(false)} />
+            )}
         </div>
     );
 }
