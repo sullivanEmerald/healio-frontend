@@ -17,6 +17,7 @@ const ProvidersPool: Worker[] = [
         state: "Liverpool",
         jobsCompleted: 15,
         rating: 5.0,
+        id: "1",
     },
     {
         name: "Sullivan Amadike",
@@ -27,6 +28,7 @@ const ProvidersPool: Worker[] = [
         state: "Liverpool",
         jobsCompleted: 15,
         rating: 4.9,
+        id: "2",
     },
     {
         name: "Brandon Emerald",
@@ -37,6 +39,7 @@ const ProvidersPool: Worker[] = [
         state: "Newcastle",
         jobsCompleted: 10,
         rating: 4.2,
+        id: "3",
     },
     {
         name: "Joshua Emerald",
@@ -47,6 +50,7 @@ const ProvidersPool: Worker[] = [
         state: "Newcastle",
         jobsCompleted: 10,
         rating: 4.5,
+        id: "4",
     },
     {
         name: "Precious Awuzu",
@@ -57,6 +61,7 @@ const ProvidersPool: Worker[] = [
         state: "Newcastle",
         jobsCompleted: 10,
         rating: 2.8,
+        id: "5",
     },
 
     {
@@ -68,6 +73,7 @@ const ProvidersPool: Worker[] = [
         state: "Newcastle",
         jobsCompleted: 10,
         rating: 3.6,
+        id: "6",
     },
 
 ];

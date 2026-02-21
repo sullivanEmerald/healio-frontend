@@ -7,4 +7,5 @@ export interface Worker {
     state: string;
     jobsCompleted: number;
     rating: number;
+    id: string;
 }

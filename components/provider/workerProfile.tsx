@@ -16,12 +16,12 @@ import CloseButton from "@/components/common/closeButton";
 export default function WorkerProfile({ show, onHide, worker }: { show: boolean; onHide: () => void; worker: any }) {
     return (
         <Drawer open={show} onOpenChange={onHide} direction="right">
-            <DrawerContent className="rounded-l-lg !w-[450px] !max-w-none !px-0 shadow-xl border border-primary">
+            <DrawerContent className="rounded-l-lg !w-[450px] !max-w-none !px-0 shadow-xl border border-primary flex flex-col h-full">
                 <DrawerHeader className="bg-primary text-white shadow-sm p-4 relative">
                     <DrawerTitle className="text-white text-lg font-bold">{worker.name} Profile</DrawerTitle>
                     <CloseButton onClick={onHide} />
                 </DrawerHeader>
-                <div className="no-scrollbar overflow-y-auto px-4 py-6 space-y-8">
+                <div className="no-scrollbar overflow-y-auto px-4 py-6 space-y-8 flex-1">
                     <div className="flex items-center gap-4">
                         <Avatar name={worker.name} size="40" round />
                         <div>
@@ -61,7 +61,7 @@ export default function WorkerProfile({ show, onHide, worker }: { show: boolean;
                         <Rating value={worker.rating} />
                     </div>
                 </div>
-                <div className="flex items-center gap-3 px-4 pb-6">
+                <div className="flex items-center gap-3 px-4 pb-6 w-full">
                     <Button onClick={onHide} className="w-1/2">
                         Close
                     </Button>
