@@ -1,6 +1,10 @@
 import GridLayout from "@/components/common/gridLayout";
 import CardLayout from "@/components/common/cardLayout";
 import { MyServiceRequestCard } from "@/components/worker/dashboard/MyServices";
+import CustomTable from "@/components/common/customTable";
+import { useMemo } from "react";
+
+
 export const InvitesServiceRequests = [
     {
         id: "sr-001",
@@ -28,6 +32,34 @@ export const InvitesServiceRequests = [
     },
 ];
 export default function InvitedServiceRequests() {
+    const columns = useMemo(() => [
+        {
+            accessorKey: "title",
+            header: () => "",
+            cell: (info: any) => <span>{info.value}</span>,
+        },
+        {
+            accessorKey: "status",
+            header: () => "Status",
+            cell: (info: any) => <span>{info.value}</span>,
+        },
+        {
+            accessorKey: "budget",
+            header: () => "Budget",
+            cell: (info: any) => <span>{info.value}</span>,
+        },
+        {
+            accessorKey: "startDate",
+            header: () => "Start Date",
+            cell: (info: any) => <span>{info.value}</span>,
+        },
+        {
+            accessorKey: "endDate",
+            header: () => "End Date",
+            cell: (info: any) => <span>{info.value}</span>,
+        },
+    ], []);
+
     return (
         <div>
             <GridLayout>
@@ -37,6 +69,13 @@ export default function InvitedServiceRequests() {
                     </CardLayout>
                 ))}
             </GridLayout>
+            <CustomTable
+                data={InvitesServiceRequests}
+                columns={columns}
+                currentPage={1}
+                totalPages={5}
+                onPageChange={() => { }}
+            />
         </div>
     );
 }

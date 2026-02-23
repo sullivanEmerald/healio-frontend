@@ -14,7 +14,7 @@ export default function ServiceRequests({ job }: { job: Job }) {
             <div className="flex items-center gap-4">
                 <DisplayAvatar name={job.name} />
             </div>
-            <p className="text-gray-700 mb-2 line-clamp-3">{job.description}</p>
+            <p className="text-gray-700 mb-2 line-clamp-1">{job.description}</p>
             <div className="flex flex-wrap gap-2">
                 {job.requiredSkills.map((skill, idx) => (
                     <span

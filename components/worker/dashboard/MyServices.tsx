@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import DisplayAvatar from "@/components/common/avatar"
 
 interface ServiceRequestCardProps {
     title: string
@@ -20,10 +21,7 @@ export function MyServiceRequestCard({
         <Card className="shadow-none bg-transparent border-none p-0">
             <CardContent className="space-y-4 shadow-none bg-transparent p-0">
                 <div className="flex justify-between items-center">
-                    <h3 className="text-lg font-semibold text-gray-900">
-                        {title}
-                    </h3>
-
+                    <DisplayAvatar name={title} />
                     <Badge
                         className="capitalize"
                         style={{ backgroundColor: "crimson" }}
