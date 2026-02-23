@@ -9,3 +9,27 @@ export interface Worker {
     rating: number;
     id: string;
 }
+
+export interface Job {
+    id: string;
+    providerId: string;
+    name: string;
+    description: string;
+    startDate: string;
+    startTime: string;
+    endDate: string;
+    endTime: string;
+    location: string;
+    amount: number;
+    paymentStructure: string;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+    requiredSkills: string[];
+    clientName: string;
+}
+
+
+export interface ProjectSummaryProps {
+    projectData: Record<string, number>;
+}

@@ -17,8 +17,8 @@ export function ServiceRequestCard({
     budget,
 }: ServiceRequestCardProps) {
     return (
-        <Card className="border border-[#0C287B] rounded-xl">
-            <CardContent className="p-5 space-y-4">
+        <Card className="shadow-none bg-transparent border-none p-0">
+            <CardContent className="space-y-4 shadow-none bg-transparent p-0">
                 <div className="flex justify-between items-center">
                     <h3 className="text-lg font-semibold text-gray-900">
                         {title}

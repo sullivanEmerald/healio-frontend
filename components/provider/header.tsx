@@ -16,6 +16,7 @@ import {
     LogOut
 } from "lucide-react";
 import Link from "next/link";
+import DisplayAvatar from "@/components/common/avatar";
 
 
 type MenuItem = {
@@ -55,7 +56,7 @@ const menuItems: MenuItem[] = [
 
 
 export default function ProviderHeader() {
-    const userName = "Sullivan Amadike";
+    const userName = "Mirable Benson";
     const walletBalance = 1200.5;
 
     const handleAddFunds = () => {
@@ -65,20 +66,20 @@ export default function ProviderHeader() {
     return (
         <header className="w-full flex items-center justify-between bg-white shadow px-4 py-3 sticky top-0 z-50">
             <div className="flex items-center gap-3">
-                <span className="text-2xl font-bold text-[#0C287B] tracking-tight">Hello, {userName}</span>
+                <span className="text-2xl font-bold text-primary tracking-tight">Hello, {userName}</span>
             </div>
             <div className="flex items-center gap-6">
-                <div className="flex items-center bg-gray-100 rounded px-3 py-1">
+                {/* <div className="flex items-center bg-gray-100 rounded px-3 py-1">
                     <span className="text-gray-700 font-medium mr-2">Wallet:</span>
                     <span className="text-green-600 font-bold">{walletBalance.toLocaleString(undefined, { style: 'currency', currency: 'USD' })}</span>
                     <button
-                        className="ml-2 p-1 rounded-full text-white transition bg-[#0C287B]"
+                        className="ml-2 p-1 rounded-full text-white transition bg-primary hover:bg-primary/90"
                         onClick={handleAddFunds}
                         title="Add Funds"
                     >
                         <FaPlus size={16} className="text-white" />
                     </button>
-                </div>
+                </div> */}
                 <button className="relative p-2 rounded-full hover:bg-gray-200 transition" title="Notifications">
                     <FaBell size={20} className="text-gray-500" />
                     <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
@@ -86,8 +87,7 @@ export default function ProviderHeader() {
                 <Popover>
                     <PopoverTrigger asChild>
                         <div className="flex items-center gap-2 cursor-pointer">
-                            <Avatar name={userName} size="36" round={true} />
-                            <span className="hidden md:inline text-gray-700 font-medium">{userName}</span>
+                            <DisplayAvatar name={userName} />
                         </div>
                     </PopoverTrigger>
                     <PopoverContent>

@@ -1,4 +1,4 @@
-import { Briefcase, Users, BarChart2, CreditCard, MessageCircle, User, Building2, FileText, Settings } from "lucide-react";
+import { Briefcase, Users, BarChart2, CreditCard, MessageCircle, User, Building2, FileText, Settings, Store, Loader, CheckCircle, Clock, Send, UserCheck, BadgeCheck, Wallet, HelpCircle } from "lucide-react";
 
 export const PROVIDERS_MAIN_NAV = [
     {
@@ -98,31 +98,161 @@ export const PROVIDER_SETTINGS_NAV = [
 ];
 
 
+
+// Workers Section
+
+export const WORKERS_MAIN_NAV = [
+    {
+        to: "/worker/dashboard",
+        icon: Briefcase,
+        label: "Dashboard",
+        paths: [],
+    },
+    {
+        to: "/worker/marketplace",
+        icon: Store,
+        label: "Marketplace",
+        paths: [],
+    },
+    {
+        to: "/worker/my-services",
+        icon: Store,
+        label: "My Services",
+        paths: [],
+    },
+    {
+        to: "/worker/analytics",
+        icon: BarChart2,
+        label: "Analytics",
+        paths: [],
+    },
+    {
+        to: "/worker/payouts",
+        icon: CreditCard,
+        label: "Payouts & Earnings",
+        paths: [],
+    },
+    {
+        to: "/worker/support",
+        icon: MessageCircle,
+        label: "Support",
+        paths: [
+            '/worker/support/suggestions'
+        ],
+    },
+];
+
+export const WORKERS_PROFILE_NAV = [
+    {
+        label: "Personal Information",
+        icon: User,
+        to: "/worker/profile/personal-information",
+        paths: [
+            '/worker/support/suggestions'
+        ],
+    },
+    {
+        label: "Payment Management",
+        icon: CreditCard,
+        to: "/worker/profile/payment-management",
+        paths: [
+            '/worker/support/suggestions'
+        ],
+    },
+    {
+        label: "User Management",
+        icon: Users,
+        to: "/worker/profile/user-management",
+        paths: [
+            '/worker/support/suggestions'
+        ],
+    },
+    {
+        label: "Company Settings",
+        icon: Building2,
+        to: "/worker/profile/company-settings",
+        paths: [
+            '/worker/support/suggestions'
+        ],
+    },
+    {
+        label: "Additional Background",
+        icon: FileText,
+        to: "/worker/profile/additional-background",
+        paths: [
+            '/worker/support/suggestions'
+        ],
+    },
+];
+
+export const WORKERS_SETTINGS_NAV = [
+    {
+        icon: Settings,
+        label: "Account Settings",
+        to: "/worker/settings",
+        paths: [
+            '/worker/support/suggestions'
+        ],
+    },
+];
+
+
 export const getStatusColor = (status: string) => {
     switch (status) {
         case "pending":
             return "#140f30";
-
         case "published":
             return "#F2720C";
-
         case "inProgress":
             return "#600D07";
-
         case "completed":
             return "#1C4C2D";
-
         case "assigned":
             return "#224074";
         case "workers":
             return '#FCB404';
         case "approved":
             return "#2E7D32";
-
+        case "applied":
+            return "#B91C1C";
         case "paid":
             return "#0F766E";
-
+        case "totalEarnings":
+            return "#7C3AED";
+        case "directInvitations":
+            return "#B91C1C";
+        case "assigned":
+            return "#7C3AED";
         default:
             return "#6B7280";
     }
 };
+
+export const getIcon = (status: string) => {
+    switch (status) {
+        case "pending":
+            return Clock;
+        case "published":
+            return Users;
+        case "inProgress":
+            return Briefcase;
+        case "completed":
+            return CheckCircle;
+        case "assigned":
+            return UserCheck;
+        case "workers":
+            return Users;
+        case "approved":
+            return BadgeCheck;
+        case "applied":
+            return FileText;
+        case "paid":
+            return CreditCard;
+        case "totalEarnings":
+            return Wallet;
+        case "directInvitations":
+            return Send;
+        default:
+            return HelpCircle;
+    }
+}

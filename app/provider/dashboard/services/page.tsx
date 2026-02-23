@@ -2,8 +2,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
-import { ServiceRequestCard } from "@/components/common/serviceReuest"
-import { Row, Col } from "react-bootstrap"
+import { ServiceRequestCard } from "@/components/provider/serviceReuest"
+import CardLayout from "@/components/common/cardLayout"
 
 export const draftServiceRequests = [
     {
@@ -76,14 +76,18 @@ export default function MyServices() {
                 <TabsContent value="drafts">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
                         {draftServiceRequests.map((item) => (
-                            <ServiceRequestCard key={item.id} {...item} />
+                            <CardLayout key={item.id}>
+                                <ServiceRequestCard {...item} />
+                            </CardLayout>
                         ))}
                     </div>
                 </TabsContent>
                 <TabsContent value="published">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
                         {PublishedServiceRequests.map((item) => (
-                            <ServiceRequestCard key={item.id} {...item} />
+                            <CardLayout key={item.id}>
+                                <ServiceRequestCard {...item} />
+                            </CardLayout>
                         ))}
                     </div>
                 </TabsContent>

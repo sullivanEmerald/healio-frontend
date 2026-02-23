@@ -6,6 +6,9 @@ import { useState } from "react";
 import WorkerProfile from "@/components/provider/workerProfile";
 import { Worker } from "@/types/workers";
 import Rating from "@/components/common/rating";
+import GridLayout from "@/components/common/gridLayout";
+import CardLayout from "@/components/common/cardLayout";
+import DisplayAvatar from "@/components/common/avatar";
 
 const ProvidersPool: Worker[] = [
     {
@@ -92,17 +95,13 @@ export default function MyWorkers() {
             <hr className="border-primary/20" />
 
             {/* Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <GridLayout>
                 {ProvidersPool.map((worker, idx) => (
-                    <Card
-                        key={idx}
-                        className="border border-primary/30 rounded-2xl p-4
-                       hover:shadow-lg transition-shadow duration-300"
-                    >
+                    <CardLayout key={idx}>
                         {/* Top section */}
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
-                                <Avatar name={worker.name} size="40" round />
+                                <DisplayAvatar name={worker.name} />
                                 <div>
                                     <p className="font-semibold text-gray-900">
                                         {worker.name}
@@ -157,9 +156,9 @@ export default function MyWorkers() {
                         >
                             View
                         </Button>
-                    </Card>
+                    </CardLayout>
                 ))}
-            </div>
+            </GridLayout>
             {showProfile && selectedWorker && (
                 <WorkerProfile show={showProfile} worker={selectedWorker} onHide={() => setShowProfile(false)} />
             )}
