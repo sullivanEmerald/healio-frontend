@@ -3,12 +3,13 @@ import { RegisterData } from "@/types/users";
 import { showToaster } from "@/lib/utils";
 
 
-export const login = async (data: { email: string; password: string }) => {
+export const login = async (data: { email: string; password: string } & { role: string | null }) => {
     try {
         const response = await axiosInstance.post('/auth/login', data);
         return response.data;
-    } catch (error) {
+    } catch (error: any) {
         console.error("Login error:", error);
+        showToaster(error.response?.data?.message || "Login failed. Please try again.", "error");
         throw error;
     }
 };

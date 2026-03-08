@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import Sidebar from "@/components/sideBar";
 import ProviderHeader from "@/components/provider/header";
 import { useEffect, useState } from "react";
+import { RoleGuard } from "@/components/guards/roleGuard";
 
 
 export default function DashboardNav({ children }: { children: React.ReactNode }) {
@@ -23,14 +24,16 @@ export default function DashboardNav({ children }: { children: React.ReactNode }
     }, [pathname]);
 
     return (
-        <div className="flex flex-col sm:flex-row min-h-screen">
-            <Sidebar items={activeNav} role='provider' />
-            <main className="flex-1 overflow-y-auto space-y-6">
-                <ProviderHeader />
-                <div className="max-w-[1400px] mx-auto px-4 ">
-                    {children}
-                </div>
-            </main>
-        </div>
+        <RoleGuard role="provider">
+            <div className="flex flex-col sm:flex-row min-h-screen">
+                <Sidebar items={activeNav} role='provider' />
+                <main className="flex-1 overflow-y-auto space-y-6">
+                    <ProviderHeader />
+                    <div className="max-w-[1400px] mx-auto px-4 ">
+                        {children}
+                    </div>
+                </main>
+            </div>
+        </RoleGuard>
     );
 }

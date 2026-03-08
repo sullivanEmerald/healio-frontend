@@ -5,13 +5,17 @@ import Link from "next/link";
 import { useState } from "react";
 import { emailPattern } from "@/data/constants";
 import { login } from "@/services/auth";
+import { useRouter } from "next/navigation";
+import { showToaster } from "@/lib/utils";
 
 export default function LoginPage() {
+    const router = useRouter();
     const [submitting, setSubmitting] = useState(false);
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
+    const User = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
 
     const [errors, setErrors] = useState({
         email: "",
@@ -59,11 +63,31 @@ export default function LoginPage() {
 
         try {
             if (validateAll()) {
-                const response = await login(formData);
-                console.log('Login successful:', response);
+                const { user, access_token } = await login({ ...formData, role: User });
+                console.log('Login successful:', user);
+
+                localStorage.clear();
+
+                // Store user data in localStorage
+                localStorage.setItem("token", access_token);
+                // localStorage.setItem("userId", user.id);
+                // localStorage.setItem("email", user.email);
+                localStorage.setItem("role", user.role);
+                // localStorage.setItem("fullName", user.fullName);
+
+                showToaster("Login successful", "success");
+
+                // Redirect to dashboard
+                const dashboardPath = user.role === "provider" ? "/provider/dashboard" : "/carer/dashboard";
+
+                // Delay navigation to ensure localStorage is updated before redirecting
+                setTimeout(() => {
+                    router.replace(dashboardPath);
+                }, 1000);
+
             }
-        } catch (error) {
-            console.error('Error submitting form:', error);
+        } catch (error: any) {
+            console.error(error || 'Login failed');
         } finally {
             setSubmitting(false);
         }

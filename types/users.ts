@@ -6,3 +6,13 @@ export type RegisterData = {
     password: string;
     confirmPassword?: string;
 };
+
+
+export type User = {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: string;
+    isVerified: boolean;
+};
