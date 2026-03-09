@@ -2,8 +2,9 @@ import { Users, Briefcase, CheckCircle, Clock, User, MessageCircle, Plus } from 
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { getStatusColor } from "@/data/constants";
-import { Progress } from "@/components/ui/progress"
+import Overview from "@/components/provider/overview";
 import { ProjectSummaryCalculation } from "@/components/common/analyticsSummary";
+import Underline from "@/components/common/underline";
 
 const OVERVIEW = [
     {
@@ -57,16 +58,8 @@ export const projectData = {
 export default function DashboardPage() {
     return (
         <section className="w-full min-h-screen space-y-4">
-            <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-[#0C287B]">
-                    Overview
-                </h2>
-                <Button className="bg-[#0C287B] p-6 flex items-center gap-2 rounded-xl">
-                    <Plus size={30} className="text-white" />
-                    <span className="text-md">Create Service Request</span>
-                </Button>
-            </div>
-
+            <Overview title="Dashboard Overview" />
+            <Underline />
             <div className="flex gap-6">
                 <div className="w-8/12 flex flex-col justify-between">
                     <div className="grid grid-cols-2 gap-4">

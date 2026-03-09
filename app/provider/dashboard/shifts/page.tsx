@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
 import { ServiceRequestCard } from "@/components/provider/serviceReuest"
 import CardLayout from "@/components/common/cardLayout"
+import Overview from "@/components/provider/overview"
+import Underline from "@/components/common/underline"
 
 export const draftServiceRequests = [
     {
@@ -55,23 +57,17 @@ export const PublishedServiceRequests = [
 export default function MyServices() {
     return (
         <div className="mb-4 space-y-4">
-            <div className="flex align-items-center justify-between">
-                <p className="text-xl font-bold text-[#0C287B]">Service Requests</p>
-                <Button className="bg-[#0C287B] p-6 flex items-center gap-2 rounded-xl">
-                    <Plus size={30} className="text-white" />
-                    <span className="text-md">Create Service Request</span>
-                </Button>
-            </div>
-            <hr />
+            <Overview title={'Shift Management'} />
+            <Underline />
             <Tabs defaultValue="drafts">
                 <TabsList variant="line" className="flex flex-row gap-8">
-                    <TabsTrigger value="drafts" className="text-[#0C287B]">Drafts</TabsTrigger>
-                    <TabsTrigger value="published" className="text-[#0C287B]">Published</TabsTrigger>
-                    <TabsTrigger value="reports" className="text-[#0C287B]">Assigned</TabsTrigger>
-                    <TabsTrigger value="inProgress" className="text-[#0C287B]">In-Progress</TabsTrigger>
-                    <TabsTrigger value="completed" className="text-[#0C287B]">Completed</TabsTrigger>
-                    <TabsTrigger value="approved" className="text-[#0C287B]">Approved</TabsTrigger>
-                    <TabsTrigger value="paid" className="text-[#0C287B]">Paid</TabsTrigger>
+                    <TabsTrigger value="drafts" className="text-primary">Drafts</TabsTrigger>
+                    <TabsTrigger value="published" className="text-primary">Published</TabsTrigger>
+                    <TabsTrigger value="reports" className="text-primary">Assigned</TabsTrigger>
+                    <TabsTrigger value="inProgress" className="text-primary">In-Progress</TabsTrigger>
+                    <TabsTrigger value="completed" className="text-primary">Completed</TabsTrigger>
+                    <TabsTrigger value="approved" className="text-primary">Approved</TabsTrigger>
+                    <TabsTrigger value="paid" className="text-primary">Paid</TabsTrigger>
                 </TabsList>
                 <TabsContent value="drafts">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">

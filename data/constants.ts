@@ -8,9 +8,9 @@ export const PROVIDERS_MAIN_NAV = [
         paths: [],
     },
     {
-        to: "/provider/dashboard/services",
+        to: "/provider/dashboard/shifts",
         icon: Briefcase,
-        label: "My Services",
+        label: "My Shifts",
         paths: [],
     },
     {
