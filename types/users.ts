@@ -10,8 +10,7 @@ export type RegisterData = {
 
 export type User = {
     id: string;
-    firstName: string;
-    lastName: string;
+    fullName: string;
     email: string;
     role: string;
     isVerified: boolean;

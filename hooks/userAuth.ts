@@ -6,10 +6,11 @@ export function useAuth() {
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
+
     useEffect(() => {
         const getUserProfileData = async () => {
             if (!localStorage.getItem('token')) {
-                setIsLoading(false);
+                setTimeout(() => setIsLoading(false), 300);
                 return;
             }
             try {

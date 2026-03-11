@@ -13,11 +13,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { showToaster } from "@/lib/utils";
 import { CreateShift } from "@/services/provider";
+import LineLoader from "@/components/common/lineLoader";
 
 const steps = ["Shift Details", "Requirements", "Pricing"];
 
 export default function NewShift() {
     const [step, setStep] = useState(0);
+    const [isPublishing, setIsPublishing] = useState(false);
     const [form, setForm] = useState({
         // Step 1: Shift Details
         title: "",
@@ -29,6 +31,7 @@ export default function NewShift() {
         shiftType: "",
         numberOfCarers: 1,
         description: "",
+        isReoccurring: false,
         // Step 2: Requirements
         skills: "",
         experience: "",
@@ -164,12 +167,15 @@ export default function NewShift() {
             showToaster("Please fix the errors in the form.");
             return;
         }
+        setIsPublishing(true);
         try {
             const response = await CreateShift(form)
             console.log("Created shift:", response);
             showToaster("Shift created successfully!");
         } catch (error) {
             console.log(error)
+        } finally {
+            setIsPublishing(false);
         }
     }
 
@@ -181,7 +187,14 @@ export default function NewShift() {
                 {steps.map((label, idx) => (
                     <p
                         key={label}
-                        onClick={() => setStep(idx)}
+                        onClick={(e) => {
+                            if (idx === step) return;
+                            e.preventDefault();
+                            e.stopPropagation();
+                            if (validateStep(step)) {
+                                setStep(step + 1);
+                            }
+                        }}
                         className={` py-2 transition-colors cursor-pointer text-primary font-semibold ${step === idx ? "text-black border-b-2 border-primary" : "bg-tranparent"
                             }`}
                     >
@@ -263,23 +276,33 @@ export default function NewShift() {
                             />
                             {errors.endTime && <span className="text-xs text-red-500 mt-1 block">{errors.endTime}</span>}
                         </div>
-                        <div>
-                            <Label htmlFor="shiftType" className="block text-sm font-medium text-primary mb-1">Shift Type</Label>
-                            <Select
-                                value={form.shiftType}
-                                onValueChange={(value) => setForm((prev) => ({ ...prev, shiftType: value }))
-                                }
-                            >
-                                <SelectTrigger className="input">
-                                    <SelectValue placeholder="Select shift type" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="Day">Day</SelectItem>
-                                    <SelectItem value="Night">Night</SelectItem>
-                                    <SelectItem value="Live-in">Live-in</SelectItem>
-                                </SelectContent>
-                            </Select>
-                            {errors.shiftType && <span className="text-xs text-red-500 mt-1 block">{errors.shiftType}</span>}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 items-end">
+                            <div className="w-full">
+                                <Label htmlFor="shiftType" className="text-sm font-medium text-primary mb-1">Shift Type</Label>
+                                <Select
+                                    value={form.shiftType}
+                                    onValueChange={(value) => setForm((prev) => ({ ...prev, shiftType: value }))
+                                    }
+                                >
+                                    <SelectTrigger className="input">
+                                        <SelectValue placeholder="Select shift type" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="Day">Day</SelectItem>
+                                        <SelectItem value="Night">Night</SelectItem>
+                                        <SelectItem value="Live-in">Live-in</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                                {errors.shiftType && <span className="text-xs text-red-500 mt-1 block">{errors.shiftType}</span>}
+                            </div>
+                            <div className="flex items-center gap-2 h-full w-full">
+                                <Checkbox
+                                    id="isReoccurring"
+                                    checked={form.isReoccurring}
+                                    onCheckedChange={(checked) => setForm((prev) => ({ ...prev, isReoccurring: !!checked }))}
+                                />
+                                <Label htmlFor="isReoccurring" className="text-primary">Reoccurring Shift</Label>
+                            </div>
                         </div>
                         <div>
                             <Label htmlFor="numberOfCarers" className="block text-sm font-medium text-primary mb-1">Number of Carers Needed</Label>
@@ -293,6 +316,7 @@ export default function NewShift() {
                             />
                             {errors.numberOfCarers && <span className="text-xs text-red-500 mt-1 block">{errors.numberOfCarers}</span>}
                         </div>
+
                     </>
                 )}
                 {step === 1 && (
@@ -440,8 +464,12 @@ export default function NewShift() {
                             Next <ChevronRight size={20} className="" />
                         </Button>
                     ) : (
-                        <Button type="submit" className="w-full md:w-auto">
-                            Publish Shift
+                        <Button
+                            type="submit"
+                            className="w-full md:w-auto"
+                            disabled={isPublishing}
+                        >
+                            {isPublishing ? <div className="flex items-center justify-center gap-3"><LineLoader /> <span>Publishing...</span></div> : "Publish Shift"}
                         </Button>
                     )}
                 </div>

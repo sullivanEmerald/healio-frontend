@@ -1,10 +1,9 @@
 import { useAuth } from "@/hooks/userAuth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Loader } from "../common/loader";
+import { Loader2 } from "lucide-react";
 
 export const RoleGuard = ({ children, role }: { children: React.ReactNode; role: string }) => {
-    const userRole = typeof window !== 'undefined' ? localStorage.getItem('role') : null;
     const { isLoading, user } = useAuth();
     const router = useRouter();
     const [isRedirecting, setIsRedirecting] = useState(false);
@@ -18,45 +17,47 @@ export const RoleGuard = ({ children, role }: { children: React.ReactNode; role:
                 setIsRedirecting(true);
                 setTimeout(() => {
                     router.push("/auth/login");
-                }, 3000);
+                }, 2000);
                 return;
             }
 
-            if (userRole && userRole !== role) {
+            if (user && user.role !== role) {
                 setRedirectMessage("You do not have permission to access this page.");
                 setIsRedirecting(true);
                 setTimeout(() => {
                     router.push("/auth/login");
-                }, 1000);
+                }, 2000);
                 return;
             }
         }
-    }, [isLoading, userRole, role, router, user]);
+    }, [isLoading, role, router, user]);
 
 
     // Remove setState from render, only show unauthorized if not redirecting/loading
-    if (!userRole || userRole !== role) {
-        // Only show unauthorized if not already redirecting/loading
-        if (!isRedirecting && !isLoading) {
-            return (
-                <div className="flex flex-col items-center justify-center mt-20">
-                    <Loader className="h-16 w-16 mx-auto" />
-                    <p className="text-center mt-4 text-gray-600">You do not have permission to access this page.</p>
-                </div>
-            );
-        }
-        return null;
-    }
+    // if (!user || user.role !== role) {
+    //     // Only show unauthorized if not already redirecting/loading
+    //     if (!isRedirecting && !isLoading) {
+    //         return (
+    //             <div className="flex flex-col items-center justify-center mt-20">
+    //                 <Loader className="h-16 w-16 mx-auto" />
+    //                 <p className="text-center mt-4 text-gray-600">You do not have permission to access this page.</p>
+    //             </div>
+    //         );
+    //     }
+    //     return null;
+    // }
 
     return (
         <>
-            {isRedirecting || isLoading ? (
-                <>
-                    <Loader className="h-16 w-16 mx-auto mt-20" />
-                    {isRedirecting && (
-                        <p className="text-center mt-4 text-gray-600">{redirectMessage}</p>
-                    )}
-                </>
+            {isLoading ? (
+                <div className="flex flex-col items-center justify-center mt-30">
+                    <Loader2 className="h-12 w-12 text-primary animate-spin" />
+                </div>
+            ) : !isLoading && isRedirecting ? (
+                <div className="flex flex-col items-center justify-center mt-30">
+                    <Loader2 className="h-12 w-12 text-primary animate-spin" />
+                    <p className="text-center font-semibold mt-4 text-primary">{redirectMessage}</p>
+                </div>
             ) : (
                 children
             )}

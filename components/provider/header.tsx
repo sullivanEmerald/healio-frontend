@@ -17,6 +17,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import DisplayAvatar from "@/components/common/avatar";
+import { useAuth } from "@/hooks/userAuth";
+import { getFirstName } from "@/utility/util";
+
 
 
 type MenuItem = {
@@ -56,7 +59,7 @@ const menuItems: MenuItem[] = [
 
 
 export default function ProviderHeader() {
-    const userName = "Mirable Benson";
+    const { user } = useAuth();
     const walletBalance = 1200.5;
 
     const handleAddFunds = () => {
@@ -66,7 +69,7 @@ export default function ProviderHeader() {
     return (
         <header className="w-full flex items-center justify-between bg-white shadow px-4 py-3 sticky top-0 z-50">
             <div className="flex items-center gap-3">
-                <span className="text-2xl font-bold text-primary tracking-tight">Hello, {userName}</span>
+                <span className="text-lg font-bold text-primary tracking-tight">Hello, {getFirstName(user?.fullName)}</span>
             </div>
             <div className="flex items-center gap-6">
                 {/* <div className="flex items-center bg-gray-100 rounded px-3 py-1">
@@ -87,7 +90,7 @@ export default function ProviderHeader() {
                 <Popover>
                     <PopoverTrigger asChild>
                         <div className="flex items-center gap-2 cursor-pointer">
-                            <DisplayAvatar name={userName} />
+                            <DisplayAvatar name={user?.fullName} />
                         </div>
                     </PopoverTrigger>
                     <PopoverContent>
@@ -100,7 +103,7 @@ export default function ProviderHeader() {
                                     {to ? (
                                         <>
                                             <Link href={to} className="flex items-center gap-3 py-3 cursor-pointer hover:bg-gray-100 transition">
-                                                <Icon size={18} className="text-[#0C287B]" />
+                                                <Icon size={18} className="text-primary" />
                                                 <span className="text-sm font-medium text-gray-700">
                                                     {label}
                                                 </span>
@@ -110,7 +113,7 @@ export default function ProviderHeader() {
                                         </>
                                     ) : (
                                         <button className="flex items-center gap-3 py-3 w-full cursor-pointer hover:bg-gray-100 transition border-none outline-none bg-transparent" onClick={() => alert('Logout clicked!')}>
-                                            <Icon size={18} className="text-[#0C287B]" />
+                                            <Icon size={18} className="text-primary" />
                                             <span className="text-sm font-medium text-gray-700">
                                                 {label}
                                             </span>
