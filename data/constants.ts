@@ -1,4 +1,4 @@
-import { Briefcase, Users, BarChart2, CreditCard, MessageCircle, User, Building2, FileText, Settings, Store, Loader, CheckCircle, Clock, Send, UserCheck, BadgeCheck, Wallet, HelpCircle } from "lucide-react";
+import { Briefcase, Users, BarChart2, CreditCard, MessageCircle, User, Building2, FileText, Settings, Store, Loader, CheckCircle, Clock, Send, UserCheck, BadgeCheck, Wallet, HelpCircle, Eye, Trash2, ArchiveX } from "lucide-react";
 
 export const PROVIDERS_MAIN_NAV = [
     {
@@ -228,8 +228,18 @@ export const getStatusColor = (status: string) => {
     }
 };
 
-export const getIcon = (status: string) => {
-    switch (status) {
+export const getIcon = (action: string) => {
+    switch (action) {
+        case "view":
+            return Eye;
+        case "publish":
+            return Send;
+        case "unpublish":
+            return ArchiveX;
+        case "edit":
+            return FileText;
+        case "delete":
+            return Trash2;
         case "pending":
             return Clock;
         case "published":

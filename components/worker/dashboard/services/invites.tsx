@@ -35,7 +35,7 @@ export default function InvitedServiceRequests() {
     const columns = useMemo(() => [
         {
             accessorKey: "title",
-            header: () => "",
+            header: () => "Title",
             cell: (info: any) => <span>{info.value}</span>,
         },
         {

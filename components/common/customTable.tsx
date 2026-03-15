@@ -15,6 +15,7 @@ export interface CustomTableProps<T = any> {
     totalPages: number;
     onPageChange: (page: number) => void;
     className?: string;
+    onRowClick?: (row: T) => void;
     // ...other props as needed
 }
 
@@ -25,13 +26,14 @@ const CustomTable = <T extends Record<string, any>>({
     totalPages,
     onPageChange,
     className = "",
+    onRowClick,
     ...props
 }: CustomTableProps<T>) => {
     return (
-        <div className={`w-full bg-white rounded-xl shadow-lg p-4 ${className}`} {...props}>
+        <div className={`w-full bg-white border-none outline-none p-4 ${className}`} {...props}>
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
+                    <thead className="bg-gray-50 text-primary uppercase text-xs font-medium tracking-wider">
                         <tr>
                             {columns.map((col, idx) => (
                                 <th
@@ -52,7 +54,11 @@ const CustomTable = <T extends Record<string, any>>({
                             </tr>
                         ) : (
                             data.map((row, rowIndex) => (
-                                <tr key={row.id || rowIndex} className="hover:bg-gray-50 transition">
+                                <tr
+                                    key={row.id || rowIndex}
+                                    className={`hover:bg-gray-50 transition ${onRowClick ? "cursor-pointer" : ""}`}
+                                    onClick={onRowClick ? () => onRowClick(row) : undefined}
+                                >
                                     {columns.map((col, colIndex) => {
                                         const value = row[col.accessorKey];
                                         return (

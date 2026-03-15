@@ -8,7 +8,7 @@ interface ButtonProps extends React.ComponentProps<typeof ShadcnButton> {
 const Button: React.FC<ButtonProps> = ({ className = "", children, ...props }) => {
     return (
         <ShadcnButton
-            className={`mt-4 w-full bg-primary text-white py-2 rounded-full font-semibold hover:bg-primary/90 transition cursor-pointer shadow-md ${className}`}
+            className={`w-auto bg-primary text-white py-5 px-4 rounded-full font-semibold hover:bg-primary/90 transition cursor-pointer shadow-md ${className}`}
             {...props}
         >
             {children}

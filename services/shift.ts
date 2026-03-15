@@ -3,7 +3,7 @@ import { axiosInstance } from "@/lib/utils";
 import { showToaster } from "@/lib/utils";
 
 
-export const CreateShift = async (shift: Shift) => {
+export const CreateShift = async (shift: any) => {
     try {
         const response = await axiosInstance.post("/provider/shifts", shift);
         return response.data;
@@ -14,4 +14,13 @@ export const CreateShift = async (shift: Shift) => {
     }
 };
 
-
+export const getAllShifts = async (): Promise<Shift[]> => {
+    try {
+        const response = await axiosInstance.get("/provider/shifts");
+        return response.data;
+    } catch (error: any) {
+        console.error(error);
+        showToaster(error?.response?.data?.message || "An error occurred while fetching shifts. Please try again.");
+        throw error;
+    }
+};

@@ -115,10 +115,10 @@ const jobListings = [
 
 export default function MyWorkers() {
     return (
-        <div className="p-4">
+        <div className="">
             <div className="mb-6">
-                <h1 className="text-2xl font-semibold">Marketplace For Available Service Requests</h1>
-                <span className="text-gray-600">Find a suitable service request and be an early applicant</span>
+                <h1 className="text-2xl font-semibold">Marketplace For Available Shifts</h1>
+                <span className="text-gray-600">Find a suitable shift and be an early applicant</span>
             </div>
             <GridLayout>
                 {jobListings.map((job) => (

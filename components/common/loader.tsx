@@ -1,25 +1,9 @@
-import React from 'react';
+import { Loader2 } from "lucide-react"
 
-type LoaderProps = {
-    className?: string;
-    [key: string]: any;
-};
-
-export const Loader: React.FC<LoaderProps> = ({ className }) => {
+export function Loader() {
     return (
-        <div className={`${className} `} style={styles.loaderContainer}>
-            <div className="loader-spin"></div>
+        <div className="flex items-center justify-center py-10 mt-20">
+            <Loader2 className="h-12 w-12 text-primary animate-spin" />
         </div>
     );
-};
-
-
-const styles = {
-    loaderContainer: {
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: '160px',
-        height: 'calc(100vh - 100px)'
-    }
 }
-

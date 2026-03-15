@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { showToaster } from "@/lib/utils";
-import { CreateShift } from "@/services/provider";
+import { CreateShift } from "@/services/shift";
 import LineLoader from "@/components/common/lineLoader";
 
 const steps = ["Shift Details", "Requirements", "Pricing"];

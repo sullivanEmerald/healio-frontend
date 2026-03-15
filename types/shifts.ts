@@ -1,8 +1,12 @@
+
+
+export type ShiftStatus = "draft" | "published" | "assigned" | "inprogress" | "completed" | "approved" | "paid";
+
 export type Shift = {
   title: string;
   postcode: string;
-  startDate: Date | undefined;
-  endDate: Date | undefined;
+  startDate: string;
+  endDate: string;
   startTime: string;
   endTime: string;
   shiftType: string;
@@ -17,5 +21,7 @@ export type Shift = {
   hourlyRate: string;
   expenses: string;
   paymentFrequency: string;
+  status: ShiftStatus;
+  id: string;
 };
 
