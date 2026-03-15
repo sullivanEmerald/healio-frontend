@@ -11,6 +11,7 @@ import CustomTable from "@/components/common/customTable";
 import moment from "moment";
 import { formatPrice } from "@/utility/util";
 import { getStatusColor } from "@/data/constants";
+import { CardDropdown } from "@/components/common/CardDropdown";
 
 export default function PublishedShifts() {
     const { shifts, isLoading, isMenuBarGrid } = useStore(useShallow((state) => ({
@@ -18,6 +19,14 @@ export default function PublishedShifts() {
         isLoading: state.isLoading,
         isMenuBarGrid: state.isMenuBarGrid,
     })));
+
+
+    const publishOptions = [
+        { label: "View", onClick: () => alert("View details for shift with ID:") },
+        { label: "Edit", onClick: () => alert("Edit shift with ID:") },
+        { label: "Unpublish", onClick: () => alert("Unpublish shift with ID:") },
+        { label: "Delete", onClick: () => alert("Delete shift with ID:") },
+    ];
 
     const publishedShifts = useMemo(() => {
         return shifts.filter(shift => shift.status === "published");
@@ -64,14 +73,17 @@ export default function PublishedShifts() {
             header: () => "End Date",
             cell: (info: any) => <span>{moment(info.value).format("MMMM Do YYYY")}</span>,
         },
+        {
+            accessorKey: "options",
+            header: "Actions",
+            cell: ({ row }: any) => publishOptions ? <CardDropdown options={publishOptions} /> : null,
+        }
     ], []);
 
-    const publishOptions = [
-        { label: "View", onClick: () => alert("View details for shift with ID:") },
-        { label: "Edit", onClick: () => alert("Edit shift with ID:") },
-        { label: "Unpublish", onClick: () => alert("Unpublish shift with ID:") },
-        { label: "Delete", onClick: () => alert("Delete shift with ID:") },
-    ];
+    const handleRowClick = (row: any) => {
+        console.log("Clicked row with ID:", row._id);
+        // You can navigate to a details page or open a modal here
+    }
 
     return (
         <div>
@@ -102,7 +114,7 @@ export default function PublishedShifts() {
                             currentPage={1}
                             totalPages={5}
                             onPageChange={() => { }}
-                            onRowClick={(row) => console.log("Clicked row with ID:", row)}
+                            onRowClick={handleRowClick}
                         />
                     )}
                 </>
