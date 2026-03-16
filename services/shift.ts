@@ -24,3 +24,13 @@ export const getAllShifts = async (): Promise<Shift[]> => {
         throw error;
     }
 };
+
+export const getShiftById = async (id: string): Promise<Shift> => {
+    try {
+        const response = await axiosInstance.get(`/provider/shifts/${id}`);
+        return response.data;
+    } catch (error: any) {
+        showToaster(error?.response?.data?.message || "An error occurred while fetching the shift. Please try again.");
+        throw error;
+    }
+};

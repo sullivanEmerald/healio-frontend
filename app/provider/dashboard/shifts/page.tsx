@@ -18,7 +18,6 @@ export default function MyServices() {
     const { listProviderShifts } = useStore(useShallow((state) => ({
         shifts: state.shifts,
         listProviderShifts: state.listProviderShifts,
-        isLoading: state.isLoading,
     })));
 
 

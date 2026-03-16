@@ -3,12 +3,14 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import Link from "next/link";
 import React from "react";
 import { getIcon } from "@/data/constants";
+import { id } from "date-fns/locale/id";
 
 interface CardDropdownProps {
     onUnpublish?: () => void;
     onModify?: () => void;
     modifyLink?: string;
     modifyState?: any;
+    id: string;
     options?: Array<{ label: string; onClick?: () => void; href?: string }>;
 }
 
@@ -18,6 +20,7 @@ export const CardDropdown: React.FC<CardDropdownProps> = ({
     modifyLink = "#",
     modifyState,
     options,
+    id
 }) => {
     return (
         <Popover>
@@ -34,7 +37,7 @@ export const CardDropdown: React.FC<CardDropdownProps> = ({
                             return opt.href ? (
                                 <li key={idx}>
                                     <Link
-                                        href={opt.href}
+                                        href={`${opt.href}${opt.href.includes("?") ? `&id=${id}` : `${id}`}`}
                                         className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                                     >
                                         <Icon className="w-4 h-4" />

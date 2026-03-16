@@ -17,7 +17,7 @@ interface ServiceRequestCardProps {
     budget?: number,
     hourlyRate?: string,
     shiftType: string,
-    id: string;
+    _id: string;
     options?: Array<{ label: string; onClick?: () => void; href?: string }>;
 }
 
@@ -31,7 +31,7 @@ export function ServiceRequestCard({
     hourlyRate,
     description,
     options,
-    id
+    _id
 }: ServiceRequestCardProps) {
     return (
         <Card className="shadow-none bg-transparent border-none p-0 cursor-pointer">
@@ -44,6 +44,7 @@ export function ServiceRequestCard({
                     {/* Dropdown   */}
                     <CardDropdown
                         options={options}
+                        id={_id}
                     />
                 </div>
 
@@ -77,7 +78,7 @@ export function ServiceRequestCard({
                     </p>
                     <span className="text-xs bg-green-100 px-2 py-1 rounded text-gray-700">{shiftType}</span>
                 </div>
-                <Button className="w-full" onClick={() => console.log("View details for service request with ID:", id)}>
+                <Button className="w-full" onClick={() => console.log("View details for service request with ID:")}>
                     View
                 </Button>
             </CardContent>

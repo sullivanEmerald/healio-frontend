@@ -16,16 +16,15 @@ import { CardDropdown } from "@/components/common/CardDropdown";
 export default function PublishedShifts() {
     const { shifts, isLoading, isMenuBarGrid } = useStore(useShallow((state) => ({
         shifts: state.shifts,
-        isLoading: state.isLoading,
+        isLoading: state.isLoading.fetching,
         isMenuBarGrid: state.isMenuBarGrid,
     })));
 
-
     const publishOptions = [
-        { label: "View", onClick: () => alert("View details for shift with ID:") },
-        { label: "Edit", onClick: () => alert("Edit shift with ID:") },
-        { label: "Unpublish", onClick: () => alert("Unpublish shift with ID:") },
-        { label: "Delete", onClick: () => alert("Delete shift with ID:") },
+        { label: "View", href: `/provider/dashboard/shifts/` },
+        { label: "Edit", onClick: () => alert(`Edit shift with ID:`) },
+        { label: "Unpublish", onClick: () => alert(`Unpublish shift with ID:`) },
+        { label: "Delete", onClick: () => alert(`Delete shift with ID:`) },
     ];
 
     const publishedShifts = useMemo(() => {
@@ -76,7 +75,7 @@ export default function PublishedShifts() {
         {
             accessorKey: "options",
             header: "Actions",
-            cell: ({ row }: any) => publishOptions ? <CardDropdown options={publishOptions} /> : null,
+            cell: ({ row }: any) => publishOptions ? <CardDropdown options={publishOptions} id={row._id} /> : null,
         }
     ], []);
 
@@ -102,7 +101,7 @@ export default function PublishedShifts() {
                     {isMenuBarGrid === "grid" ? (
                         <GridLayout>
                             {publishedShifts.map(shift => (
-                                <CardLayout key={shift.id}>
+                                <CardLayout key={shift._id}>
                                     <ServiceRequestCard {...shift} options={publishOptions} />
                                 </CardLayout>
                             ))}

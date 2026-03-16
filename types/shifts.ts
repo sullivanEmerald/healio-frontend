@@ -22,6 +22,6 @@ export type Shift = {
   expenses: string;
   paymentFrequency: string;
   status: ShiftStatus;
-  id: string;
+  _id: string;
 };
 

@@ -1,4 +1,4 @@
-import { getAllShifts } from "@/services/shift";
+import { getAllShifts, getShiftById } from "@/services/shift";
 import { Shift } from "../types/shifts";
 import { StateCreator } from "zustand";
 import { Store } from "@/types/store";
@@ -13,12 +13,24 @@ type ShiftActions = {
 
 export type ShiftSlice = {
     shifts: Shift[];
-    isLoading: boolean;
+    shift: Shift | null;
+    isLoading: {
+        fetching: boolean;
+        creating: boolean;
+        updating: boolean;
+        deleting: boolean;
+    }
 } & ShiftActions;
 
 export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [], ShiftSlice> = (set: any): ShiftSlice => ({
     shifts: [],
-    isLoading: false,
+    shift: null,
+    isLoading: {
+        fetching: false,
+        creating: false,
+        updating: false,
+        deleting: false,
+    },
 
     createShift: async (shift: Shift) => {
         // Implementation for creating a shift
@@ -30,18 +42,29 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
         // Implementation for deleting a shift
     },
     fetchShift: async (id: string) => {
-        // Implementation for fetching a single shift
-        return null;
+        try {
+            const shift = await getShiftById(id as string);
+            set({ shift });
+        } catch (error) {
+            console.log("Error fetching shift:", error);
+            set({ shift: null });
+        } finally {
+            set({ isLoading: false });
+        }
     },
     listProviderShifts: async () => {
-        set({ isLoading: true });
+        set((state: ShiftSlice) => ({
+            isLoading: { ...state.isLoading, fetching: true }
+        }))
         try {
             const shifts = await getAllShifts();
             set({ shifts });
         } catch (error) {
             // Optionally set an error state here
         } finally {
-            set({ isLoading: false });
+            set((state: ShiftSlice) => ({
+                isLoading: { ...state.isLoading, fetching: false }
+            }))
         }
     },
 
