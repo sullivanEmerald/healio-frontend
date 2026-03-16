@@ -11,9 +11,9 @@ export interface Worker {
 }
 
 export interface Job {
-    id: string;
-    providerId: string;
-    name: string;
+    _id: string;
+    title: string;
+    providerId?: { _id: string; firstName: string, lastName: string };
     description: string;
     startDate: string;
     startTime: string;
@@ -21,12 +21,19 @@ export interface Job {
     endTime: string;
     location: string;
     amount: number;
-    paymentStructure: string;
+    paymentFrequency: string;
     status: string;
     createdAt: string;
     updatedAt: string;
     requiredSkills: string[];
     clientName: string;
+    enhancedDBS?: boolean,
+    experience?: string;
+    hourlyRate?: number;
+    language?: string;
+    shiftType?: string;
+    skills?: string;
+
 }
 
 

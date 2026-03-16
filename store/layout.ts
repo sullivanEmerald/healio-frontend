@@ -1,5 +1,6 @@
 import { StateCreator } from "zustand/vanilla";
 import { Store } from "@/types/store";
+
 type LayoutActions = {
     toggleMenuBar: (layout: string) => void;
 }

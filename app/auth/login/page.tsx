@@ -59,12 +59,15 @@ export default function LoginPage() {
         return Object.values(newErrors).every((e) => !e);
     };
 
-
     // Handle form submit
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setSubmitting(true);
 
+        if (!User) {
+            showToaster("User role not found. Please select a role before logging in.", "error");
+            return;
+        }
+        setSubmitting(true);
         try {
             if (validateAll()) {
                 const { user, access_token } = await login({ ...formData, role: User });
@@ -79,7 +82,7 @@ export default function LoginPage() {
 
                 // Redirect to dashboard
                 const dashboardPath = user.role === "provider" ? "/provider/dashboard" : "/carer/dashboard";
-
+                router.replace(dashboardPath);
                 // Delay navigation to ensure localStorage is updated before redirecting
                 setTimeout(() => {
                     router.replace(dashboardPath);

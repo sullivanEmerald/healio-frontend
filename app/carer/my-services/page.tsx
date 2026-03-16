@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Underline from "@/components/common/underline"
 import { ServiceRequestCard } from "@/components/provider/serviceReuest"
 import { ToggleLayout } from "@/components/common/toggleLayout"
-import InviteServiceRequests from "@/components/worker/dashboard/services/invites"
+import InviteServiceRequests from "@/components/carer/dashboard/services/invites"
 
 
 export const PublishedServiceRequests = [

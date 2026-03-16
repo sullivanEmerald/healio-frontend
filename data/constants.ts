@@ -103,41 +103,41 @@ export const PROVIDER_SETTINGS_NAV = [
 
 export const WORKERS_MAIN_NAV = [
     {
-        to: "/worker/dashboard",
+        to: "/carer/dashboard",
         icon: Briefcase,
         label: "Dashboard",
         paths: [],
     },
     {
-        to: "/worker/marketplace",
+        to: "/carer/marketplace",
         icon: Store,
         label: "Marketplace",
         paths: [],
     },
     {
-        to: "/worker/my-services",
+        to: "/carer/my-services",
         icon: Store,
         label: "My Services",
         paths: [],
     },
     {
-        to: "/worker/analytics",
+        to: "/carer/analytics",
         icon: BarChart2,
         label: "Analytics",
         paths: [],
     },
     {
-        to: "/worker/payouts",
+        to: "/carer/payouts",
         icon: CreditCard,
         label: "Payouts & Earnings",
         paths: [],
     },
     {
-        to: "/worker/support",
+        to: "/carer/support",
         icon: MessageCircle,
         label: "Support",
         paths: [
-            '/worker/support/suggestions'
+            '/carer/support/suggestions'
         ],
     },
 ];
@@ -146,41 +146,41 @@ export const WORKERS_PROFILE_NAV = [
     {
         label: "Personal Information",
         icon: User,
-        to: "/worker/profile/personal-information",
+        to: "/carer/profile/personal-information",
         paths: [
-            '/worker/support/suggestions'
+            '/carer/support/suggestions'
         ],
     },
     {
         label: "Payment Management",
         icon: CreditCard,
-        to: "/worker/profile/payment-management",
+        to: "/carer/profile/payment-management",
         paths: [
-            '/worker/support/suggestions'
+            '/carer/support/suggestions'
         ],
     },
     {
         label: "User Management",
         icon: Users,
-        to: "/worker/profile/user-management",
+        to: "/carer/profile/user-management",
         paths: [
-            '/worker/support/suggestions'
+            '/carer/support/suggestions'
         ],
     },
     {
         label: "Company Settings",
         icon: Building2,
-        to: "/worker/profile/company-settings",
+        to: "/carer/profile/company-settings",
         paths: [
-            '/worker/support/suggestions'
+            '/carer/support/suggestions'
         ],
     },
     {
         label: "Additional Background",
         icon: FileText,
-        to: "/worker/profile/additional-background",
+        to: "/carer/profile/additional-background",
         paths: [
-            '/worker/support/suggestions'
+            '/carer/support/suggestions'
         ],
     },
 ];
@@ -189,7 +189,7 @@ export const WORKERS_SETTINGS_NAV = [
     {
         icon: Settings,
         label: "Account Settings",
-        to: "/worker/settings",
+        to: "/carer/settings",
         paths: [
             '/worker/support/suggestions'
         ],

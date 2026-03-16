@@ -1,6 +1,6 @@
 import GridLayout from "@/components/common/gridLayout";
 import CardLayout from "@/components/common/cardLayout";
-import { MyServiceRequestCard } from "@/components/worker/dashboard/MyServices";
+import { MyServiceRequestCard } from "@/components/carer/dashboard/MyServices";
 import CustomTable from "@/components/common/customTable";
 import { useMemo } from "react";
 
