@@ -1,5 +1,5 @@
 import { useStore } from "@/store/store";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { ServiceRequestCard } from "../serviceReuest";
 import GridLayout from "@/components/common/gridLayout";
 import CardLayout from "@/components/common/cardLayout";
@@ -12,6 +12,7 @@ import moment from "moment";
 import { formatPrice } from "@/utility/util";
 import { getStatusColor } from "@/data/constants";
 import { CardDropdown } from "@/components/common/CardDropdown";
+import WorkerProfile from "../workerProfile";
 
 export default function PublishedShifts() {
     const { shifts, isLoading, isMenuBarGrid } = useStore(useShallow((state) => ({

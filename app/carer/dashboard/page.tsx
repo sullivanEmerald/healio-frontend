@@ -1,6 +1,6 @@
 import Underline from "@/components/common/underline";
-import AnalyticsOverview from "@/components/carer/dashboard/analyticsOverView";
-import ChartAnalytics from "@/components/carer/dashboard/chartAnalytics";
+import AnalyticsOverview from "@/components/worker/dashboard/analyticsOverView";
+import ChartAnalytics from "@/components/worker/dashboard/chartAnalytics";
 export default function MyWorkers() {
     return (
         <>
