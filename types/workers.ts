@@ -29,10 +29,10 @@ export interface Job {
     clientName: string;
     enhancedDBS?: boolean,
     experience?: string;
-    hourlyRate?: number;
     language?: string;
     shiftType?: string;
     skills?: string;
+    state: string
 
 }
 

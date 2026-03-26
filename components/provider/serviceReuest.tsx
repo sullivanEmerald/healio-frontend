@@ -15,7 +15,7 @@ interface ServiceRequestCardProps {
     startDate: string,
     endDate: string,
     budget?: number,
-    hourlyRate?: string,
+    amount?: string,
     shiftType: string,
     _id: string;
     options?: Array<{ label: string; onClick?: () => void; href?: string }>;
@@ -28,7 +28,7 @@ export function ServiceRequestCard({
     startDate,
     endDate,
     shiftType,
-    hourlyRate,
+    amount,
     description,
     options,
     _id
@@ -74,7 +74,7 @@ export function ServiceRequestCard({
 
                 <div className="flex items-center gap-4">
                     <p className="text-base font-semibold text-primary">
-                        £{formatPrice(hourlyRate ?? 0)}
+                        £{formatPrice(amount ?? "0.00")}
                     </p>
                     <span className="text-xs bg-green-100 px-2 py-1 rounded text-gray-700">{shiftType}</span>
                 </div>

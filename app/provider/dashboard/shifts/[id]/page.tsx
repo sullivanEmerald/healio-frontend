@@ -84,8 +84,8 @@ export default function ShiftDetailsPage() {
                                 <div><span className="font-medium">Start Time:</span> {shift.startTime}</div>
                                 <div><span className="font-medium">End Time:</span> {shift.endTime}</div>
                                 <div className="flex items-center gap-2">
-                                    <span className="font-medium">Hourly Rate:</span>
-                                    <span className="text-blue-600 font-bold">£{shift.hourlyRate}</span>
+                                    <span className="font-medium">Amount:</span>
+                                    <span className="text-blue-600 font-bold">£{shift.amount || "0.00"}</span>
                                 </div>
                                 <div><span className="font-medium">Expenses:</span> {shift.expenses}</div>
                                 <div><span className="font-medium">Payment Frequency:</span> {shift.paymentFrequency}</div>

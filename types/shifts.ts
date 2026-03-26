@@ -18,7 +18,7 @@ export type Shift = {
   language: string;
   enhancedDBS: boolean;
   rightToWork: boolean;
-  hourlyRate: string;
+  amount: string;
   expenses: string;
   paymentFrequency: string;
   status: ShiftStatus;

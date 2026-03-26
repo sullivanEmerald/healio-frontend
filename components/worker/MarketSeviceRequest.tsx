@@ -32,10 +32,10 @@ export default function ServiceRequests({ job }: { job: Job }) {
                 </span>
             </div>
             <div className="flex flex-col md:flex-row md:items-center md:gap-4">
-                <span className="text-sm text-red-500 font-semibold">{job.location || 'London'}</span>
+                <span className="text-sm text-red-500 font-semibold">{job?.state || 'Remote'}</span>
             </div>
             <div className="flex items-center gap-4">
-                <span className="font-bold text-lg text-primary">${formatPrice(Number(job.hourlyRate))}</span>
+                <span className="font-bold text-lg text-primary">${formatPrice(Number(job?.amount)) || '0.00'}</span>
                 <span className="text-xs bg-green-100 px-2 py-1 rounded text-gray-700">{job.paymentFrequency}</span>
             </div>
             <div className="flex items-center gap-2">

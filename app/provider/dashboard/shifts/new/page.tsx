@@ -14,6 +14,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { showToaster } from "@/lib/utils";
 import { CreateShift } from "@/services/shift";
 import LineLoader from "@/components/common/lineLoader";
+import { State } from "country-state-city";
+
+const ukStates = State.getStatesOfCountry("GB");
 
 const steps = ["Shift Details", "Requirements", "Pricing"];
 
@@ -23,7 +26,7 @@ export default function NewShift() {
     const [form, setForm] = useState({
         // Step 1: Shift Details
         title: "",
-        postcode: "",
+        state: "",
         startDate: undefined as Date | undefined,
         endDate: undefined as Date | undefined,
         startTime: "",
@@ -40,7 +43,7 @@ export default function NewShift() {
         enhancedDBS: false,
         rightToWork: false,
         // Step 3: Pricing
-        hourlyRate: "",
+        amount: "",
         expenses: "",
         paymentFrequency: "Weekly",
     });
@@ -58,7 +61,7 @@ export default function NewShift() {
         experience: "",
         genderPreference: "",
         language: "",
-        hourlyRate: "",
+        amount: "",
         expenses: "",
         paymentFrequency: "",
     });
@@ -76,8 +79,8 @@ export default function NewShift() {
             if (!value.trim()) error = 'Title is required';
         } else if (name === 'description') {
             if (!value || value.length < 5) error = 'Description must be at least 5 characters';
-        } else if (name === 'postcode') {
-            if (!value.trim()) error = 'Postcode is required';
+        } else if (name === 'state') {
+            if (!value.trim()) error = 'State is required';
         } else if (name === 'startDate') {
             if (!value) error = 'Start date is required';
         } else if (name === 'endDate') {
@@ -96,8 +99,8 @@ export default function NewShift() {
             if (!value || Number(value) < 0) error = 'Experience is required';
         } else if (name === 'language') {
             if (!value.trim()) error = 'Language is required';
-        } else if (name === 'hourlyRate') {
-            if (!value || Number(value) <= 0) error = 'Hourly rate must be greater than 0';
+        } else if (name === 'amount') {
+            if (!value || Number(value) <= 50) error = 'Amount must be greater than pounds';
         } else if (name === 'paymentFrequency') {
             if (!value.trim()) error = 'Payment frequency is required';
         }
@@ -128,7 +131,7 @@ export default function NewShift() {
         const newErrors: typeof errors = {
             title: validateField('title', form.title),
             description: validateField('description', form.description),
-            postcode: validateField('postcode', form.postcode),
+            postcode: validateField('postcode', form.state),
             startDate: validateField('startDate', form.startDate),
             endDate: validateField('endDate', form.endDate),
             startTime: validateField('startTime', form.startTime),
@@ -139,7 +142,7 @@ export default function NewShift() {
             experience: validateField('experience', form.experience),
             genderPreference: '', // optional
             language: validateField('language', form.language),
-            hourlyRate: validateField('hourlyRate', form.hourlyRate),
+            amount: validateField('hourlyRate', form.amount),
             expenses: '', // optional
             paymentFrequency: validateField('paymentFrequency', form.paymentFrequency),
         };
@@ -228,15 +231,22 @@ export default function NewShift() {
                             {errors.description && <span className="text-xs text-red-500 mt-1 block">{errors.description}</span>}
                         </div>
                         <div>
-                            <Label htmlFor="postcode" className="block text-sm font-medium text-primary mb-1">Postcode</Label>
-                            <Input
-                                id="postcode"
-                                name="postcode"
-                                value={form.postcode}
-                                onChange={handleChange}
-                                className="input"
-                            />
-                            {errors.postcode && <span className="text-xs text-red-500 mt-1 block">{errors.postcode}</span>}
+                            <Label htmlFor="state" className="block text-sm font-medium text-primary mb-1">State</Label>
+                            <Select
+                                value={form.state}
+                                onValueChange={(value) => setForm((prev) => ({ ...prev, state: value }))}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Select state" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {ukStates.map((state) => (
+                                        <SelectItem key={state.isoCode} value={state.name}>
+                                            {state.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </div>
                         <div>
                             <Label className="block text-sm font-medium text-primary mb-1">Start Date</Label>
@@ -396,17 +406,17 @@ export default function NewShift() {
                 {step === 2 && (
                     <>
                         <div>
-                            <Label htmlFor="hourlyRate" className="block text-sm font-medium text-primary mb-1">Hourly Rate (£)</Label>
+                            <Label htmlFor="amount" className="block text-sm font-medium text-primary mb-1">Hourly Rate (£)</Label>
                             <Input
-                                id="hourlyRate"
+                                id="amount"
                                 type="number"
                                 min={0}
-                                name="hourlyRate"
-                                value={form.hourlyRate}
+                                name="amount"
+                                value={form.amount}
                                 onChange={handleChange}
                                 className="input"
                             />
-                            {errors.hourlyRate && <span className="text-xs text-red-500 mt-1 block">{errors.hourlyRate}</span>}
+                            {errors.amount && <span className="text-xs text-red-500 mt-1 block">{errors.amount}</span>}
                         </div>
                         <div>
                             <Label htmlFor="expenses" className="block text-sm font-medium text-primary mb-1">Expenses (if any)</Label>

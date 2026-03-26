@@ -16,21 +16,59 @@ import { Job } from "@/types/workers";
 import WorkerProfile from "@/components/worker/serviceProfile";
 import { FilterShifts } from "@/components/worker/filterShifts";
 
+export type FilterState = {
+    state: string;
+    startDate: Date | undefined;
+    endDate: Date | undefined;
+    paymentFrequency: string;
+    shiftType: string;
+    minRate: string;
+    maxRate: string;
+};
+
 export default function MyWorkers() {
 
     const { gethMarketplaceShifts, availableShifts, isFetching, isMenuBarGrid } = useStore(useShallow((state) => ({
         gethMarketplaceShifts: state.gethMarketplaceShifts,
-        isFetching: state.isFetching,
+        isFetching: state.isShiftOperation.isfetching,
         availableShifts: state.availableShifts,
         isMenuBarGrid: state.isMenuBarGrid,
     })));
     const [selectedShift, setSelectedShift] = useState<Job | null>(null);
     const [showMiniProfile, setShowMiniProfile] = useState(false);
     const [showFilter, setShowFilter] = useState(false);
+    const [filters, setFilters] = useState<FilterState | null>(null);
+
+    const [search, setSearch] = useState("");
+    const [debouncedSearch, setDebouncedSearch] = useState("");
+
+    const onApply = (filters: FilterState) => {
+        setFilters(filters);
+        setShowFilter(false);
+    }
 
     useEffect(() => {
-        gethMarketplaceShifts();
-    }, [gethMarketplaceShifts]);
+        const handler = setTimeout(() => {
+            setDebouncedSearch(search);
+        }, 700); // 500ms debounce
+
+        return () => clearTimeout(handler);
+    }, [search]);
+
+    useEffect(() => {
+        gethMarketplaceShifts({
+            ...(filters ?? {
+                state: "",
+                startDate: undefined,
+                endDate: undefined,
+                paymentFrequency: "",
+                shiftType: "",
+                minRate: "",
+                maxRate: "",
+            }),
+            search: debouncedSearch,
+        });
+    }, [gethMarketplaceShifts, filters, debouncedSearch]);
 
     const columns = useMemo(() => [
         {
@@ -89,13 +127,15 @@ export default function MyWorkers() {
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                 <div>
                     <h1 className="text-lg text-primary font-semibold">Marketplace For Available Shifts</h1>
-                    <span className="text-gray-600">Find a suitable shift and be an early applicant</span>
+                    <span className="text-gray-800">Find a suitable shift and be an early applicant</span>
                 </div>
                 <div className="w-full md:w-[300px]">
                     <Input
-                        placeholder="Search for shifts by title, state, type or budget"
+                        placeholder="Search for shifts by title, description or type"
                         className="w-full border-gray-100 placeholder:text-sm"
                         disabled={isFetching || availableShifts.length === 0}
+                        value={search}
+                        onChange={e => setSearch(e.target.value)}
                     />
                 </div>
             </div>
@@ -130,7 +170,7 @@ export default function MyWorkers() {
                 <WorkerProfile show={showMiniProfile} onHide={() => setShowMiniProfile(false)} job={selectedShift} />
             )}
 
-            {showFilter && <FilterShifts onClose={() => setShowFilter(false)} show={showFilter} header="Filter Marketplace Shifts" />}
+            {showFilter && <FilterShifts onClose={() => setShowFilter(false)} show={showFilter} header="Filter Marketplace Shifts" onApply={(shiftFilter: FilterState) => onApply(shiftFilter)} />}
         </div>
     );
 }
