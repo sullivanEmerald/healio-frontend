@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useCallback } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ServiceRequestCard } from "@/components/provider/serviceReuest"
 import CardLayout from "@/components/common/cardLayout"
@@ -21,9 +21,13 @@ export default function MyServices() {
     })));
 
 
-    useEffect(() => {
+    const handleListProviderShifts = useCallback(() => {
         listProviderShifts();
-    }, []);
+    }, [listProviderShifts]);
+
+    useEffect(() => {
+        handleListProviderShifts();
+    }, [handleListProviderShifts]);
 
     return (
         <div className="mb-4 space-y-4">

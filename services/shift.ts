@@ -1,6 +1,7 @@
 import { Shift } from "@/types/shifts";
 import { axiosInstance } from "@/lib/utils";
 import { showToaster } from "@/lib/utils";
+import { ShiftWithApplications } from "@/types/shifts";
 
 
 export const CreateShift = async (shift: any) => {
@@ -25,7 +26,7 @@ export const getAllShifts = async (): Promise<Shift[]> => {
     }
 };
 
-export const getShiftById = async (id: string): Promise<Shift> => {
+export const getShiftById = async (id: string): Promise<ShiftWithApplications> => {
     try {
         const response = await axiosInstance.get(`/provider/shifts/${id}`);
         return response.data;

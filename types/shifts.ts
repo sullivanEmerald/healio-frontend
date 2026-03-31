@@ -25,3 +25,7 @@ export type Shift = {
   _id: string;
 };
 
+export type ShiftWithApplications = {
+  shift: Shift,
+  application: any
+}
