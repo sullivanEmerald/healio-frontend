@@ -15,9 +15,10 @@ export const CreateShift = async (shift: any) => {
     }
 };
 
-export const getAllShifts = async (): Promise<ShiftWithCarerDetails[]> => {
+export const getAllShifts = async (): Promise<ShiftWithCarerDetails> => {
     try {
         const response = await axiosInstance.get("/provider/shifts");
+        console.log("All shifts response:", response.data);
         return response.data;
     } catch (error: any) {
         console.error(error);

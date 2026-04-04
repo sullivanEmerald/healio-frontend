@@ -16,7 +16,8 @@ type ShiftActions = {
 export type ShiftSlice = {
     shifts: Shift[];
     shift: Shift | null;
-    applications: any[]; // You can replace 'any' with a specific type if you have one for applications
+    applications: any[];
+    assignedShifts: any[]; // You can replace 'any' with a specific type if you have one for assigned shifts
     isLoading: {
         fetching: boolean;
         creating: boolean;
@@ -31,6 +32,7 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
     shifts: [],
     shift: null,
     applications: [],
+    assignedShifts: [],
     isLoading: {
         fetching: false,
         creating: false,
@@ -55,6 +57,7 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
         }))
         try {
             const result = await getShiftById(id as string);
+            console.log("Fetched shift details:", result.shift);
             set({ shift: result?.shift, applications: result?.applications || [] });
         } catch (error) {
             console.log("Error fetching shift:", error);
@@ -93,10 +96,11 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
             isLoading: { ...state.isLoading, fetching: true }
         }))
         try {
-            const shifts = await getAllShifts();
-            set({ shifts });
+            const result = await getAllShifts();
+            set({ shifts: result?.shifts, assignedShifts: result?.assignments });
         } catch (error) {
-            // Optionally set an error state here
+            console.log("Error fetching shifts:", error);
+            set({ shifts: [], assignedShifts: [] });
         } finally {
             set((state: ShiftSlice) => ({
                 isLoading: { ...state.isLoading, fetching: false }

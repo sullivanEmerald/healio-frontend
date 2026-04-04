@@ -62,7 +62,7 @@ export function AppliedShiftsCard({
                     <div className="grid grid-cols-2 gap-4 text-sm">
                         <div>
                             <p className="text-gray-500">Date Applied</p>
-                            <p className="font-medium text-gray-800">{moment(createdAt).format("MMMM Do YYYY")}</p>
+                            <p className="font-medium text-gray-800">{moment(createdAt).fromNow()}</p>
                         </div>
                     </div>
 

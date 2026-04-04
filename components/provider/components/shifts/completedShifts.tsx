@@ -26,7 +26,7 @@ interface AssignedRequestCardProps {
 }
 
 
-export function AssignedRequestCard({
+export function CompletedRequestCard({
     shiftId,
     providerId,
     _id,
@@ -36,6 +36,11 @@ export function AssignedRequestCard({
     updatedAt,
     status
 }: AssignedRequestCardProps) {
+
+    const CompletedOptions = [
+        { label: "Approve", onClick: () => alert(`Approve shift with ID:`) },
+    ];
+
     return (
         <Card className="shadow-none bg-transparent border-none p-0 cursor-pointer">
             <CardContent className="space-y-6 shadow-none bg-transparent p-0">
@@ -45,7 +50,7 @@ export function AssignedRequestCard({
                     </h3>
 
                     <CardDropdown
-                        options={options}
+                        options={CompletedOptions}
                         id={_id}
                     />
                 </div>

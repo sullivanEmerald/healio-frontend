@@ -13,6 +13,7 @@ import { NotFoundComponent } from "@/components/common/NotFoundComponent";
 import PublishedShifts from "@/components/provider/shifts/PublishedShifts";
 import DraftShifts from "@/components/provider/shifts/DraftShifts";
 import AssignedShifts from "@/components/provider/shifts/AssignedShift";
+import CompletedShifts from "@/components/provider/shifts/CompletedShifts";
 
 
 export default function MyServices() {
@@ -51,7 +52,13 @@ export default function MyServices() {
                     <PublishedShifts />
                 </TabsContent>
                 <TabsContent value="assigned">
-                    <AssignedShifts />
+                    <AssignedShifts shiftStatus="assigned" />
+                </TabsContent>
+                <TabsContent value="inProgress">
+                    <AssignedShifts shiftStatus="in-progress" />
+                </TabsContent>
+                <TabsContent value="completed">
+                    <CompletedShifts shiftStatus="completed" />
                 </TabsContent>
             </Tabs>
         </div>
