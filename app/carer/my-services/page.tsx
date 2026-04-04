@@ -10,6 +10,8 @@ import { useStore } from "@/store/store"
 import { useState, useCallback, useEffect } from "react"
 import { Loader } from "@/components/common/loader"
 import { useShallow } from "zustand/react/shallow"
+import InProgressShifts from "@/components/worker/services/InProgressShifts"
+import CompletedShifts from "@/components/worker/services/CompletedShifts"
 
 
 export const PublishedServiceRequests = [
@@ -77,6 +79,20 @@ export default function MyServices() {
                         <Loader />
                     ) : (
                         <AssignedShifts />
+                    )}
+                </TabsContent>
+                <TabsContent value="inProgress">
+                    {isMyShiftsLoading ? (
+                        <Loader />
+                    ) : (
+                        <InProgressShifts />
+                    )}
+                </TabsContent>
+                <TabsContent value="completed">
+                    {isMyShiftsLoading ? (
+                        <Loader />
+                    ) : (
+                        <CompletedShifts />
                     )}
                 </TabsContent>
             </Tabs>

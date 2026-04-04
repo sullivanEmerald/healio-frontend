@@ -8,10 +8,23 @@ import Button from "@/components/common/button"
 import Underline from "@/components/common/underline"
 import { CarerShiftApplication } from "@/types/workers"
 import { CardDropdown } from "@/components/common/CardDropdown"
+import { useStore } from "@/store/store"
+import { useShallow } from "zustand/react/shallow"
 
 
-export function ShiftRecordCard({ ShiftRecord, showOptions = false, options = [] }: any) {
+export function InProgressShiftRecord({ ShiftRecord }: any) {
     const { shiftId } = ShiftRecord;
+
+    const { markShiftCompleted } = useStore(useShallow((state) => ({
+        markShiftCompleted: state.markShiftCompleted,
+    })));
+
+    const options = [
+        {
+            label: "Mark As Completed",
+            onClick: () => markShiftCompleted(ShiftRecord._id),
+        },
+    ];
     return (
         <Card className="shadow-none bg-transparent border-none p-0 cursor-pointer">
             <CardContent className="space-y-6 shadow-none bg-transparent p-0">
@@ -19,13 +32,11 @@ export function ShiftRecordCard({ ShiftRecord, showOptions = false, options = []
                     <h3 className="text-lg font-semibold text-gray-900 line-clamp-1">
                         <DisplayAvatar name={shiftId.title} />
                     </h3>
+                    <CardDropdown
+                        options={options}
+                        id={ShiftRecord._id}
+                    />
 
-                    {showOptions && options.length > 0 && (
-                        <CardDropdown
-                            options={options}
-                            id={ShiftRecord._id}
-                        />
-                    )}
                 </div>
 
                 <p className="text-gray-700 line-clamp-1">{shiftId.description}</p>

@@ -5,25 +5,19 @@ import { useShallow } from "zustand/react/shallow";
 import GridLayout from "@/components/common/gridLayout";
 import CardLayout from "@/components/common/cardLayout";
 import { NotFoundComponent } from "@/components/common/NotFoundComponent";
-import { ShiftRecordCard } from "../components/ShiftRecord";
+import { AssignedShiftRecord } from "../components/AssignedShiftRecord";
 import { CarerShiftApplication } from "@/types/workers";
+import { start } from "repl";
 
 export default function AssignedShifts() {
-    const { myShifts } = useStore(useShallow((state) => ({
-        myShifts: state.myShifts,
+    const { myAssignedShifts } = useStore(useShallow((state) => ({
+        myAssignedShifts: state.myAssignedShifts,
     })));
 
     const assignedShifts = useMemo(() => {
-        return myShifts.filter(shift => shift.status === "approved");
-    }, [myShifts]);
+        return myAssignedShifts.filter(shift => shift.status.toLowerCase() === "assigned");
+    }, [myAssignedShifts]);
 
-
-    const options = [
-        {
-            label: "Start",
-            onClick: (id: string) => console.log("Start Shift clicked", id),
-        },
-    ];
 
     return (
         <div className="mb-4 space-y-4">
@@ -39,7 +33,7 @@ export default function AssignedShifts() {
                         <CardLayout
                             key={shift._id}
                         >
-                            <ShiftRecordCard ShiftRecord={shift} showOptions={true} options={options} />
+                            <AssignedShiftRecord ShiftRecord={shift} />
                         </CardLayout>
                     ))}
                 </GridLayout>

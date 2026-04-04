@@ -39,13 +39,25 @@ export const fetchMyShifts = async () => {
     }
 };
 
-export const startShiftNow = async (shiftId: string) => {
+export const startShiftNow = async (assignmentId: string) => {
     try {
-        const response = await axiosInstance.post(`/carer/start-shift/${shiftId}`);
+        const response = await axiosInstance.post(`/carer/start-shift/${assignmentId}`);
         return response.data;
     } catch (error: any) {
         console.error("Failed to start shift", error);
         showToaster(error.response?.data?.message || "Failed to start shift", "error");
+        throw error;
+    }
+};
+
+
+export const markShiftAsCompleted = async (assignmentId: string) => {
+    try {
+        const response = await axiosInstance.post(`/carer/complete-shift/${assignmentId}`);
+        return response.data;
+    } catch (error: any) {
+        console.error("Failed to mark shift as completed", error);
+        showToaster(error.response?.data?.message || "Failed to mark shift as completed", "error");
         throw error;
     }
 };

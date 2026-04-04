@@ -247,6 +247,7 @@ export const getIcon = (action: string) => {
         case "inProgress":
             return Briefcase;
         case "completed":
+        case "mark as completed":
             return CheckCircle;
         case "assigned":
             return UserCheck;

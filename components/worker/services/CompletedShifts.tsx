@@ -5,33 +5,35 @@ import { useShallow } from "zustand/react/shallow";
 import GridLayout from "@/components/common/gridLayout";
 import CardLayout from "@/components/common/cardLayout";
 import { NotFoundComponent } from "@/components/common/NotFoundComponent";
-import { ShiftRecordCard } from "../components/ShiftRecord";
 import { CarerShiftApplication } from "@/types/workers";
+import { CompletedShiftRecord } from "../components/CompletedShifts";
 
-export default function AppliedShifts() {
-    const { myAppliedShifts } = useStore(useShallow((state) => ({
-        myAppliedShifts: state.myAppliedShifts,
+
+export default function CompletedShifts() {
+    const { myAssignedShifts } = useStore(useShallow((state) => ({
+        myAssignedShifts: state.myAssignedShifts,
     })));
 
-    const appliedShifts = useMemo(() => {
-        return myAppliedShifts.filter(shift => shift.status === "pending");
-    }, [myAppliedShifts]);
+    const completedShifts = useMemo(() => {
+        return myAssignedShifts.filter(shift => shift.status.toLowerCase() === "completed");
+    }, [myAssignedShifts]);
+
 
     return (
         <div className="mb-4 space-y-4">
             <div className="flex align-items-center justify-between">
-                <h2 className="text-lg font-semibold">Applied Shifts</h2>
+                <h2 className="text-lg font-semibold">Completed Shifts</h2>
                 <ToggleLayout />
             </div>
-            {appliedShifts.length === 0 ? (
-                <NotFoundComponent title="No applied shifts found." />
+            {completedShifts.length === 0 ? (
+                <NotFoundComponent title="No completed shifts found." subTitle="You have no shifts that are completed." />
             ) : (
                 <GridLayout>
-                    {appliedShifts.map((shift: any) => (
+                    {completedShifts.map((shift: any) => (
                         <CardLayout
                             key={shift._id}
                         >
-                            <ShiftRecordCard ShiftRecord={shift} />
+                            <CompletedShiftRecord ShiftRecord={shift} />
                         </CardLayout>
                     ))}
                 </GridLayout>

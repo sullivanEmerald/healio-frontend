@@ -1,7 +1,7 @@
 import { Store } from "@/types/store";
 import { StateCreator } from "zustand";
 import { Job } from "@/types/workers";
-import { fetchMarketplaceShifts, applyForShift, fetchMyShifts, startShiftNow } from "@/services/carer";
+import { fetchMarketplaceShifts, applyForShift, fetchMyShifts, startShiftNow, markShiftAsCompleted } from "@/services/carer";
 import { FilterState } from "@/app/carer/marketplace/page";
 import { showToaster } from "@/lib/utils";
 
@@ -10,27 +10,32 @@ type CarerActions = {
     applyForShift: (shiftId: string) => Promise<void>;
     getMyShifts: () => Promise<void>;
     startShift: (shiftId: string) => Promise<void>;
+    markShiftCompleted: (shiftId: string) => Promise<void>;
 }
 
 export type CarerSlice = {
-    availableShifts: Job[] | [];
+    availableShifts: any[] | [];
     myAppliedShifts: any[] | [];
+    myAssignedShifts: any[] | [];
     isShiftOperation: {
         isfetching: boolean;
         isApplying: boolean;
         isMyShiftsLoading: boolean;
         isStartingShift: boolean;
+        isCompletingShift: boolean;
     };
 } & CarerActions;
 
 export const createCarerSlice: StateCreator<Store, [['zustand/immer', never]], [], CarerSlice> = (set: any): CarerSlice => ({
     availableShifts: [],
     myAppliedShifts: [],
+    myAssignedShifts: [],
     isShiftOperation: {
         isfetching: false,
         isApplying: false,
         isMyShiftsLoading: false,
         isStartingShift: false,
+        isCompletingShift: false,
     },
 
     getMarketplaceShifts: async (filters: FilterState & { search: string }) => {
@@ -68,7 +73,7 @@ export const createCarerSlice: StateCreator<Store, [['zustand/immer', never]], [
         try {
             const data = await fetchMyShifts();
             console.log("Fetched my shifts", data);
-            set({ myShifts: data });
+            set({ myAssignedShifts: data.assignedShifts, myAppliedShifts: data.appliedShifts });
         } catch (error) {
             console.error("Failed to fetch my shifts", error);
         } finally {
@@ -79,10 +84,10 @@ export const createCarerSlice: StateCreator<Store, [['zustand/immer', never]], [
     startShift: async (shiftId: string) => {
         set({ isShiftOperation: { isStartingShift: true } });
         try {
-            const data = await startShiftNow(shiftId);
+            await startShiftNow(shiftId);
             setTimeout(() => {
                 set((state: CarerSlice) => ({
-                    myShifts: state.myShifts.map((shift: any) =>
+                    myAssignedShifts: state.myAssignedShifts.map((shift: any) =>
                         shift._id === shiftId ? { ...shift, status: "in-progress" } : shift
                     )
                 }));
@@ -92,6 +97,25 @@ export const createCarerSlice: StateCreator<Store, [['zustand/immer', never]], [
             console.error("Failed to start shift", error);
         } finally {
             set({ isShiftOperation: { isStartingShift: false } });
+        }
+    },
+
+    markShiftCompleted: async (shiftId: string) => {
+        set({ isShiftOperation: { isCompletingShift: true } });
+        try {
+            await markShiftAsCompleted(shiftId);
+            setTimeout(() => {
+                set((state: CarerSlice) => ({
+                    myAssignedShifts: state.myAssignedShifts.map((shift: any) =>
+                        shift._id === shiftId ? { ...shift, status: "completed" } : shift
+                    )
+                }));
+                showToaster("Successfully marked the shift as completed", "success");
+            }, 2000);
+        } catch (error) {
+            console.error("Failed to mark shift as completed", error);
+        } finally {
+            set({ isShiftOperation: { isCompletingShift: false } });
         }
     },
 });
