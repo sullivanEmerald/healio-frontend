@@ -15,6 +15,7 @@ import { formatPrice } from "@/utility/util";
 import { Job } from "@/types/workers";
 import WorkerProfile from "@/components/worker/serviceProfile";
 import { FilterShifts } from "@/components/worker/filterShifts";
+import { ToggleLayout } from "@/components/common/toggleLayout";
 
 export type FilterState = {
     state: string;
@@ -28,8 +29,8 @@ export type FilterState = {
 
 export default function MyWorkers() {
 
-    const { gethMarketplaceShifts, availableShifts, isFetching, isMenuBarGrid } = useStore(useShallow((state) => ({
-        gethMarketplaceShifts: state.gethMarketplaceShifts,
+    const { getMarketplaceShifts, availableShifts, isFetching, isMenuBarGrid } = useStore(useShallow((state) => ({
+        getMarketplaceShifts: state.getMarketplaceShifts,
         isFetching: state.isShiftOperation.isfetching,
         availableShifts: state.availableShifts,
         isMenuBarGrid: state.isMenuBarGrid,
@@ -56,7 +57,7 @@ export default function MyWorkers() {
     }, [search]);
 
     useEffect(() => {
-        gethMarketplaceShifts({
+        getMarketplaceShifts({
             ...(filters ?? {
                 state: "",
                 startDate: undefined,
@@ -68,7 +69,7 @@ export default function MyWorkers() {
             }),
             search: debouncedSearch,
         });
-    }, [gethMarketplaceShifts, filters, debouncedSearch]);
+    }, [getMarketplaceShifts, filters, debouncedSearch]);
 
     const columns = useMemo(() => [
         {

@@ -40,3 +40,10 @@ export interface Job {
 export interface ProjectSummaryProps {
     projectData: Record<string, number>;
 }
+
+
+export type CarerShiftApplication = {
+    _id: string;
+    createdAt?: string;
+    shiftId: Job
+}

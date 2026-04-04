@@ -1,4 +1,4 @@
-import { Shift } from "@/types/shifts";
+import { Shift, ShiftWithCarerDetails } from "@/types/shifts";
 import { axiosInstance } from "@/lib/utils";
 import { showToaster } from "@/lib/utils";
 import { ShiftWithApplications } from "@/types/shifts";
@@ -15,7 +15,7 @@ export const CreateShift = async (shift: any) => {
     }
 };
 
-export const getAllShifts = async (): Promise<Shift[]> => {
+export const getAllShifts = async (): Promise<ShiftWithCarerDetails[]> => {
     try {
         const response = await axiosInstance.get("/provider/shifts");
         return response.data;
@@ -29,6 +29,7 @@ export const getAllShifts = async (): Promise<Shift[]> => {
 export const getShiftById = async (id: string): Promise<ShiftWithApplications> => {
     try {
         const response = await axiosInstance.get(`/provider/shifts/${id}`);
+        console.log("Shift details response:", response.data);
         return response.data;
     } catch (error: any) {
         showToaster(error?.response?.data?.message || "An error occurred while fetching the shift. Please try again.");
@@ -36,6 +37,12 @@ export const getShiftById = async (id: string): Promise<ShiftWithApplications> =
     }
 };
 
-
-
-
+export const approveApplicationAPI = async (applicationId: string) => {
+    try {
+        const response = await axiosInstance.post(`/provider/applications/${applicationId}/approve`);
+        return response.data;
+    } catch (error: any) {
+        showToaster(error?.response?.data?.message || "An error occurred while approving the application. Please try again.");
+        throw error;
+    }
+};

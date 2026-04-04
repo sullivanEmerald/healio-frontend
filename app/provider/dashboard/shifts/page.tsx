@@ -12,6 +12,7 @@ import { Loader } from "@/components/common/loader";
 import { NotFoundComponent } from "@/components/common/NotFoundComponent";
 import PublishedShifts from "@/components/provider/shifts/PublishedShifts";
 import DraftShifts from "@/components/provider/shifts/DraftShifts";
+import AssignedShifts from "@/components/provider/shifts/AssignedShift";
 
 
 export default function MyServices() {
@@ -36,7 +37,7 @@ export default function MyServices() {
             <Tabs defaultValue="published" >
                 <TabsList variant="line" className="flex flex-row gap-8 mb-4">
                     <TabsTrigger value="published" className="text-primary cursor-pointer">Published</TabsTrigger>
-                    <TabsTrigger value="reports" className="text-primary cursor-pointer">Assigned</TabsTrigger>
+                    <TabsTrigger value="assigned" className="text-primary cursor-pointer">Assigned</TabsTrigger>
                     <TabsTrigger value="inProgress" className="text-primary cursor-pointer">In-Progress</TabsTrigger>
                     <TabsTrigger value="completed" className="text-primary cursor-pointer">Completed</TabsTrigger>
                     <TabsTrigger value="approved" className="text-primary cursor-pointer">Approved</TabsTrigger>
@@ -49,7 +50,9 @@ export default function MyServices() {
                 <TabsContent value="published">
                     <PublishedShifts />
                 </TabsContent>
-                <TabsContent value="analytics">Change your password here.</TabsContent>
+                <TabsContent value="assigned">
+                    <AssignedShifts />
+                </TabsContent>
             </Tabs>
         </div>
     )

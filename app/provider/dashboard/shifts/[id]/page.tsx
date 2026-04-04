@@ -15,6 +15,7 @@ import { Back } from "@/components/common/back";
 import { Loader } from "@/components/common/loader";
 import { NotFoundComponent } from "@/components/common/NotFoundComponent";
 import { AppliedShifts } from "@/components/provider/shifts/AppliedShifts";
+import GridLayout from "@/components/common/gridLayout";
 
 export default function ShiftDetailsPage() {
     const { id } = useParams();
@@ -36,8 +37,8 @@ export default function ShiftDetailsPage() {
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4 mb-4">
                     <DisplayAvatar name={shift?.title} canShowName={false} />
-                    <h1 className="text-3xl text-gray-800 font-bold">{getAccountTypeDisplay(shift?.title ?? null)}</h1>
-                    <Badge variant="default" className="ml-2 capitalize text-sm px-3 py-1" style={{ backgroundColor: getStatusColor(shift?.status || "") }} >{shift?.status}</Badge>
+                    <h2 className="text-3xl text-gray-800 font-semibold">{getAccountTypeDisplay(shift?.title ?? null)}</h2>
+                    {/* <Badge variant="default" className="ml-2 capitalize text-sm px-3 py-1" style={{ backgroundColor: getStatusColor(shift?.status || "") }} >{shift?.status}</Badge> */}
                 </div>
                 <Button>
                     Stop Reoccuring

@@ -1,4 +1,4 @@
-import { Briefcase, Users, BarChart2, CreditCard, MessageCircle, User, Building2, FileText, Settings, Store, Loader, CheckCircle, Clock, Send, UserCheck, BadgeCheck, Wallet, HelpCircle, Eye, Trash2, ArchiveX } from "lucide-react";
+import { Briefcase, Users, BarChart2, CreditCard, MessageCircle, User, Building2, FileText, Settings, Store, Loader, CheckCircle, Clock, Send, UserCheck, BadgeCheck, Wallet, HelpCircle, Eye, Trash2, ArchiveX, X, Play } from "lucide-react";
 
 export const PROVIDERS_MAIN_NAV = [
     {
@@ -253,7 +253,10 @@ export const getIcon = (action: string) => {
         case "workers":
             return Users;
         case "approved":
+        case "approve":
             return BadgeCheck;
+        case "start":
+            return Play;
         case "applied":
             return FileText;
         case "paid":
@@ -262,6 +265,8 @@ export const getIcon = (action: string) => {
             return Wallet;
         case "directInvitations":
             return Send;
+        case "reject":
+            return X;
         default:
             return HelpCircle;
     }

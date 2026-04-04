@@ -2,14 +2,13 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import moment from "moment"
 import { formatPrice } from "@/utility/util"
-import { CardDropdown } from "../common/CardDropdown"
-import DisplayAvatar from "../common/avatar"
+import DisplayAvatar from "@/components/common/avatar"
 import { getStatusColor } from "@/data/constants"
-import Button from "../common/button"
-import Underline from "../common/underline"
+import Button from "@/components/common/button"
+import Underline from "@/components/common/underline"
 
 
-interface ServiceRequestCardProps {
+interface AssignedRequestCardProps {
     title: string,
     description?: string,
     status: string,
@@ -28,7 +27,7 @@ interface ServiceRequestCardProps {
 }
 
 
-export function ServiceRequestCard({
+export function AssignedRequestCard({
     title,
     status,
     startDate,
@@ -39,7 +38,7 @@ export function ServiceRequestCard({
     options,
     assignedCarerId,
     _id
-}: ServiceRequestCardProps) {
+}: AssignedRequestCardProps) {
     return (
         <Card className="shadow-none bg-transparent border-none p-0 cursor-pointer">
             <CardContent className="space-y-6 shadow-none bg-transparent p-0">
@@ -48,11 +47,10 @@ export function ServiceRequestCard({
                         <DisplayAvatar name={title} />
                     </h3>
 
-                    {/* Dropdown   */}
-                    <CardDropdown
+                    {/* <CardDropdown
                         options={options}
                         id={_id}
-                    />
+                    /> */}
                 </div>
 
                 <p className="text-gray-700 line-clamp-1">{description}</p>
@@ -84,12 +82,13 @@ export function ServiceRequestCard({
                 </div>
                 <Underline />
                 <div>
-                    <span className="font-medium text-gray-800 ml-2">Assigned To:</span>
-                    <span className="font-medium text-gray-800 ml-2">{assignedCarerId?.firstName} {assignedCarerId?.lastName}</span>
+                    <span className="font-medium text-gray-500 ml-2">Assigned To:</span>
+                    <span className="font-medium text-red-500 ml-2">{assignedCarerId?.firstName} {assignedCarerId?.lastName}</span>
                 </div>
-                <Button className="w-full" onClick={() => console.log("View details for service request with ID:")}>
+                <Underline />
+                {/* <Button className="w-full" onClick={() => console.log("View details for service request with ID:")}>
                     View
-                </Button>
+                </Button> */}
             </CardContent>
         </Card>
     )

@@ -1,7 +1,8 @@
-import { getAllShifts, getShiftById } from "@/services/shift";
+import { getAllShifts, getShiftById, approveApplicationAPI } from "@/services/shift";
 import { Shift } from "../types/shifts";
 import { StateCreator } from "zustand";
 import { Store } from "@/types/store";
+import { showToaster } from "@/lib/utils";
 
 type ShiftActions = {
     createShift: (shift: Shift) => Promise<void>;
@@ -9,6 +10,7 @@ type ShiftActions = {
     deleteShift: (id: string) => Promise<void>;
     fetchShift: (id: string) => Promise<void | null>;
     listProviderShifts: () => Promise<void>;
+    approveApplication: (applicationId: string) => Promise<void>;
 }
 
 export type ShiftSlice = {
@@ -21,6 +23,7 @@ export type ShiftSlice = {
         updating: boolean;
         deleting: boolean;
         isfetchingById: boolean;
+        isApproving: boolean;
     }
 } & ShiftActions;
 
@@ -33,7 +36,8 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
         creating: false,
         updating: false,
         deleting: false,
-        isfetchingById: false
+        isfetchingById: false,
+        isApproving: false,
     },
 
     createShift: async (shift: Shift) => {
@@ -51,13 +55,36 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
         }))
         try {
             const result = await getShiftById(id as string);
-            set({ shift: result?.shift, applications: result?.application || [] });
+            set({ shift: result?.shift, applications: result?.applications || [] });
         } catch (error) {
             console.log("Error fetching shift:", error);
             set({ shift: null });
         } finally {
             set((state: ShiftSlice) => ({
                 isLoading: { ...state.isLoading, isfetchingById: false }
+            }))
+        }
+    },
+    approveApplication: async (id: string) => {
+        set((state: ShiftSlice) => ({
+            isLoading: { ...state.isLoading, isApproving: true }
+        }))
+        try {
+            // Call the API to approve the application
+            const result = await approveApplicationAPI(id);
+            console.log("Application approved:", result);
+            setTimeout(() => {
+                set((state: ShiftSlice) => ({
+                    applications: state.applications.map(app => app._id === id ? { ...app, status: "approved" } : { ...app, status: 'rejected' }) // Optionally remove the approved application from the list
+                }));
+            }, 1000);
+            showToaster("Application approved successfully!");
+        } catch (error) {
+            console.log("Error approving application:", error);
+            set({ shift: null });
+        } finally {
+            set((state: ShiftSlice) => ({
+                isLoading: { ...state.isLoading, isApproving: false }
             }))
         }
     },

@@ -30,7 +30,7 @@ const CustomTable = <T extends Record<string, any>>({
     ...props
 }: CustomTableProps<T>) => {
     return (
-        <div className={`w-full bg-white border-none outline-none p-4 ${className}`} {...props}>
+        <div className={`w-full bg-white border-none outline-none  py-2 ${className}`} {...props}>
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50 text-primary uppercase text-xs font-medium tracking-wider">
@@ -64,7 +64,7 @@ const CustomTable = <T extends Record<string, any>>({
                                         return (
                                             <td
                                                 key={col.accessorKey || colIndex}
-                                                className={`px-6 py-4 whitespace-nowrap text-sm text-gray-700 ${col.className || ""}`}
+                                                className={`px-4 py-2 whitespace-nowrap text-sm text-gray-700 ${col.className || ""}`}
                                             >
                                                 {col.cell
                                                     ? col.cell({ row, value, rowIndex })

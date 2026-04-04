@@ -27,5 +27,13 @@ export type Shift = {
 
 export type ShiftWithApplications = {
   shift: Shift,
-  application: any
+  applications: any
 }
+
+export type ShiftWithCarerDetails = Shift & {
+  assignedCarerId: {
+    firstName: string;
+    lastName: string;
+    _id: string;
+  } | null;
+}; 

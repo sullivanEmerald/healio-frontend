@@ -4,6 +4,12 @@ import Underline from "@/components/common/underline"
 import { ServiceRequestCard } from "@/components/provider/serviceReuest"
 import { ToggleLayout } from "@/components/common/toggleLayout"
 import InviteServiceRequests from "@/components/worker/dashboard/services/invites"
+import AppliedShifts from "@/components/worker/services/AppliedShifts"
+import AssignedShifts from "@/components/worker/services/AssignedShift,"
+import { useStore } from "@/store/store"
+import { useState, useCallback, useEffect } from "react"
+import { Loader } from "@/components/common/loader"
+import { useShallow } from "zustand/react/shallow"
 
 
 export const PublishedServiceRequests = [
@@ -26,15 +32,26 @@ export const PublishedServiceRequests = [
 ];
 
 export default function MyServices() {
+    const { getMyShifts, isMyShiftsLoading } = useStore(useShallow((state) => ({
+        getMyShifts: state.getMyShifts,
+        isMyShiftsLoading: state.isShiftOperation.isMyShiftsLoading,
+    })));
+
+    const getShifts = useCallback(async () => {
+        await getMyShifts();
+    }, [getMyShifts]);
+
+
+    useEffect(() => {
+        getShifts();
+    }, [getShifts]);
+
     return (
         <div className="mb-4 space-y-4">
             <div className="flex align-items-center justify-between">
                 <p className="text-xl font-bold text-[#0C287B]">My Service Requests</p>
             </div>
             <Underline />
-            <div className="flex justify-end">
-                <ToggleLayout />
-            </div>
             <Tabs defaultValue="invites" className="w-full space-y-4">
                 <TabsList variant="line" className="flex flex-row gap-8">
                     <TabsTrigger value="invites" className="text-primary">Invites</TabsTrigger>
@@ -42,21 +59,26 @@ export default function MyServices() {
                     <TabsTrigger value="assigned" className="text-primary">Assigned</TabsTrigger>
                     <TabsTrigger value="inProgress" className="text-primary">In-Progress</TabsTrigger>
                     <TabsTrigger value="completed" className="text-primary">Completed</TabsTrigger>
-                    <TabsTrigger value="approved" className="text-primary">Approved</TabsTrigger>
+                    <TabsTrigger value="reviewed" className="text-primary">Reviewed</TabsTrigger>
                     <TabsTrigger value="paid" className="text-primary">Paid</TabsTrigger>
                 </TabsList>
                 <TabsContent value="invites" className="">
                     <InviteServiceRequests />
                 </TabsContent>
                 <TabsContent value="applied">
-                    {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-                        {PublishedServiceRequests.map((item) => (
-                            <ServiceRequestCard key={item.id} {...item} />
-                        ))}
-                    </div> */}
+                    {isMyShiftsLoading ? (
+                        <Loader />
+                    ) : (
+                        <AppliedShifts />
+                    )}
                 </TabsContent>
-
-                <TabsContent value="analytics">Change your password here.</TabsContent>
+                <TabsContent value="assigned">
+                    {isMyShiftsLoading ? (
+                        <Loader />
+                    ) : (
+                        <AssignedShifts />
+                    )}
+                </TabsContent>
             </Tabs>
         </div>
     )
