@@ -33,7 +33,7 @@ export default function DraftShifts() {
             ) : (
                 <GridLayout>
                     {draftShifts.map(shift => (
-                        <CardLayout key={shift.id}>
+                        <CardLayout key={shift._id}>
                             <ServiceRequestCard {...shift} />
                         </CardLayout>
                     ))}
