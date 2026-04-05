@@ -7,6 +7,8 @@ import { getStatusColor } from "@/data/constants"
 import Button from "@/components/common/button"
 import Underline from "@/components/common/underline"
 import { Shift } from "@/types/shifts"
+import { useShallow } from "zustand/react/shallow";
+import { useStore } from "@/store/store";
 import { CardDropdown } from "@/components/common/CardDropdown"
 
 
@@ -36,9 +38,12 @@ export function CompletedRequestCard({
     updatedAt,
     status
 }: AssignedRequestCardProps) {
+    const { verifyShift } = useStore(useShallow((state) => ({
+        verifyShift: state.verifyShift,
+    })));
 
-    const CompletedOptions = [
-        { label: "Approve", onClick: () => alert(`Approve shift with ID:`) },
+    const option = [
+        { label: "Approve", onClick: () => verifyShift(_id) },
     ];
 
     return (
@@ -50,7 +55,7 @@ export function CompletedRequestCard({
                     </h3>
 
                     <CardDropdown
-                        options={CompletedOptions}
+                        options={option}
                         id={_id}
                     />
                 </div>

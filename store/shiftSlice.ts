@@ -1,4 +1,4 @@
-import { getAllShifts, getShiftById, approveApplicationAPI } from "@/services/shift";
+import { getAllShifts, getShiftById, approveApplicationAPI, verifyShift } from "@/services/shift";
 import { Shift } from "../types/shifts";
 import { StateCreator } from "zustand";
 import { Store } from "@/types/store";
@@ -11,6 +11,7 @@ type ShiftActions = {
     fetchShift: (id: string) => Promise<void | null>;
     listProviderShifts: () => Promise<void>;
     approveApplication: (applicationId: string) => Promise<void>;
+    verifyShift: (id: string) => Promise<void>;
 }
 
 export type ShiftSlice = {
@@ -25,6 +26,7 @@ export type ShiftSlice = {
         deleting: boolean;
         isfetchingById: boolean;
         isApproving: boolean;
+        isVerifying: boolean;
     }
 } & ShiftActions;
 
@@ -40,6 +42,7 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
         deleting: false,
         isfetchingById: false,
         isApproving: false,
+        isVerifying: false,
     },
 
     createShift: async (shift: Shift) => {
@@ -107,5 +110,23 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
             }))
         }
     },
+
+    verifyShift: async (id: string) => {
+        set((state: ShiftSlice) => ({
+            isLoading: { ...state.isLoading, isVerifying: true }
+        }))
+        try {
+            await verifyShift(id);
+            set((state: ShiftSlice) => ({
+                assignedShifts: state.assignedShifts.map(shift => shift._id === id ? { ...shift, status: "reviewed" } : shift)
+            }));
+        } catch (error) {
+            console.log("Error verifying shift:", error);
+        } finally {
+            set((state: ShiftSlice) => ({
+                isLoading: { ...state.isLoading, isVerifying: false }
+            }))
+        }
+    }
 
 });

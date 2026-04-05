@@ -44,10 +44,11 @@ export function AssignedRequestCard({
                         <DisplayAvatar name={shiftId.title} />
                     </h3>
 
-                    <CardDropdown
-                        options={options}
-                        id={_id}
-                    />
+                    {options && (
+                        <span onClick={e => e.stopPropagation()}>
+                            <CardDropdown options={options} id={_id} />
+                        </span>
+                    )}
                 </div>
 
                 <p className="text-gray-700 line-clamp-1">{shiftId.description}</p>

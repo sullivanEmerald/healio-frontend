@@ -47,3 +47,13 @@ export const approveApplicationAPI = async (applicationId: string) => {
         throw error;
     }
 };
+
+export const verifyShift = async (assignmentId: string) => {
+    try {
+        const response = await axiosInstance.post(`/provider/assignment/${assignmentId}/review`);
+        return response.data;
+    } catch (error: any) {
+        showToaster(error?.response?.data?.message || "An error occurred while verifying the shift. Please try again.");
+        throw error;
+    }
+};

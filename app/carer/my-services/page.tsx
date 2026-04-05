@@ -12,6 +12,7 @@ import { Loader } from "@/components/common/loader"
 import { useShallow } from "zustand/react/shallow"
 import InProgressShifts from "@/components/worker/services/InProgressShifts"
 import CompletedShifts from "@/components/worker/services/CompletedShifts"
+import ReviewedShifts from "@/components/worker/services/ReviewedShits"
 
 
 export const PublishedServiceRequests = [
@@ -93,6 +94,13 @@ export default function MyServices() {
                         <Loader />
                     ) : (
                         <CompletedShifts />
+                    )}
+                </TabsContent>
+                <TabsContent value="reviewed">
+                    {isMyShiftsLoading ? (
+                        <Loader />
+                    ) : (
+                        <ReviewedShifts />
                     )}
                 </TabsContent>
             </Tabs>

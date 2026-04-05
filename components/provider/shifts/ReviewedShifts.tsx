@@ -17,20 +17,13 @@ import { AssignedRequestCard } from "../components/shifts/assignedRequest";
 
 
 
-export default function AssignedShifts({ shiftStatus }: { shiftStatus: string }) {
+export default function ReviewedShifts({ shiftStatus }: { shiftStatus: string }) {
     const { shifts, isLoading, isMenuBarGrid } = useStore(useShallow((state) => ({
         shifts: state.assignedShifts,
         isLoading: state.isLoading.fetching,
         isMenuBarGrid: state.isMenuBarGrid,
     })));
 
-
-    const assignOptions = [
-        { label: "View", href: `/provider/dashboard/shifts/` },
-        { label: "Edit", onClick: () => alert(`Edit shift with ID:`) },
-        { label: "Unassign", onClick: () => alert(`Unassign shift with ID:`) },
-        { label: "Delete", onClick: () => alert(`Delete shift with ID:`) },
-    ];
 
     const assignedShifts = useMemo(() => {
         return shifts.filter(shift => shift.status === shiftStatus);
@@ -119,7 +112,7 @@ export default function AssignedShifts({ shiftStatus }: { shiftStatus: string })
                         <GridLayout>
                             {assignedShifts.map(shift => (
                                 <CardLayout key={shift._id}>
-                                    <AssignedRequestCard {...shift} options={assignOptions} />
+                                    <AssignedRequestCard {...shift} />
                                 </CardLayout>
                             ))}
                         </GridLayout>

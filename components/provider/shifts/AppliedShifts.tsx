@@ -17,12 +17,14 @@ import CarerMiniProfile from "../components/shifts/carerMiniProfile";
 
 
 export const AppliedShifts = () => {
-    const { isfetchingById, shiftApplications, isMenuGrid } = useStore(useShallow((state) => ({
+    const { isfetchingById, shiftApplications, isMenuGrid, approveApplication } = useStore(useShallow((state) => ({
         isfetchingById: state.isLoading.isfetchingById,
         shiftApplications: state.applications,
-        isMenuGrid: state.isMenuBarGrid
+        isMenuGrid: state.isMenuBarGrid,
+        approveApplication: state.approveApplication,
     })));
     const [isShowCarerMiniProfile, setIsShowCarerMiniProfile] = useState<{ show: boolean; carer: CarerMiniProfileType | null, applicationId: string }>({ show: false, carer: null, applicationId: "" });
+    const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
 
 
     const handleRowClick = (row: any) => {
@@ -31,8 +33,8 @@ export const AppliedShifts = () => {
     }
 
     const options = [
-        { label: "Approve", onClick: () => alert(`Approve application with ID:`) },
-        { label: "Reject", onClick: () => alert(`Reject application with ID:`) },
+        { label: "Approve", onClick: () => approveApplication(selectedApplicationId ?? "") },
+        { label: "Reject", onClick: () => alert(`Reject application with ID: ${selectedApplicationId}`) },
     ];
 
     const columns = useMemo(() => [
@@ -61,7 +63,11 @@ export const AppliedShifts = () => {
             cell: ({ row }: any) =>
                 options ? (
                     <span
-                        onClick={e => e.stopPropagation()} // Prevent row click
+                        onClick={e => {
+                            e.stopPropagation();
+                            setSelectedApplicationId(row._id);
+                        }}
+
                     >
                         <CardDropdown options={options} id={row._id} />
                     </span>

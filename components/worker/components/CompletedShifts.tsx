@@ -6,25 +6,12 @@ import DisplayAvatar from "@/components/common/avatar"
 import { getStatusColor } from "@/data/constants"
 import Button from "@/components/common/button"
 import Underline from "@/components/common/underline"
-import { CarerShiftApplication } from "@/types/workers"
-import { CardDropdown } from "@/components/common/CardDropdown"
-import { useStore } from "@/store/store"
-import { useShallow } from "zustand/react/shallow"
+import { showToaster } from "@/lib/utils"
 
 
 export function CompletedShiftRecord({ ShiftRecord }: any) {
     const { shiftId } = ShiftRecord;
 
-    const { markShiftCompleted } = useStore(useShallow((state) => ({
-        markShiftCompleted: state.markShiftCompleted,
-    })));
-
-    // const options = [
-    //     {
-    //         label: "Mark As Completed",
-    //         onClick: () => markShiftCompleted(ShiftRecord._id),
-    //     },
-    // ];
     return (
         <Card className="shadow-none bg-transparent border-none p-0 cursor-pointer">
             <CardContent className="space-y-6 shadow-none bg-transparent p-0">
@@ -76,6 +63,7 @@ export function CompletedShiftRecord({ ShiftRecord }: any) {
                     <span className="font-normal text-sm text-gray-500">Date Applied</span>
                     <span className="font-normal text-sm text-gray-800">{moment(ShiftRecord.createdAt).format("MMMM Do YYYY, h:mm:ss a")}</span>
                 </div>
+                <Button className="w-full" onClick={() => showToaster("Payout Requested Coming Soon.. Chill")}>Request Payout</Button>
             </CardContent>
         </Card>
     )

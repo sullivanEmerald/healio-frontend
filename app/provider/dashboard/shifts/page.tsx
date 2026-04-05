@@ -14,6 +14,7 @@ import PublishedShifts from "@/components/provider/shifts/PublishedShifts";
 import DraftShifts from "@/components/provider/shifts/DraftShifts";
 import AssignedShifts from "@/components/provider/shifts/AssignedShift";
 import CompletedShifts from "@/components/provider/shifts/CompletedShifts";
+import ReviewedShifts from "@/components/provider/shifts/ReviewedShifts";
 
 
 export default function MyServices() {
@@ -59,6 +60,9 @@ export default function MyServices() {
                 </TabsContent>
                 <TabsContent value="completed">
                     <CompletedShifts shiftStatus="completed" />
+                </TabsContent>
+                <TabsContent value="approved">
+                    <ReviewedShifts shiftStatus="reviewed" />
                 </TabsContent>
             </Tabs>
         </div>

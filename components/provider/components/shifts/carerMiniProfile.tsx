@@ -30,7 +30,11 @@ export default function CarerMiniProfile({ show, onHide, header, carer, applicat
                     >
                         Close
                     </Button>
-                    <Button className="w-1/2" disabled={isApproving} onClick={() => approveApplication(applicationId)}  >
+                    <Button className="w-1/2" disabled={isApproving} onClick={async () => {
+                        if (isApproving) return;
+                        await approveApplication(applicationId);
+                        onHide();
+                    }}  >
                         {isApproving ? <LineLoader /> : "Approve"}
                     </Button>
                 </div>
