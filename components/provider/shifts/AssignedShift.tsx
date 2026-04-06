@@ -14,6 +14,8 @@ import { getStatusColor } from "@/data/constants";
 import { CardDropdown } from "@/components/common/CardDropdown";
 import WorkerProfile from "../workerProfile";
 import { AssignedRequestCard } from "../components/shifts/assignedRequest";
+import { useShiftStatus } from "@/hooks/shiftStatus";
+
 
 
 
@@ -24,6 +26,7 @@ export default function AssignedShifts({ shiftStatus }: { shiftStatus: string })
         isMenuBarGrid: state.isMenuBarGrid,
     })));
 
+    const { assignedShifts } = useShiftStatus();
 
     const assignOptions = [
         { label: "View", href: `/provider/dashboard/shifts/` },
@@ -32,9 +35,6 @@ export default function AssignedShifts({ shiftStatus }: { shiftStatus: string })
         { label: "Delete", onClick: () => alert(`Delete shift with ID:`) },
     ];
 
-    const assignedShifts = useMemo(() => {
-        return shifts.filter(shift => shift.status === shiftStatus);
-    }, [shifts]);
 
 
     const columns = useMemo(() => [

@@ -7,6 +7,7 @@ import DisplayAvatar from "../common/avatar"
 import { getStatusColor } from "@/data/constants"
 import Button from "../common/button"
 import Underline from "../common/underline"
+import { useRouter } from "next/navigation";
 
 
 interface ServiceRequestCardProps {
@@ -40,6 +41,7 @@ export function ServiceRequestCard({
     assignedCarerId,
     _id
 }: ServiceRequestCardProps) {
+    const router = useRouter();
     return (
         <Card className="shadow-none bg-transparent border-none p-0 cursor-pointer">
             <CardContent className="space-y-6 shadow-none bg-transparent p-0">
@@ -87,7 +89,7 @@ export function ServiceRequestCard({
                     <span className="font-medium text-gray-800 ml-2">Assigned To:</span>
                     <span className="font-medium text-gray-800 ml-2">{assignedCarerId?.firstName} {assignedCarerId?.lastName}</span>
                 </div>
-                <Button className="w-full" onClick={() => console.log("View details for service request with ID:")}>
+                <Button className="w-full" onClick={() => router.push(`/provider/dashboard/shifts/${_id}`)}>
                     View
                 </Button>
             </CardContent>

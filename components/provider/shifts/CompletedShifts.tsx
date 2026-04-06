@@ -12,6 +12,7 @@ import moment from "moment";
 import { formatPrice } from "@/utility/util";
 import { getStatusColor } from "@/data/constants";
 import { CompletedRequestCard } from "../components/shifts/completedShifts";
+import { useShiftStatus } from "@/hooks/shiftStatus";
 
 
 export default function CompletedShifts({ shiftStatus }: { shiftStatus: string }) {
@@ -21,10 +22,8 @@ export default function CompletedShifts({ shiftStatus }: { shiftStatus: string }
         isMenuBarGrid: state.isMenuBarGrid,
     })));
 
+    const { completedShifts } = useShiftStatus();
 
-    const assignedShifts = useMemo(() => {
-        return shifts.filter(shift => shift.status === shiftStatus);
-    }, [shifts]);
 
 
     const columns = useMemo(() => [
@@ -96,10 +95,10 @@ export default function CompletedShifts({ shiftStatus }: { shiftStatus: string }
             <ProviderHeader title="Assigned Shifts" />
             {isLoading ? (
                 <Loader />
-            ) : assignedShifts.length === 0 ? (
+            ) : completedShifts.length === 0 ? (
                 <NotFoundComponent
-                    title="No Assigned Shifts Found"
-                    subTitle="It seems you don't have any assigned shifts at the moment."
+                    title="No Completed Shifts Found"
+                    subTitle="It seems you don't have any completed shifts at the moment."
                     buttonText="Create Shift"
                     onButtonClick={() => console.log("Create Shift")}
                 />
@@ -107,7 +106,7 @@ export default function CompletedShifts({ shiftStatus }: { shiftStatus: string }
                 <>
                     {isMenuBarGrid === "grid" ? (
                         <GridLayout>
-                            {assignedShifts.map(shift => (
+                            {completedShifts.map(shift => (
                                 <CardLayout key={shift._id}>
                                     <CompletedRequestCard {...shift} />
                                 </CardLayout>
@@ -115,7 +114,7 @@ export default function CompletedShifts({ shiftStatus }: { shiftStatus: string }
                         </GridLayout>
                     ) : (
                         <CustomTable
-                            data={assignedShifts}
+                            data={completedShifts}
                             columns={columns}
                             currentPage={1}
                             totalPages={5}

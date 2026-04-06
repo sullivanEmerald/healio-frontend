@@ -18,13 +18,22 @@ import { useShiftStatus } from "@/hooks/shiftStatus";
 
 
 
-export default function ReviewedShifts({ shiftStatus }: { shiftStatus: string }) {
+
+export default function InProgressShifts({ shiftStatus }: { shiftStatus: string }) {
     const { shifts, isLoading, isMenuBarGrid } = useStore(useShallow((state) => ({
         shifts: state.assignedShifts,
         isLoading: state.isLoading.fetching,
         isMenuBarGrid: state.isMenuBarGrid,
     })));
-    const { reviewedShifts } = useShiftStatus();
+
+    const { inProgressShifts } = useShiftStatus();
+
+    const assignOptions = [
+        { label: "View", href: `/provider/dashboard/shifts/` },
+        { label: "Edit", onClick: () => alert(`Edit shift with ID:`) },
+        { label: "Unassign", onClick: () => alert(`Unassign shift with ID:`) },
+        { label: "Delete", onClick: () => alert(`Delete shift with ID:`) },
+    ];
 
 
 
@@ -97,7 +106,7 @@ export default function ReviewedShifts({ shiftStatus }: { shiftStatus: string })
             <ProviderHeader title="Assigned Shifts" />
             {isLoading ? (
                 <Loader />
-            ) : reviewedShifts.length === 0 ? (
+            ) : inProgressShifts.length === 0 ? (
                 <NotFoundComponent
                     title={`No ${shiftStatus} Shifts Found`}
                     subTitle={`It seems you don't have any ${shiftStatus} shifts at the moment.`}
@@ -108,15 +117,15 @@ export default function ReviewedShifts({ shiftStatus }: { shiftStatus: string })
                 <>
                     {isMenuBarGrid === "grid" ? (
                         <GridLayout>
-                            {reviewedShifts.map(shift => (
+                            {inProgressShifts.map(shift => (
                                 <CardLayout key={shift._id}>
-                                    <AssignedRequestCard {...shift} />
+                                    <AssignedRequestCard {...shift} options={assignOptions} />
                                 </CardLayout>
                             ))}
                         </GridLayout>
                     ) : (
                         <CustomTable
-                            data={reviewedShifts}
+                            data={inProgressShifts}
                             columns={columns}
                             currentPage={1}
                             totalPages={5}

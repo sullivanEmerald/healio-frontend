@@ -12,14 +12,16 @@ import moment from "moment";
 import { formatPrice } from "@/utility/util";
 import { getStatusColor } from "@/data/constants";
 import { CardDropdown } from "@/components/common/CardDropdown";
-import WorkerProfile from "../workerProfile";
+import { useShiftStatus } from "@/hooks/shiftStatus";
 
-export default function PublishedShifts() {
+export default function PublishedShifts({ shiftStatus }: { shiftStatus: string }) {
     const { shifts, isLoading, isMenuBarGrid } = useStore(useShallow((state) => ({
         shifts: state.shifts,
         isLoading: state.isLoading.fetching,
         isMenuBarGrid: state.isMenuBarGrid,
     })));
+
+    const { publishedShifts } = useShiftStatus();
 
     const publishOptions = [
         { label: "View", href: `/provider/dashboard/shifts/` },
@@ -27,11 +29,6 @@ export default function PublishedShifts() {
         { label: "Unpublish", onClick: () => alert(`Unpublish shift with ID:`) },
         { label: "Delete", onClick: () => alert(`Delete shift with ID:`) },
     ];
-
-    const publishedShifts = useMemo(() => {
-        return shifts.filter(shift => shift.status === "published");
-    }, [shifts]);
-
 
     const columns = useMemo(() => [
         {
