@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Overview from "@/components/provider/overview";
 import Underline from "@/components/common/underline";
 import Button from "@/components/common/button";
@@ -15,14 +15,26 @@ import { showToaster } from "@/lib/utils";
 import { CreateShift } from "@/services/shift";
 import LineLoader from "@/components/common/lineLoader";
 import { State } from "country-state-city";
+import { useSearchParams } from "next/navigation";
+import { useStore } from "@/store/store";
+import { useShallow } from "zustand/react/shallow";
 
 const ukStates = State.getStatesOfCountry("GB");
 
 const steps = ["Shift Details", "Requirements", "Pricing"];
 
 export default function NewShift() {
+    const { isLoading, shift, fetchShift } = useStore(useShallow((state) => ({
+        isLoading: state.isLoading.fetching,
+        shift: state.shift,
+        fetchShift: state.fetchShift,
+    })));
     const [step, setStep] = useState(0);
+    const searchParams = useSearchParams();
+    const mode = searchParams.get("mode");
+    const id = searchParams.get("id");
     const [isPublishing, setIsPublishing] = useState(false);
+    console.log('Shift data for editing:', shift);
     const [form, setForm] = useState({
         // Step 1: Shift Details
         title: "",
@@ -181,6 +193,38 @@ export default function NewShift() {
             setIsPublishing(false);
         }
     }
+    useEffect(() => {
+        if (mode === "edit" && id) {
+            const getShift = async () => {
+                await fetchShift(id);
+                if (shift) {
+                    setForm({
+                        title: shift?.title,
+                        description: shift?.description,
+                        state: shift?.state || "",
+                        startDate: shift?.startDate ? new Date(shift.startDate) : undefined,
+                        endDate: shift?.endDate ? new Date(shift.endDate) : undefined,
+                        startTime: shift?.startTime || "",
+                        endTime: shift?.endTime || "",
+                        shiftType: shift?.shiftType || "",
+                        numberOfCarers: shift?.numberOfCarers || 0,
+                        skills: shift?.skills || "",
+                        experience: shift?.experience || "",
+                        genderPreference: shift?.genderPreference || "",
+                        language: shift?.language || "",
+                        amount: shift?.amount.toString() || "0",
+                        expenses: shift?.expenses.toString() || "0",
+                        paymentFrequency: shift?.paymentFrequency || "",
+                        isReoccurring: shift?.isReoccurring || false,
+                        enhancedDBS: shift?.enhancedDBS || false,
+                        rightToWork: shift?.rightToWork || false,
+                    });
+
+                };
+            }
+            getShift();
+        }
+    }, [mode, id]);
 
     return (
         <div>
@@ -213,10 +257,10 @@ export default function NewShift() {
                             <Input
                                 id="title"
                                 name="title"
+                                value={form?.title}
                                 type="text"
                                 onChange={handleChange}
                                 required
-                                className="border-2 border-primary focus:border-primary focus:ring-primary rounded-lg px-4 py-6 text-primary placeholder:text-primary/60 bg-transparent"
                                 placeholder="Enter your title"
                             />
                             {errors.title && <span className="text-xs text-red-500 mt-1 block">{errors.title}</span>}
@@ -251,7 +295,7 @@ export default function NewShift() {
                         <div>
                             <Label className="block text-sm font-medium text-primary mb-1">Start Date</Label>
                             <DatePicker
-                                date={form.startDate}
+                                date={form.startDate || undefined}
                                 onChange={(date: any) => date && setForm({ ...form, startDate: date })}
                             />
                             {errors.startDate && <span className="text-xs text-red-500 mt-1 block">{errors.startDate}</span>}
@@ -259,7 +303,7 @@ export default function NewShift() {
                         <div>
                             <Label className="block text-sm font-medium text-primary mb-1">End Date</Label>
                             <DatePicker
-                                date={form.endDate}
+                                date={form.endDate || undefined}
                                 onChange={(date: any) => date && setForm({ ...form, endDate: date })}
                             />
                             {errors.endDate && <span className="text-xs text-red-500 mt-1 block">{errors.endDate}</span>}
@@ -477,9 +521,9 @@ export default function NewShift() {
                         <Button
                             type="submit"
                             className="w-full md:w-auto"
-                            disabled={isPublishing}
+                            disabled={isPublishing || isLoading}
                         >
-                            {isPublishing ? <div className="flex items-center justify-center gap-3"><LineLoader /> <span>Publishing...</span></div> : "Publish Shift"}
+                            {isPublishing ? <div className="flex items-center justify-center gap-3"><LineLoader /> <span>{mode === 'edit' ? "Updating..." : "Publishing..."}</span></div> : <span>{mode === 'edit' ? "Update Shift" : "Publish Shift"}</span>}
                         </Button>
                     )}
                 </div>

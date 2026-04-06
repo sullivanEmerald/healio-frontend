@@ -15,8 +15,7 @@ import { CardDropdown } from "@/components/common/CardDropdown";
 import { useShiftStatus } from "@/hooks/shiftStatus";
 
 export default function PublishedShifts({ shiftStatus }: { shiftStatus: string }) {
-    const { shifts, isLoading, isMenuBarGrid } = useStore(useShallow((state) => ({
-        shifts: state.shifts,
+    const { isLoading, isMenuBarGrid } = useStore(useShallow((state) => ({
         isLoading: state.isLoading.fetching,
         isMenuBarGrid: state.isMenuBarGrid,
     })));
@@ -25,7 +24,7 @@ export default function PublishedShifts({ shiftStatus }: { shiftStatus: string }
 
     const publishOptions = [
         { label: "View", href: `/provider/dashboard/shifts/` },
-        { label: "Edit", onClick: () => alert(`Edit shift with ID:`) },
+        { label: "Edit", href: '/provider/dashboard/shifts/new?mode=edit' },
         { label: "Unpublish", onClick: () => alert(`Unpublish shift with ID:`) },
         { label: "Delete", onClick: () => alert(`Delete shift with ID:`) },
     ];

@@ -19,6 +19,7 @@ interface ServiceRequestCardProps {
     budget?: number,
     amount?: string,
     shiftType: string,
+    updatedAt?: string,
     _id: string;
     options?: Array<{ label: string; onClick?: () => void; href?: string }>;
     assignedCarerId?: {
@@ -39,7 +40,8 @@ export function ServiceRequestCard({
     description,
     options,
     assignedCarerId,
-    _id
+    _id,
+    updatedAt
 }: ServiceRequestCardProps) {
     const router = useRouter();
     return (
@@ -86,9 +88,10 @@ export function ServiceRequestCard({
                 </div>
                 <Underline />
                 <div>
-                    <span className="font-medium text-gray-800 ml-2">Assigned To:</span>
-                    <span className="font-medium text-gray-800 ml-2">{assignedCarerId?.firstName} {assignedCarerId?.lastName}</span>
+                    <span className="font-medium text-gray-800 ml-2">Published:</span>
+                    <span className="font-medium text-red-800 ml-2">{moment(updatedAt).format("MMMM Do YYYY")}</span>
                 </div>
+                <Underline />
                 <Button className="w-full" onClick={() => router.push(`/provider/dashboard/shifts/${_id}`)}>
                     View
                 </Button>

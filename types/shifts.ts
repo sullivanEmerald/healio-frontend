@@ -6,6 +6,7 @@ export type Shift = {
   title: string;
   postcode: string;
   startDate: string;
+  state?: string;
   endDate: string;
   startTime: string;
   endTime: string;
@@ -21,6 +22,7 @@ export type Shift = {
   amount: string;
   expenses: string;
   paymentFrequency: string;
+  isReoccurring?: boolean;
   status: ShiftStatus;
   _id: string;
 };
