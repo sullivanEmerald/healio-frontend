@@ -1,4 +1,4 @@
-import { getAllShifts, getShiftById, approveApplicationAPI, verifyShift, updateShift } from "@/services/shift";
+import { getAllShifts, getShiftById, approveApplicationAPI, verifyShift, updateShift, saveDraftRequest } from "@/services/shift";
 import { Shift } from "../types/shifts";
 import { StateCreator } from "zustand";
 import { Store } from "@/types/store";
@@ -13,6 +13,7 @@ type ShiftActions = {
     approveApplication: (applicationId: string) => Promise<void>;
     verifyShift: (id: string) => Promise<void>;
     editShift: (shift: any, id: string) => Promise<void>;
+    saveDraft: (shift: any) => Promise<void>;
 }
 
 export type ShiftSlice = {
@@ -149,5 +150,23 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
                 isLoading: { ...state.isLoading, isUpdatingShift: false }
             }))
         }
+    },
+
+    saveDraft: async (shift: any) => {
+        set((state: ShiftSlice) => ({
+            isLoading: { ...state.isLoading, isSavingDraft: true }
+        }))
+        try {
+            await saveDraftRequest(shift);
+            showToaster("Draft saved successfully!");
+        } catch (error) {
+            console.log("Error saving draft:", error);
+        } finally {
+            set((state: ShiftSlice) => ({
+                isLoading: { ...state.isLoading, isSavingDraft: false }
+            }))
+        }
     }
+
+
 });

@@ -524,34 +524,46 @@ export default function NewShift() {
                         <Button
                             type="button"
                             onClick={() => setStep(step - 1)}
-                            className="w-full md:w-auto"
+                            className="w-full md:w-auto order-1 md:order-none"
                         >
                             <ChevronLeft size={20} className="" /> Back
                         </Button>
                     )}
-                    {step < steps.length - 1 ? (
+                    <div className="flex w-full md:w-auto gap-2 justify-end ml-auto">
                         <Button
                             type="button"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                if (validateStep(step)) {
-                                    setStep(step + 1);
-                                }
-                            }}
-                            className="w-full md:w-auto"
+                            variant="outline"
+                            onClick={() => showToaster('Draft saved!')}
+                            className="w-full md:w-auto bg-secondary text-white hover:bg-secondary/70"
                         >
-                            Next <ChevronRight size={20} className="" />
+                            Save to Draft
                         </Button>
-                    ) : (
-                        <Button
-                            type="submit"
-                            className="w-full md:w-auto"
-                            disabled={isPublishing || isLoading}
-                        >
-                            {isPublishing ? <div className="flex items-center justify-center gap-3"><LineLoader /> <span>{mode === 'edit' ? "Updating..." : "Publishing..."}</span></div> : <span>{mode === 'edit' ? "Update Shift" : "Publish Shift"}</span>}
-                        </Button>
-                    )}
+                        {step < steps.length - 1 ? (
+                            <>
+                                <Button
+                                    type="button"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        if (validateStep(step)) {
+                                            setStep(step + 1);
+                                        }
+                                    }}
+                                    className="w-full md:w-auto"
+                                >
+                                    Next <ChevronRight size={20} className="" />
+                                </Button>
+                            </>
+                        ) : (
+                            <Button
+                                type="submit"
+                                className="w-full md:w-auto"
+                                disabled={isPublishing || isLoading}
+                            >
+                                {isPublishing ? <div className="flex items-center justify-center gap-3"><LineLoader /> <span>{mode === 'edit' ? "Updating..." : "Publishing..."}</span></div> : <span>{mode === 'edit' ? "Update Shift" : "Publish Shift"}</span>}
+                            </Button>
+                        )}
+                    </div>
                 </div>
             </form>
         </div>
