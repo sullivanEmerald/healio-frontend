@@ -227,6 +227,28 @@ export default function NewShift() {
                 };
             }
             getShift();
+        } else {
+            setForm({
+                title: "",
+                description: "",
+                state: "",
+                startDate: undefined,
+                endDate: undefined,
+                startTime: "",
+                endTime: "",
+                shiftType: "",
+                numberOfCarers: 0,
+                skills: "",
+                experience: "",
+                genderPreference: "",
+                language: "",
+                amount: "0",
+                expenses: "0",
+                paymentFrequency: "",
+                isReoccurring: false,
+                enhancedDBS: false,
+                rightToWork: false,
+            });
         }
     }, [mode, id]);
 
