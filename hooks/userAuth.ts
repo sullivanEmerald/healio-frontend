@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { User } from '@/types/users';
 import { getUserProfile } from '@/services/user';
+import { useRouter } from 'next/navigation';
 
 export function useAuth() {
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-
+    const router = useRouter();
 
     useEffect(() => {
         const getUserProfileData = async () => {
@@ -38,5 +39,16 @@ export function useAuth() {
         getUserProfileData();
     }, []);
 
-    return { user, isLoading, setIsLoading };
+
+    const logout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('id');
+        localStorage.removeItem('email');
+        localStorage.removeItem('role');
+        // Keep 'fullName' in localStorage
+        setUser(null);
+        router.replace('/auth/login');
+    }
+
+    return { user, isLoading, setIsLoading, logout };
 }

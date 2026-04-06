@@ -18,6 +18,7 @@ export default function LoginPage() {
         password: "",
     });
     const User = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
+    const FullName = typeof window !== 'undefined' ? localStorage.getItem('fullName') : null;
 
     const [errors, setErrors] = useState({
         email: "",
@@ -98,7 +99,7 @@ export default function LoginPage() {
 
     return (
         <>
-            <h2 className="text-3xl font-bold text-center text-primary mb-2">Welcome Back Sullivan</h2>
+            <h2 className="text-2xl font-bold text-primary mb-2">Welcome Back {FullName ? `${FullName}` : ' to Healio'}</h2>
             <p className="text-center text-primary mb-6">Please enter your credentials to continue</p>
             <form className="space-y-6" onSubmit={handleSubmit}>
                 <div>

@@ -22,6 +22,7 @@ import { getFirstName } from "@/utility/util";
 
 
 
+
 type MenuItem = {
     label: string;
     icon: React.ComponentType<{ size?: number; className?: string }>;
@@ -59,7 +60,7 @@ const menuItems: MenuItem[] = [
 
 
 export default function ProviderHeader() {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
     const walletBalance = 1200.5;
 
     const handleAddFunds = () => {
@@ -111,7 +112,7 @@ export default function ProviderHeader() {
                                             <hr className="border-gray-200 mx-4" />
                                         </>
                                     ) : (
-                                        <button className="flex items-center gap-3 py-3 w-full cursor-pointer hover:bg-gray-100 transition border-none outline-none bg-transparent focus:outline-none focus:ring-2 focus:ring-primary" onClick={() => alert('Logout clicked!')}>
+                                        <button className="flex items-center gap-3 py-3 w-full cursor-pointer hover:bg-gray-100 transition border-none outline-none bg-transparent focus:outline-none focus:ring-2 focus:ring-primary" onClick={logout}>
                                             <Icon size={18} className="text-primary" />
                                             <span className="text-sm font-medium text-gray-700">
                                                 {label}
