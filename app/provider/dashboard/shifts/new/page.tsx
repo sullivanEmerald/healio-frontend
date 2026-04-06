@@ -24,11 +24,12 @@ const ukStates = State.getStatesOfCountry("GB");
 const steps = ["Shift Details", "Requirements", "Pricing"];
 
 export default function NewShift() {
-    const { isLoading, shift, fetchShift, editShift } = useStore(useShallow((state) => ({
+    const { isLoading, shift, fetchShift, editShift, saveDraft } = useStore(useShallow((state) => ({
         isLoading: state.isLoading.fetching,
         shift: state.shift,
         fetchShift: state.fetchShift,
         editShift: state.editShift,
+        saveDraft: state.saveDraft,
     })));
     const [step, setStep] = useState(0);
     const searchParams = useSearchParams();
@@ -530,14 +531,16 @@ export default function NewShift() {
                         </Button>
                     )}
                     <div className="flex w-full md:w-auto gap-2 justify-end ml-auto">
-                        <Button
-                            type="button"
-                            variant="outline"
-                            onClick={() => showToaster('Draft saved!')}
-                            className="w-full md:w-auto bg-secondary text-white hover:bg-secondary/70"
-                        >
-                            Save to Draft
-                        </Button>
+                        {mode !== "edit" && (
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => showToaster('Draft saved!')}
+                                className="w-full md:w-auto bg-secondary text-white hover:bg-secondary/70"
+                            >
+                                Save to Draft
+                            </Button>
+                        )}
                         {step < steps.length - 1 ? (
                             <>
                                 <Button
