@@ -24,17 +24,17 @@ const ukStates = State.getStatesOfCountry("GB");
 const steps = ["Shift Details", "Requirements", "Pricing"];
 
 export default function NewShift() {
-    const { isLoading, shift, fetchShift } = useStore(useShallow((state) => ({
+    const { isLoading, shift, fetchShift, editShift } = useStore(useShallow((state) => ({
         isLoading: state.isLoading.fetching,
         shift: state.shift,
         fetchShift: state.fetchShift,
+        editShift: state.editShift,
     })));
     const [step, setStep] = useState(0);
     const searchParams = useSearchParams();
     const mode = searchParams.get("mode");
     const id = searchParams.get("id");
     const [isPublishing, setIsPublishing] = useState(false);
-    console.log('Shift data for editing:', shift);
     const [form, setForm] = useState({
         // Step 1: Shift Details
         title: "",
@@ -62,7 +62,6 @@ export default function NewShift() {
     const [errors, setErrors] = useState({
         title: "",
         description: "",
-        postcode: "",
         startDate: "",
         endDate: "",
         startTime: "",
@@ -76,11 +75,12 @@ export default function NewShift() {
         amount: "",
         expenses: "",
         paymentFrequency: "",
+        state: ""
     });
 
     // Step fields for validation
     const stepFields = [
-        ["title", "description", "postcode", "startDate", "endDate", "startTime", "endTime", "shiftType", "numberOfCarers"], // Step 0
+        ["title", "description", "state", "startDate", "endDate", "startTime", "endTime", "shiftType", "numberOfCarers"], // Step 0
         ["skills", "experience", "language"], // Step 1
         ["hourlyRate", "paymentFrequency"], // Step 2
     ];
@@ -143,7 +143,7 @@ export default function NewShift() {
         const newErrors: typeof errors = {
             title: validateField('title', form.title),
             description: validateField('description', form.description),
-            postcode: validateField('postcode', form.state),
+            state: validateField('state', form.state),
             startDate: validateField('startDate', form.startDate),
             endDate: validateField('endDate', form.endDate),
             startTime: validateField('startTime', form.startTime),
@@ -184,9 +184,13 @@ export default function NewShift() {
         }
         setIsPublishing(true);
         try {
-            const response = await CreateShift(form)
-            console.log("Created shift:", response);
-            showToaster("Shift created successfully!");
+            if (mode === "edit" && id) {
+                await editShift(form, id);
+                showToaster("Shift updated successfully!");
+            } else {
+                await CreateShift(form);
+                showToaster("Shift created successfully!");
+            }
         } catch (error) {
             console.log(error)
         } finally {
@@ -493,7 +497,7 @@ export default function NewShift() {
                         </div>
                     </>
                 )}
-                <div className="flex flex-col md:flex-row items-center justify-between">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-2 ">
                     {step > 0 && (
                         <Button
                             type="button"

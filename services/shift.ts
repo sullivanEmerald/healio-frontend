@@ -59,9 +59,9 @@ export const verifyShift = async (assignmentId: string) => {
 };
 
 
-export const updateShift = async (shift: Shift) => {
+export const updateShift = async (shift: Partial<Shift>, id: string) => {
     try {
-        const response = await axiosInstance.put(`/provider/shifts/${shift._id}`, shift);
+        const response = await axiosInstance.put(`/provider/shifts/${id}`, shift);
         return response.data;
     } catch (error: any) {
         showToaster(error?.response?.data?.message || "An error occurred while updating the shift. Please try again.");

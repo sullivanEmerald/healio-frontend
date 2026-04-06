@@ -12,7 +12,7 @@ type ShiftActions = {
     listProviderShifts: () => Promise<void>;
     approveApplication: (applicationId: string) => Promise<void>;
     verifyShift: (id: string) => Promise<void>;
-    editShift: (shift: Shift) => Promise<void>;
+    editShift: (shift: any, id: string) => Promise<void>;
 }
 
 export type ShiftSlice = {
@@ -132,12 +132,12 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
         }
     },
 
-    editShift: async (shift: Shift) => {
+    editShift: async (shift: any, id: string) => {
         set((state: ShiftSlice) => ({
             isLoading: { ...state.isLoading, isUpdatingShift: true }
         }))
         try {
-            const result = await updateShift(shift);
+            const result = await updateShift(shift, id);
             console.log("Shift updated:", result);
             set((state: ShiftSlice) => ({
                 shifts: state.shifts.map(s => s._id === shift._id ? { ...s, ...shift } : s)
