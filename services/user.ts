@@ -11,3 +11,14 @@ export const getUserProfile = async () => {
         throw error;
     }
 };
+
+
+export const updateProviderDetails = async (details: any) => {
+    try {
+        const response = await axiosInstance.put("/provider/profile", details);
+        return response.data;
+    } catch (error: any) {
+        showToaster(error?.response?.data?.message || "An error occurred while updating profile. Please try again.");
+        throw error;
+    }
+};

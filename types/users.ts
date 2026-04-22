@@ -15,3 +15,10 @@ export type User = {
     role: string;
     isVerified: boolean;
 };
+
+export type Provider = {
+    firstName: string;
+    lastName: string;
+    businessEmail: string;
+    phoneNumber: string;
+}

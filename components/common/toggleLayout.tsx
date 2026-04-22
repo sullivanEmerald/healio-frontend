@@ -1,3 +1,4 @@
+"use client";
 import { LayoutGrid, List } from "lucide-react";
 import { useStore } from "@/store/store";
 import { useShallow } from "zustand/react/shallow";

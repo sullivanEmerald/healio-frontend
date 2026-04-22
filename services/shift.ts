@@ -100,4 +100,15 @@ export const getDashboardOverview = async () => {
         showToaster(error?.response?.data?.message || "An error occurred");
         throw error;
     }
-};      
+};
+
+export const getProviderDetails = async () => {
+    try {
+        const response = await axiosInstance.get("/provider/profile");
+        return response.data;
+    } catch (error: any) {
+        showToaster(error?.response?.data?.message || "An error occurred");
+        throw error;
+    }
+};
+
