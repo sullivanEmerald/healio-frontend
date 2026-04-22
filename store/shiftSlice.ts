@@ -1,4 +1,4 @@
-import { getAllShifts, getShiftById, approveApplicationAPI, verifyShift, updateShift, saveDraftRequest } from "@/services/shift";
+import { getAllShifts, getShiftById, approveApplicationAPI, verifyShift, updateShift, saveDraftRequest, getDraftRequest } from "@/services/shift";
 import { Shift } from "../types/shifts";
 import { StateCreator } from "zustand";
 import { Store } from "@/types/store";
@@ -13,14 +13,16 @@ type ShiftActions = {
     approveApplication: (applicationId: string) => Promise<void>;
     verifyShift: (id: string) => Promise<void>;
     editShift: (shift: any, id: string) => Promise<void>;
-    saveDraft: (shift: any) => Promise<void>;
+    saveDraft: (shift: any, id?: string) => Promise<void>;
+    getSaveDraft: (id: string) => Promise<void>;
 }
 
 export type ShiftSlice = {
     shifts: Shift[];
     shift: Shift | null;
     applications: any[];
-    assignedShifts: any[]; // You can replace 'any' with a specific type if you have one for assigned shifts
+    assignedShifts: any[];
+    savedDraft: Partial<Shift> | null;
     isLoading: {
         fetching: boolean;
         creating: boolean;
@@ -30,6 +32,8 @@ export type ShiftSlice = {
         isApproving: boolean;
         isVerifying: boolean;
         isUpdatingShift: boolean;
+        isSavingDraft: boolean;
+        isFetchingDraft: boolean;
     }
 } & ShiftActions;
 
@@ -38,6 +42,7 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
     shift: null,
     applications: [],
     assignedShifts: [],
+    savedDraft: null,
     isLoading: {
         fetching: false,
         creating: false,
@@ -47,6 +52,8 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
         isApproving: false,
         isVerifying: false,
         isUpdatingShift: false,
+        isSavingDraft: false,
+        isFetchingDraft: false,
     },
 
     createShift: async (shift: Shift) => {
@@ -152,13 +159,12 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
         }
     },
 
-    saveDraft: async (shift: any) => {
+    saveDraft: async (shift: any, id?: string | undefined) => {
         set((state: ShiftSlice) => ({
             isLoading: { ...state.isLoading, isSavingDraft: true }
         }))
         try {
-            await saveDraftRequest(shift);
-            showToaster("Draft saved successfully!");
+            await saveDraftRequest(shift, id);
         } catch (error) {
             console.log("Error saving draft:", error);
         } finally {
@@ -166,7 +172,22 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
                 isLoading: { ...state.isLoading, isSavingDraft: false }
             }))
         }
-    }
+    },
 
+    getSaveDraft: async (id: string) => {
+        set((state: ShiftSlice) => ({
+            isLoading: { ...state.isLoading, isFetchingDraft: true }
+        }))
+        try {
+            const result = await getDraftRequest(id);
+            set({ savedDraft: result });
+        } catch (error) {
+            console.log("Error fetching draft:", error);
+        } finally {
+            set((state: ShiftSlice) => ({
+                isLoading: { ...state.isLoading, isFetchingDraft: false }
+            }))
+        }
+    },
 
 });

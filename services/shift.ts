@@ -70,12 +70,23 @@ export const updateShift = async (shift: Partial<Shift>, id: string) => {
 };
 
 
-export const saveDraftRequest = async (shift: Partial<Shift>) => {
+export const saveDraftRequest = async (shift: Partial<Shift>, id?: string | undefined) => {
     try {
-        const response = await axiosInstance.post("/provider/shift/draft", shift);
+        const response = await axiosInstance.post(`/provider/shift/draft/${id}`, shift);
+        console.log('Save draft response:', response.data);
         return response.data;
     } catch (error: any) {
         showToaster(error?.response?.data?.message || "An error occurred while saving the draft. Please try again.");
+        throw error;
+    }
+};
+
+export const getDraftRequest = async (id: string) => {
+    try {
+        const response = await axiosInstance.get(`/provider/shift/draft/${id}`);
+        return response.data;
+    } catch (error: any) {
+        showToaster(error?.response?.data?.message || "An error occurred");
         throw error;
     }
 };

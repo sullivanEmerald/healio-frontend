@@ -92,7 +92,7 @@ export default function CompletedShifts({ shiftStatus }: { shiftStatus: string }
 
     return (
         <div>
-            <ProviderHeader title="Assigned Shifts" />
+            <ProviderHeader title="Completed Shifts" />
             {isLoading ? (
                 <Loader />
             ) : completedShifts.length === 0 ? (

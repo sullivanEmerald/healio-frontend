@@ -94,7 +94,7 @@ export default function ReviewedShifts({ shiftStatus }: { shiftStatus: string })
 
     return (
         <div>
-            <ProviderHeader title="Assigned Shifts" />
+            <ProviderHeader title="Approved Shifts" />
             {isLoading ? (
                 <Loader />
             ) : reviewedShifts.length === 0 ? (

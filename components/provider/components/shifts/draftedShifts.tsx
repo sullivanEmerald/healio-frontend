@@ -2,15 +2,15 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import moment from "moment"
 import { formatPrice } from "@/utility/util"
-import { CardDropdown } from "../common/CardDropdown"
-import DisplayAvatar from "../common/avatar"
+import { CardDropdown } from "@/components/common/CardDropdown"
+import DisplayAvatar from "@/components/common/avatar"
 import { getStatusColor } from "@/data/constants"
-import Button from "../common/button"
-import Underline from "../common/underline"
+import Button from "@/components/common/button"
+import Underline from "@/components/common/underline"
 import { useRouter } from "next/navigation";
 
 
-interface ServiceRequestCardProps {
+interface DraftedShiftsCardProps {
     title: string,
     description?: string,
     status: string,
@@ -30,7 +30,7 @@ interface ServiceRequestCardProps {
 }
 
 
-export function ServiceRequestCard({
+export function DraftedShiftsCard({
     title,
     status,
     startDate,
@@ -42,7 +42,7 @@ export function ServiceRequestCard({
     assignedCarerId,
     _id,
     updatedAt
-}: ServiceRequestCardProps) {
+}: DraftedShiftsCardProps) {
     const router = useRouter();
     return (
         <Card className="shadow-none bg-transparent border-none p-0 cursor-pointer">
@@ -81,20 +81,22 @@ export function ServiceRequestCard({
                     </div>
                 </div>
                 <div className="flex items-center gap-4">
-                    <p className="text-base font-semibold text-primary">
-                        £{formatPrice(amount ?? "0.00")}
-                    </p>
-                    <span className="text-xs bg-green-100 px-2 py-1 rounded text-gray-700">{shiftType || "-"}</span>
+                    {amount && (
+                        <p className="text-base font-semibold text-primary">
+                            £{formatPrice(amount)}
+                        </p>
+                    )}
+                    {shiftType && <span className="text-xs bg-green-100 px-2 py-1 rounded text-gray-700">{shiftType}</span>}
                 </div>
                 <Underline />
                 <div>
-                    <span className="font-medium text-gray-800 ml-2">Published:</span>
+                    <span className="font-medium text-gray-800 ml-2">Drafted:</span>
                     <span className="font-medium text-red-800 ml-2">{moment(updatedAt).format("MMMM Do YYYY") || "-"}</span>
                 </div>
                 <Underline />
-                <Button className="w-full" onClick={() => router.push(`/provider/dashboard/shifts/${_id}`)}>
+                {/* <Button className="w-full" onClick={() => router.push(`/provider/dashboard/shifts/${_id}`)}>
                     View
-                </Button>
+                </Button> */}
             </CardContent>
         </Card>
     )

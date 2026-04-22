@@ -24,7 +24,7 @@ export default function MyServices() {
         shifts: state.shifts,
         listProviderShifts: state.listProviderShifts,
     })));
-    const { publishedShifts, assignedShifts, inProgressShifts, completedShifts, reviewedShifts } = useShiftStatus();
+    const { publishedShifts, assignedShifts, inProgressShifts, completedShifts, reviewedShifts, draftShifts } = useShiftStatus();
 
 
     const handleListProviderShifts = useCallback(() => {
@@ -47,7 +47,7 @@ export default function MyServices() {
                     <TabsTrigger value="completed" className="text-primary cursor-pointer">Completed <span className="bg-secondary rounded-full text-white text-xs w-5 h-5 flex items-center justify-center">{completedShifts.length}</span></TabsTrigger>
                     <TabsTrigger value="approved" className="text-primary cursor-pointer">Approved <span className="bg-secondary rounded-full text-white text-xs w-5 h-5 flex items-center justify-center">{reviewedShifts.length}</span></TabsTrigger>
                     <TabsTrigger value="paid" className="text-primary cursor-pointer">Paid</TabsTrigger>
-                    <TabsTrigger value="drafts" className="text-primary cursor-pointer">Drafts</TabsTrigger>
+                    <TabsTrigger value="drafts" className="text-primary cursor-pointer">Drafts <span className="bg-secondary rounded-full text-white text-xs w-5 h-5 flex items-center justify-center">{draftShifts.length}</span></TabsTrigger>
                 </TabsList>
                 <TabsContent value="drafts" className="">
                     <DraftShifts />

@@ -24,12 +24,15 @@ const ukStates = State.getStatesOfCountry("GB");
 const steps = ["Shift Details", "Requirements", "Pricing"];
 
 export default function NewShift() {
-    const { isLoading, shift, fetchShift, editShift, saveDraft } = useStore(useShallow((state) => ({
+    const { isLoading, shift, fetchShift, editShift, saveDraft, isSavingDraft, fetchDraft, savedDraft } = useStore(useShallow((state) => ({
         isLoading: state.isLoading.fetching,
         shift: state.shift,
         fetchShift: state.fetchShift,
         editShift: state.editShift,
         saveDraft: state.saveDraft,
+        isSavingDraft: state.isLoading.isSavingDraft,
+        fetchDraft: state.getSaveDraft,
+        savedDraft: state.savedDraft
     })));
     const [step, setStep] = useState(0);
     const searchParams = useSearchParams();
@@ -198,6 +201,17 @@ export default function NewShift() {
             setIsPublishing(false);
         }
     }
+
+    const handleSaveDraft = async () => {
+        if (!form.title.trim()) {
+            showToaster("Title is required.");
+            return;
+        }
+        // Save the draft
+        await saveDraft(form, id ?? undefined);
+        showToaster("Draft saved successfully!");
+    }
+
     useEffect(() => {
         if (mode === "edit" && id) {
             const getShift = async () => {
@@ -228,6 +242,35 @@ export default function NewShift() {
                 };
             }
             getShift();
+        } else if (mode === "draft" && id) {
+            const getSavedDraft = async () => {
+                await fetchDraft(id)
+                if (savedDraft) {
+                    setForm({
+                        title: savedDraft?.title || "",
+                        description: savedDraft?.description || "",
+                        state: savedDraft?.state || "",
+                        startDate: savedDraft?.startDate ? new Date(savedDraft.startDate) : undefined,
+                        endDate: savedDraft?.endDate ? new Date(savedDraft.endDate) : undefined,
+                        startTime: savedDraft?.startTime || "",
+                        endTime: savedDraft?.endTime || "",
+                        shiftType: savedDraft?.shiftType || "",
+                        numberOfCarers: savedDraft?.numberOfCarers || 0,
+                        skills: savedDraft?.skills || "",
+                        experience: savedDraft?.experience || "",
+                        genderPreference: savedDraft?.genderPreference || "",
+                        language: savedDraft?.language || "",
+                        amount: savedDraft?.amount !== undefined ? savedDraft.amount.toString() : "0",
+                        expenses: savedDraft?.expenses !== undefined ? savedDraft.expenses.toString() : "0",
+                        paymentFrequency: savedDraft?.paymentFrequency || "",
+                        isReoccurring: savedDraft?.isReoccurring || false,
+                        enhancedDBS: savedDraft?.enhancedDBS || false,
+                        rightToWork: savedDraft?.rightToWork || false,
+                    });
+
+                };
+            }
+            getSavedDraft();
         } else {
             setForm({
                 title: "",
@@ -535,10 +578,11 @@ export default function NewShift() {
                             <Button
                                 type="button"
                                 variant="outline"
-                                onClick={() => showToaster('Draft saved!')}
-                                className="w-full md:w-auto bg-secondary text-white hover:bg-secondary/70"
+                                onClick={handleSaveDraft}
+                                disabled={isSavingDraft}
+                                className="w-full md:w-auto bg-secondary text-white hover:bg-secondary/60 hover:text-white"
                             >
-                                Save to Draft
+                                {isSavingDraft ? <div className="flex items-center justify-center gap-3"><LineLoader /> <span>Saving Draft...</span></div> : "Save to Draft"}
                             </Button>
                         )}
                         {step < steps.length - 1 ? (

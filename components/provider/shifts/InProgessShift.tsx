@@ -103,7 +103,7 @@ export default function InProgressShifts({ shiftStatus }: { shiftStatus: string 
 
     return (
         <div>
-            <ProviderHeader title="Assigned Shifts" />
+            <ProviderHeader title="In-Progress Shifts" />
             {isLoading ? (
                 <Loader />
             ) : inProgressShifts.length === 0 ? (

@@ -14,6 +14,10 @@ export const useShiftStatus = () => {
         return shifts.filter(shift => shift.status === "published");
     }, [shifts]);
 
+    const draftShifts = useMemo(() => {
+        return shifts.filter(shift => shift.status === "draft");
+    }, [shifts]);
+
     const assignedShifts = useMemo(() => {
         return assignedShiftsAvailable.filter(shift => shift.status === "assigned");
     }, [assignedShiftsAvailable]);
@@ -30,5 +34,5 @@ export const useShiftStatus = () => {
         return assignedShiftsAvailable.filter(shift => shift.status === "reviewed");
     }, [assignedShiftsAvailable]);
 
-    return { publishedShifts, assignedShifts, inProgressShifts, completedShifts, reviewedShifts };
+    return { publishedShifts, draftShifts, assignedShifts, inProgressShifts, completedShifts, reviewedShifts };
 }
