@@ -1,4 +1,4 @@
-import { Briefcase, Users, BarChart2, CreditCard, MessageCircle, User, Building2, FileText, Settings, Store, Loader, CheckCircle, Clock, Send, UserCheck, BadgeCheck, Wallet, HelpCircle, Eye, Trash2, ArchiveX, X, Play } from "lucide-react";
+import { Briefcase, Users, BarChart2, CreditCard, MessageCircle, User, Building2, FileText, Settings, Store, Loader, CheckCircle, Clock, Send, UserCheck, BadgeCheck, Wallet, HelpCircle, Eye, Trash2, ArchiveX, X, Play, CalendarDays, FileEdit } from "lucide-react";
 
 export const PROVIDERS_MAIN_NAV = [
     {
@@ -223,6 +223,12 @@ export const getStatusColor = (status: string) => {
             return "#B91C1C";
         case "assigned":
             return "#7C3AED";
+        case "upcomingShifts":
+            return "#6B7280";
+        case "totalShifts":
+            return "#140f30";
+        case "totalWorkers":
+            return "#6B7280";
         default:
             return "#6B7280";
     }
@@ -268,6 +274,12 @@ export const getIcon = (action: string) => {
             return Send;
         case "reject":
             return X;
+        case "totalWorkers":
+            return Users;
+        case "totalShifts":
+            return CalendarDays;
+        case "draft":
+            return FileEdit;
         default:
             return HelpCircle;
     }

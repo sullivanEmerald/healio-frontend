@@ -1,8 +1,9 @@
-import { getAllShifts, getShiftById, approveApplicationAPI, verifyShift, updateShift, saveDraftRequest, getDraftRequest } from "@/services/shift";
+import { getAllShifts, getShiftById, approveApplicationAPI, verifyShift, updateShift, saveDraftRequest, getDraftRequest, getDashboardOverview } from "@/services/shift";
 import { Shift } from "../types/shifts";
 import { StateCreator } from "zustand";
 import { Store } from "@/types/store";
 import { showToaster } from "@/lib/utils";
+import { DashboardOverview } from "@/types/provider";
 
 type ShiftActions = {
     createShift: (shift: Shift) => Promise<void>;
@@ -15,6 +16,7 @@ type ShiftActions = {
     editShift: (shift: any, id: string) => Promise<void>;
     saveDraft: (shift: any, id?: string) => Promise<void>;
     getSaveDraft: (id: string) => Promise<void>;
+    getDashboardOverview: () => Promise<void>;
 }
 
 export type ShiftSlice = {
@@ -23,6 +25,7 @@ export type ShiftSlice = {
     applications: any[];
     assignedShifts: any[];
     savedDraft: Partial<Shift> | null;
+    dashboardOverview: DashboardOverview | null;
     isLoading: {
         fetching: boolean;
         creating: boolean;
@@ -34,6 +37,7 @@ export type ShiftSlice = {
         isUpdatingShift: boolean;
         isSavingDraft: boolean;
         isFetchingDraft: boolean;
+        isfetchingDashboardOverview: boolean;
     }
 } & ShiftActions;
 
@@ -43,6 +47,7 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
     applications: [],
     assignedShifts: [],
     savedDraft: null,
+    dashboardOverview: null,
     isLoading: {
         fetching: false,
         creating: false,
@@ -54,6 +59,7 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
         isUpdatingShift: false,
         isSavingDraft: false,
         isFetchingDraft: false,
+        isfetchingDashboardOverview: false
     },
 
     createShift: async (shift: Shift) => {
@@ -186,6 +192,24 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
         } finally {
             set((state: ShiftSlice) => ({
                 isLoading: { ...state.isLoading, isFetchingDraft: false }
+            }))
+        }
+    },
+
+    getDashboardOverview: async () => {
+        set((state: ShiftSlice) => ({
+            isLoading: { ...state.isLoading, isfetchingDashboardOverview: true }
+        }));
+
+        try {
+            const result = await getDashboardOverview();
+            set({ dashboardOverview: result });
+        } catch (error) {
+            console.log("Error fetching dashboard overview:", error);
+            set({ dashboardOverview: null });
+        } finally {
+            set((state: ShiftSlice) => ({
+                isLoading: { ...state.isLoading, isfetchingDashboardOverview: false }
             }))
         }
     },

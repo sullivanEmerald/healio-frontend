@@ -1,11 +1,12 @@
 import { ProjectSummaryProps } from "@/types/workers";
 import { Progress } from "@/components/ui/progress";
 import { getStatusColor } from "@/data/constants";
+import { DashboardOverview } from "@/types/provider";
 
-function ProjectSummaryCalculation({ projectData }: ProjectSummaryProps) {
+function ProjectSummaryCalculation({ projectData }: { projectData: DashboardOverview }) {
     const arrayedProject = Object.entries(projectData) || []
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 overflow-y-auto">
             {arrayedProject.map(([status, number]) => {
                 const progressValue = number;
 

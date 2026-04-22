@@ -90,3 +90,14 @@ export const getDraftRequest = async (id: string) => {
         throw error;
     }
 };
+
+
+export const getDashboardOverview = async () => {
+    try {
+        const response = await axiosInstance.get("/provider/dashboard/overview");
+        return response.data;
+    } catch (error: any) {
+        showToaster(error?.response?.data?.message || "An error occurred");
+        throw error;
+    }
+};      
