@@ -60,8 +60,8 @@ export default function DashboardPage() {
         <section className="w-full min-h-screen space-y-4">
             <Overview title="Dashboard Overview" />
             <Underline />
-            <div className="flex gap-6">
-                <div className="w-8/12 flex flex-col justify-between">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="w-full flex flex-col justify-between">
                     <div className="grid grid-cols-2 gap-4">
                         {OVERVIEW.map((item, i) => {
                             const Icon = item.icon;
@@ -97,7 +97,7 @@ export default function DashboardPage() {
                 </div>
 
                 {/* RIGHT */}
-                <div className="w-5/12">
+                <div className="w-full">
                     <Card className="h-full">
                         <CardHeader>
                             <CardTitle className="text-2xl font-bold">Projects Summary</CardTitle>
