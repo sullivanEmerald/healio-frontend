@@ -12,7 +12,6 @@ export const getUserProfile = async () => {
     }
 };
 
-
 export const updateProviderDetails = async (details: any) => {
     try {
         const response = await axiosInstance.put("/provider/profile", details);
@@ -22,3 +21,4 @@ export const updateProviderDetails = async (details: any) => {
         throw error;
     }
 };
+

@@ -17,7 +17,7 @@ export default function LoginPage() {
         email: "",
         password: "",
     });
-    const User = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
+    const User = typeof window !== 'undefined' ? localStorage.getItem('role') : null;
     const FullName = typeof window !== 'undefined' ? localStorage.getItem('fullName') : null;
 
     const [errors, setErrors] = useState({

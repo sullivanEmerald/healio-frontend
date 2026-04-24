@@ -44,7 +44,7 @@ export function useAuth() {
         localStorage.removeItem('token');
         localStorage.removeItem('id');
         localStorage.removeItem('email');
-        localStorage.removeItem('role');
+        // localStorage.removeItem('role');
         // Keep 'fullName' in localStorage
         setUser(null);
         router.replace('/auth/login');

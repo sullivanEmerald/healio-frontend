@@ -24,3 +24,13 @@ export const register = async (data: RegisterData & { role: string }) => {
         throw error;
     }
 };
+
+export const changePassword = async (passwords: any) => {
+    try {
+        const response = await axiosInstance.post("/auth/change-password", passwords);
+        return response.data;
+    } catch (error: any) {
+        showToaster(error?.response?.data?.message || "An error occurred while changing password. Please try again.");
+        throw error;
+    };
+};

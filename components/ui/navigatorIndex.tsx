@@ -20,7 +20,7 @@ export function NavigationBar() {
 
     const handleSelect = (role: 'provider' | 'carer') => {
         if (typeof window !== 'undefined') {
-            localStorage.setItem('user', role);
+            localStorage.setItem('role', role);
         }
         router.push('/auth/login');
     };
