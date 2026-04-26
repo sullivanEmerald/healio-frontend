@@ -125,7 +125,7 @@ export const getAllCarers = async () => {
 
 export const addCarerToPool = async (id: string) => {
     try {
-        const response = await axiosInstance.get(`/provider/carers/${id}`);
+        const response = await axiosInstance.post(`/provider-pool/carers/${id}`);
         return response.data;
     } catch (error: any) {
         showToaster(error?.response?.data?.message || "An error occurred");

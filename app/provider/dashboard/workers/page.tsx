@@ -14,6 +14,8 @@ import { useShallow } from "zustand/react/shallow";
 import ProviderHeader from "@/components/provider/components/header";
 import Underline from "@/components/common/underline";
 import CarerPoolCard from "./components/carersPool";
+import { Loader } from "@/components/common/loader";
+import { NotFoundComponent } from "@/components/common/NotFoundComponent";
 
 const ProvidersPool: Worker[] = [
     {
@@ -111,16 +113,20 @@ export default function MyWorkers() {
             <ProviderHeader title="Care Workers Pool" />
             <Underline />
             {/* Cards */}
-            <GridLayout>
-                {carers.map((worker, idx) => (
-                    <CardLayout key={idx}>
-                        <CarerPoolCard {...worker} />
-                    </CardLayout>
-                ))}
-            </GridLayout>
-            {showProfile && selectedWorker && (
-                <WorkerProfile show={showProfile} worker={selectedWorker} onHide={() => setShowProfile(false)} />
+            {isLoading ? (
+                <Loader />
+            ) : carers.length === 0 ? (
+                <NotFoundComponent title="No carers found" subTitle="Carers are not available at the moment. Check again later." />
+            ) : (
+                <GridLayout>
+                    {carers.map((worker, idx) => (
+                        <CardLayout key={idx}>
+                            <CarerPoolCard worker={worker} />
+                        </CardLayout>
+                    ))}
+                </GridLayout>
             )}
+
         </div>
     );
 }

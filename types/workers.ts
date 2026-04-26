@@ -58,6 +58,6 @@ export interface WorkerpoolCardProps {
     state?: string;
     jobsCompleted?: number;
     rating?: number;
-    id?: string;
+    id: string;
     businessEmail?: string;
 }

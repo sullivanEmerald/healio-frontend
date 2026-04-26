@@ -4,40 +4,41 @@ import DisplayAvatar from "@/components/common/avatar";
 import Rating from "@/components/common/rating";
 import WorkerProfile from "@/components/provider/workerProfile";
 import { useState } from "react";
+import CarerProfile from "./carerProfile";
 
 
-export default function CarerPoolCard({ fullName, skills, isAvailable, jobsCompleted, state, country, id }: WorkerpoolCardProps) {
-    // const [showProfile, setShowProfile] = useState({ show: false, ca });
+export default function CarerPoolCard({ worker }: { worker: WorkerpoolCardProps }) {
+    const [showProfile, setShowProfile] = useState({ show: false, carer: null as WorkerpoolCardProps | null });
     return (
         <>
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <DisplayAvatar name={fullName} />
+                    <DisplayAvatar name={worker.fullName} />
 
                 </div>
 
-                {isAvailable && (
+                {worker.isAvailable && (
                     <span className="h-3 w-3 rounded-full bg-green-600 animate-pulse" />
                 )}
             </div>
             <div>
                 <p className="text-sm text-gray-500">
-                    {state}, {country}
+                    {worker.state}, {worker.country}
                 </p>
             </div>
             {/* Stats */}
             <div className="mt-4 flex items-center gap-4 text-sm">
                 <p className="text-gray-600">Jobs Completed</p>
                 <p className="font-bold text-red-700">
-                    {jobsCompleted || 0}
+                    {worker.jobsCompleted || 0}
                 </p>
             </div>
 
             {/* Skills */}
 
-            {skills && skills.length > 0 && (
+            {worker.skills && worker.skills.length > 0 && (
                 <div className="mt-4 flex flex-wrap gap-2">
-                    {skills.map((skill, idx) => (
+                    {worker.skills.map((skill, idx) => (
                         <span
                             key={idx}
                             className="px-3 py-1 text-xs font-medium
@@ -56,13 +57,15 @@ export default function CarerPoolCard({ fullName, skills, isAvailable, jobsCompl
             </div>
             <Button
                 className="mt-4 w-full bg-primary text-white py-2 font-semibold hover:bg-primary/90 transition"
-            // onClick={() => {
-            //     setSelectedWorker(worker);
-            //     setShowProfile(true);
-            // }}
+                onClick={() => {
+                    setShowProfile({ show: true, carer: worker });
+                }}
             >
                 View
             </Button>
+            {showProfile.show && showProfile.carer && (
+                <CarerProfile show={showProfile.show} worker={showProfile.carer} onHide={() => setShowProfile({ show: false, carer: null })} />
+            )}
         </>
     )
 
