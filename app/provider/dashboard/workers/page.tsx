@@ -2,13 +2,18 @@
 import Avatar from "react-avatar";
 import { Card } from "@/components/ui/card";
 import Button from "@/components/common/button";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import WorkerProfile from "@/components/provider/workerProfile";
 import { Worker } from "@/types/workers";
 import Rating from "@/components/common/rating";
 import GridLayout from "@/components/common/gridLayout";
 import CardLayout from "@/components/common/cardLayout";
 import DisplayAvatar from "@/components/common/avatar";
+import { useStore } from "@/store/store";
+import { useShallow } from "zustand/react/shallow";
+import ProviderHeader from "@/components/provider/components/header";
+import Underline from "@/components/common/underline";
+import CarerPoolCard from "./components/carersPool";
 
 const ProvidersPool: Worker[] = [
     {
@@ -84,78 +89,32 @@ const ProvidersPool: Worker[] = [
 export default function MyWorkers() {
     const [selectedWorker, setSelectedWorker] = useState<Worker | null>(null);
     const [showProfile, setShowProfile] = useState(false);
+    const { getAllCarers, isLoading, carers } = useStore(useShallow((state) => ({
+        getAllCarers: state.getAllCarers,
+        isLoading: state.isLoading.isFetchingCarers,
+        carers: state.carers,
+    })));
+
+    console.log("Carers from store:", useStore.getState().carers);
+
+    const getAllCarersHandler = useCallback(() => {
+        getAllCarers();
+    }, [getAllCarers]);
+
+    useEffect(() => {
+        getAllCarersHandler();
+    }, [getAllCarersHandler]);
+
     return (
         <div className="space-y-6">
             {/* Header */}
-            <div className="flex items-center gap-3">
-                <h2 className="text-2xl font-bold text-[#0C287B]">Workers Pool</h2>
-                <span className="h-3 w-3 rounded-full bg-green-600 animate-pulse" />
-            </div>
-
-            <hr className="border-primary/20" />
-
+            <ProviderHeader title="Care Workers Pool" />
+            <Underline />
             {/* Cards */}
             <GridLayout>
-                {ProvidersPool.map((worker, idx) => (
+                {carers.map((worker, idx) => (
                     <CardLayout key={idx}>
-                        {/* Top section */}
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                                <DisplayAvatar name={worker.name} />
-                                <div>
-                                    <p className="font-semibold text-gray-900">
-                                        {worker.name}
-                                    </p>
-                                    <p className="text-sm text-gray-500">
-                                        {worker.state}, {worker.country}
-                                    </p>
-                                </div>
-                            </div>
-
-                            {worker.isAvailable && (
-                                <span className="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700 font-medium">
-                                    Available
-                                </span>
-                            )}
-                        </div>
-
-                        {/* Stats */}
-                        <div className="mt-4 flex items-center justify-between text-sm">
-                            <p className="text-gray-600">Jobs Completed</p>
-                            <p className="font-bold text-[#0C287B]">
-                                {worker.jobsCompleted}
-                            </p>
-                        </div>
-
-                        {/* Skills */}
-                        {worker.skills.length > 0 && (
-                            <div className="mt-4 flex flex-wrap gap-2">
-                                {worker.skills.map((skill, idx) => (
-                                    <span
-                                        key={idx}
-                                        className="px-3 py-1 text-xs font-medium
-                               rounded-full bg-[#140f30]/10
-                               text-[#140f30]"
-                                    >
-                                        {skill}
-                                    </span>
-                                ))}
-                            </div>
-                        )}
-                        {/* Rating */}
-                        <div className="mt-4 flex items-center gap-2">
-                            <span className="text-sm text-gray-600">Rating:</span>
-                            <Rating value={worker.rating} />
-                        </div>
-                        <Button
-                            className="mt-4 w-full bg-primary text-white py-2 font-semibold hover:bg-primary/90 transition"
-                            onClick={() => {
-                                setSelectedWorker(worker);
-                                setShowProfile(true);
-                            }}
-                        >
-                            View
-                        </Button>
+                        <CarerPoolCard {...worker} />
                     </CardLayout>
                 ))}
             </GridLayout>

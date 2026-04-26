@@ -112,3 +112,23 @@ export const getProviderDetails = async () => {
     }
 };
 
+export const getAllCarers = async () => {
+    try {
+        const response = await axiosInstance.get("/provider/carers");
+        return response.data;
+    } catch (error: any) {
+        showToaster(error?.response?.data?.message || "An error occurred");
+        throw error;
+    }
+};
+
+
+export const addCarerToPool = async (id: string) => {
+    try {
+        const response = await axiosInstance.get(`/provider/carers/${id}`);
+        return response.data;
+    } catch (error: any) {
+        showToaster(error?.response?.data?.message || "An error occurred");
+        throw error;
+    }
+};

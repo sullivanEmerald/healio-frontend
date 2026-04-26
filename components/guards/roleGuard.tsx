@@ -17,7 +17,7 @@ export const RoleGuard = ({ children, role }: { children: React.ReactNode; role:
                 setIsRedirecting(true);
                 setTimeout(() => {
                     router.push("/auth/login");
-                }, 2000);
+                }, 1000);
                 return;
             }
 
@@ -26,7 +26,7 @@ export const RoleGuard = ({ children, role }: { children: React.ReactNode; role:
                 setIsRedirecting(true);
                 setTimeout(() => {
                     router.push("/auth/login");
-                }, 2000);
+                }, 1000);
                 return;
             }
         }

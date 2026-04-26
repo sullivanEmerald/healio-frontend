@@ -12,7 +12,7 @@ export default function SelectUser({ isLogin = false }: { isLogin?: boolean }) {
 
         if (!userType) return;
         if (typeof window !== 'undefined') {
-            localStorage.setItem('user', userType.toString());
+            localStorage.setItem('role', userType.toString());
         }
         router.push(`/auth/register`)
     };

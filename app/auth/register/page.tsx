@@ -31,7 +31,7 @@ export default function LoginPage() {
 
 
     useEffect(() => {
-        const user = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
+        const user = typeof window !== 'undefined' ? localStorage.getItem('role') : null;
         if (!user) {
             router.push('/auth/account');
         } else {
@@ -128,7 +128,7 @@ export default function LoginPage() {
     return (
         <>
             <div className="mb-4">
-                <h2 className="text-2xl font-semibold text-primary">
+                <h2 className="text-2xl font-bold text-primary/80">
                     Get Started As A {getAccountTypeDisplay(accountType)}
                 </h2>
                 <span className="text-gray-500  font-bold text-lg">Welcome to Healio</span>

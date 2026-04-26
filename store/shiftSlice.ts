@@ -1,4 +1,4 @@
-import { getAllShifts, getShiftById, approveApplicationAPI, verifyShift, updateShift, saveDraftRequest, getDraftRequest, getDashboardOverview } from "@/services/shift";
+import { getAllShifts, getShiftById, approveApplicationAPI, verifyShift, updateShift, saveDraftRequest, getDraftRequest, getDashboardOverview, getAllCarers, addCarerToPool } from "@/services/shift";
 import { Shift } from "../types/shifts";
 import { StateCreator } from "zustand";
 import { Store } from "@/types/store";
@@ -17,6 +17,8 @@ type ShiftActions = {
     saveDraft: (shift: any, id?: string) => Promise<void>;
     getSaveDraft: (id: string) => Promise<void>;
     getDashboardOverview: () => Promise<void>;
+    getAllCarers: () => Promise<void>;
+    addCarerToPool: (id: string) => Promise<void>;
 }
 
 export type ShiftSlice = {
@@ -26,6 +28,7 @@ export type ShiftSlice = {
     assignedShifts: any[];
     savedDraft: Partial<Shift> | null;
     dashboardOverview: DashboardOverview | null;
+    carers: any[];
     isLoading: {
         fetching: boolean;
         creating: boolean;
@@ -38,6 +41,8 @@ export type ShiftSlice = {
         isSavingDraft: boolean;
         isFetchingDraft: boolean;
         isfetchingDashboardOverview: boolean;
+        isFetchingCarers: boolean;
+        isAddingCarerToPool: boolean;
     }
 } & ShiftActions;
 
@@ -48,6 +53,7 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
     assignedShifts: [],
     savedDraft: null,
     dashboardOverview: null,
+    carers: [],
     isLoading: {
         fetching: false,
         creating: false,
@@ -59,7 +65,9 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
         isUpdatingShift: false,
         isSavingDraft: false,
         isFetchingDraft: false,
-        isfetchingDashboardOverview: false
+        isfetchingDashboardOverview: false,
+        isFetchingCarers: false,
+        isAddingCarerToPool: false
     },
 
     createShift: async (shift: Shift) => {
@@ -214,4 +222,40 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
         }
     },
 
-});
+    getAllCarers: async () => {
+        set((state: ShiftSlice) => ({
+            isLoading: { ...state.isLoading, isFetchingCarers: true }
+        }));
+
+        try {
+            const result = await getAllCarers();
+            set({ carers: result });
+        } catch (error) {
+            console.log("Error fetching carers:", error);
+            set({ carers: [] });
+        } finally {
+            set((state: ShiftSlice) => ({
+                isLoading: { ...state.isLoading, isFetchingCarers: false }
+            }))
+        }
+    },
+
+    addCarerToPool: async (id: string) => {
+        set((state: ShiftSlice) => ({
+            isLoading: { ...state.isLoading, isAddingCarerToPool: true }
+        }));
+
+        try {
+            await addCarerToPool(id)
+            showToaster('Carer successfully added to your pool')
+        } catch (error) {
+
+        } finally {
+            set((state: ShiftSlice) => ({
+                isLoading: { ...state.isLoading, isAddingCarerToPool: false }
+            }));
+        }
+
+    }
+
+});  

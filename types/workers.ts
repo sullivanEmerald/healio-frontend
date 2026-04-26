@@ -47,3 +47,17 @@ export type CarerShiftApplication = {
     createdAt?: string;
     shiftId: Job
 }
+
+
+export interface WorkerpoolCardProps {
+    fullName: string;
+    skills?: string[];
+    isAvailable?: boolean;
+    status?: string;
+    country?: string;
+    state?: string;
+    jobsCompleted?: number;
+    rating?: number;
+    id?: string;
+    businessEmail?: string;
+}

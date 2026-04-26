@@ -16,7 +16,7 @@ export const PROVIDERS_MAIN_NAV = [
     {
         to: "/provider/dashboard/workers",
         icon: Users,
-        label: "Workers Pool",
+        label: "Carers Pool",
         paths: ["/provider/workers"],
     },
     {
@@ -43,6 +43,12 @@ export const PROVIDERS_MAIN_NAV = [
 
 
 export const PROVIDERS_PROFILE_NAV = [
+    {
+        to: "/provider/dashboard",
+        icon: Briefcase,
+        label: "Dashboard",
+        paths: [],
+    },
     {
         label: "Personal Information",
         icon: User,
@@ -87,6 +93,12 @@ export const PROVIDERS_PROFILE_NAV = [
 
 
 export const PROVIDER_SETTINGS_NAV = [
+    {
+        to: "/provider/dashboard",
+        icon: Briefcase,
+        label: "Dashboard",
+        paths: [],
+    },
     {
         icon: Settings,
         label: "Account Settings",
@@ -144,6 +156,12 @@ export const WORKERS_MAIN_NAV = [
 
 export const WORKERS_PROFILE_NAV = [
     {
+        to: "/carer/dashboard",
+        icon: Briefcase,
+        label: "Dashboard",
+        paths: [],
+    },
+    {
         label: "Personal Information",
         icon: User,
         to: "/carer/profile/personal-information",
@@ -186,6 +204,12 @@ export const WORKERS_PROFILE_NAV = [
 ];
 
 export const WORKERS_SETTINGS_NAV = [
+    {
+        to: "/carer/dashboard",
+        icon: Briefcase,
+        label: "Dashboard",
+        paths: [],
+    },
     {
         icon: Settings,
         label: "Account Settings",
