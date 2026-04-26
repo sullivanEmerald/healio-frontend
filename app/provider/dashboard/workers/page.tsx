@@ -2,7 +2,7 @@
 import Avatar from "react-avatar";
 import { Card } from "@/components/ui/card";
 import Button from "@/components/common/button";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import WorkerProfile from "@/components/provider/workerProfile";
 import { Worker } from "@/types/workers";
 import Rating from "@/components/common/rating";
@@ -16,6 +16,9 @@ import Underline from "@/components/common/underline";
 import CarerPoolCard from "./components/carersPool";
 import { Loader } from "@/components/common/loader";
 import { NotFoundComponent } from "@/components/common/NotFoundComponent";
+import CustomTable from "@/components/common/customTable";
+import { WorkerpoolCardProps } from "@/types/workers";
+import CarerProfile from "./components/carerProfile";
 
 const ProvidersPool: Worker[] = [
     {
@@ -89,15 +92,15 @@ const ProvidersPool: Worker[] = [
 ];
 
 export default function MyWorkers() {
-    const [selectedWorker, setSelectedWorker] = useState<Worker | null>(null);
+    const [selectedWorker, setSelectedWorker] = useState<WorkerpoolCardProps | null>(null);
     const [showProfile, setShowProfile] = useState(false);
-    const { getAllCarers, isLoading, carers } = useStore(useShallow((state) => ({
+
+    const { getAllCarers, isLoading, carers, isMenuGrid } = useStore(useShallow((state) => ({
         getAllCarers: state.getAllCarers,
         isLoading: state.isLoading.isFetchingCarers,
         carers: state.carers,
+        isMenuGrid: state.isMenuBarGrid,
     })));
-
-    console.log("Carers from store:", useStore.getState().carers);
 
     const getAllCarersHandler = useCallback(() => {
         getAllCarers();
@@ -107,26 +110,88 @@ export default function MyWorkers() {
         getAllCarersHandler();
     }, [getAllCarersHandler]);
 
+    const columns = useMemo(() => [
+        {
+            accessorKey: "fullName",
+            header: () => "Name",
+            cell: (info: any) => {
+                return (
+                    <div className="flex items-center gap-3">
+                        <DisplayAvatar name={info.value} />
+                        {/* <span>{info.value}</span> */}
+                    </div>
+                );
+            },
+        },
+        {
+            accessorKey: "jobsCompleted",
+            header: () => "Jobs Completed",
+            cell: (info: any) => {
+                return (
+                    <span className="text-red-700 font-bold">
+                        {info.value || 0}
+                    </span>
+                );
+            },
+        },
+        {
+            accessorKey: "action",
+            header: () => "Action",
+            cell: (info: any) => {
+                return (
+                    <span className="text-red-700 font-medium cursor-pointer underline" onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedWorker(info.row);
+                        setShowProfile(true);
+                    }}>
+                        View
+                    </span>
+                );
+            },
+        }
+    ], []);
     return (
-        <div className="space-y-6">
-            {/* Header */}
-            <ProviderHeader title="Care Workers Pool" />
-            <Underline />
-            {/* Cards */}
-            {isLoading ? (
-                <Loader />
-            ) : carers.length === 0 ? (
-                <NotFoundComponent title="No carers found" subTitle="Carers are not available at the moment. Check again later." />
-            ) : (
-                <GridLayout>
-                    {carers.map((worker, idx) => (
-                        <CardLayout key={idx}>
-                            <CarerPoolCard worker={worker} />
-                        </CardLayout>
-                    ))}
-                </GridLayout>
-            )}
+        <>
+            <div className="space-y-6">
+                {/* Header */}
+                <ProviderHeader title="Care Workers Pool" />
+                <Underline />
+                {/* Cards */}
+                {isLoading ? (
+                    <Loader />
+                ) : carers.length === 0 ? (
+                    <NotFoundComponent title="No carers found" subTitle="Carers are not available at the moment. Check again later." />
+                ) : (
+                    <>
+                        {isMenuGrid === "grid" ? (
+                            <GridLayout>
+                                {carers.map((worker, idx) => (
+                                    <CardLayout key={idx}>
+                                        <CarerPoolCard worker={worker} />
+                                    </CardLayout>
+                                ))}
+                            </GridLayout>
+                        ) : (
+                            <CustomTable
+                                data={carers}
+                                columns={columns}
+                                currentPage={1}
+                                totalPages={5}
+                                onPageChange={() => { }}
+                                onRowClick={() => { }}
+                            />
+                        )}
+                    </>
+                )}
 
-        </div>
+            </div>
+            {showProfile && selectedWorker && (
+                <CarerProfile
+                    show={showProfile}
+                    onHide={() => setShowProfile(false)}
+                    worker={selectedWorker}
+                />
+            )}
+        </>
     );
 }

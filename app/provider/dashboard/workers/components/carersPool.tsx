@@ -1,5 +1,5 @@
 import { WorkerpoolCardProps } from "@/types/workers"
-import { Button } from "@/components/ui/button";
+import Button from "@/components/common/button";
 import DisplayAvatar from "@/components/common/avatar";
 import Rating from "@/components/common/rating";
 import WorkerProfile from "@/components/provider/workerProfile";
@@ -56,7 +56,6 @@ export default function CarerPoolCard({ worker }: { worker: WorkerpoolCardProps 
                 <Rating value={10} />
             </div>
             <Button
-                className="mt-4 w-full bg-primary text-white py-2 font-semibold hover:bg-primary/90 transition"
                 onClick={() => {
                     setShowProfile({ show: true, carer: worker });
                 }}

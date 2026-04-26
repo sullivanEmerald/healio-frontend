@@ -247,6 +247,11 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
 
         try {
             await addCarerToPool(id)
+            setTimeout(() => {
+                set((state: ShiftSlice) => ({
+                    carers: state.carers.filter(carer => carer.id !== id)
+                }));
+            }, 3000);
             showToaster('Carer successfully added to your pool')
         } catch (error) {
 
