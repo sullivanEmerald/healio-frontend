@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Overview from "@/components/provider/overview";
 import Underline from "@/components/common/underline";
 import Button from "@/components/common/button";
@@ -24,7 +24,7 @@ const ukStates = State.getStatesOfCountry("GB");
 const steps = ["Shift Details", "Requirements", "Pricing"];
 
 export default function NewShift() {
-    const { isLoading, shift, fetchShift, editShift, saveDraft, isSavingDraft, fetchDraft, savedDraft } = useStore(useShallow((state) => ({
+    const { isLoading, shift, fetchShift, editShift, saveDraft, isSavingDraft, fetchDraft, savedDraft, getMyPool, MyPool } = useStore(useShallow((state) => ({
         isLoading: state.isLoading.fetching,
         shift: state.shift,
         fetchShift: state.fetchShift,
@@ -32,8 +32,21 @@ export default function NewShift() {
         saveDraft: state.saveDraft,
         isSavingDraft: state.isLoading.isSavingDraft,
         fetchDraft: state.getSaveDraft,
-        savedDraft: state.savedDraft
+        savedDraft: state.savedDraft,
+        getMyPool: state.getProvidersPool,
+        MyPool: state.myPool,
     })));
+
+
+    const getPool = useCallback(() => {
+        getMyPool();
+    }, [getMyPool]);
+
+
+    useEffect(() => {
+        getPool();
+    }, [getPool]);
+
     const [step, setStep] = useState(0);
     const searchParams = useSearchParams();
     const mode = searchParams.get("mode");
@@ -62,6 +75,8 @@ export default function NewShift() {
         amount: "",
         expenses: "",
         paymentFrequency: "Weekly",
+        // Add poolId for MyPool selection
+        poolId: "",
     });
     const [errors, setErrors] = useState({
         title: "",
@@ -79,12 +94,13 @@ export default function NewShift() {
         amount: "",
         expenses: "",
         paymentFrequency: "",
-        state: ""
+        state: "",
+        poolId: "",
     });
 
     // Step fields for validation
     const stepFields = [
-        ["title", "description", "state", "startDate", "endDate", "startTime", "endTime", "shiftType", "numberOfCarers"], // Step 0
+        ["title", "description", "state", "startDate", "endDate", "startTime", "endTime", "shiftType", "numberOfCarers", "poolId"], // Add poolId to step 0
         ["skills", "experience", "language"], // Step 1
         ["hourlyRate", "paymentFrequency"], // Step 2
     ];
@@ -119,6 +135,8 @@ export default function NewShift() {
             if (!value || Number(value) <= 50) error = 'Amount must be greater than pounds';
         } else if (name === 'paymentFrequency') {
             if (!value.trim()) error = 'Payment frequency is required';
+        } else if (name === 'poolId') {
+            if (!value) error = 'Please select a pool';
         }
         return error;
     };
@@ -161,6 +179,7 @@ export default function NewShift() {
             amount: validateField('hourlyRate', form.amount),
             expenses: '', // optional
             paymentFrequency: validateField('paymentFrequency', form.paymentFrequency),
+            poolId: ''
         };
         setErrors(newErrors);
         return Object.values(newErrors).every((e) => !e);
@@ -237,6 +256,7 @@ export default function NewShift() {
                         isReoccurring: shift?.isReoccurring || false,
                         enhancedDBS: shift?.enhancedDBS || false,
                         rightToWork: shift?.rightToWork || false,
+                        poolId: "",
                     });
 
                 };
@@ -266,6 +286,7 @@ export default function NewShift() {
                         isReoccurring: savedDraft?.isReoccurring || false,
                         enhancedDBS: savedDraft?.enhancedDBS || false,
                         rightToWork: savedDraft?.rightToWork || false,
+                        poolId: ''
                     });
 
                 };
@@ -292,6 +313,7 @@ export default function NewShift() {
                 isReoccurring: false,
                 enhancedDBS: false,
                 rightToWork: false,
+                poolId: '',
             });
         }
     }, [mode, id]);
@@ -439,6 +461,29 @@ export default function NewShift() {
                                 className="input"
                             />
                             {errors.numberOfCarers && <span className="text-xs text-red-500 mt-1 block">{errors.numberOfCarers}</span>}
+                        </div>
+                        <div>
+                            <Label htmlFor="poolId" className="block text-sm font-medium text-primary mb-1">Select Pool</Label>
+                            <Select
+                                value={form.poolId}
+                                onValueChange={(value) => setForm((prev) => ({ ...prev, poolId: value }))}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Select carer" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {MyPool && MyPool.length > 0 ? (
+                                        MyPool.map((pool: { id: string; fullName: string }) => (
+                                            <SelectItem key={pool.id} value={pool.id}>
+                                                {pool.fullName}
+                                            </SelectItem>
+                                        ))
+                                    ) : (
+                                        <div className="px-4 py-2 text-gray-500">No Carer In Pool</div>
+                                    )}
+                                </SelectContent>
+                            </Select>
+                            {errors.poolId && <span className="text-xs text-red-500 mt-1 block">{errors.poolId}</span>}
                         </div>
 
                     </>

@@ -132,3 +132,13 @@ export const addCarerToPool = async (id: string) => {
         throw error;
     }
 };
+
+export const getMyPool = async () => {
+    try {
+        const response = await axiosInstance.get("/provider-pool/my-carers");
+        return response.data;
+    } catch (error: any) {
+        showToaster(error?.response?.data?.message || "An error occurred");
+        throw error;
+    }
+}

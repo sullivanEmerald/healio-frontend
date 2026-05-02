@@ -113,6 +113,7 @@ export default function LoginPage() {
                     password: "",
                     confirmPassword: "",
                 });
+                router.push('/auth/login');
                 console.log('Registration successful:', response);
             } else {
                 setSubmitting(false);

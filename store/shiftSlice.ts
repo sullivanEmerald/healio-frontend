@@ -1,9 +1,10 @@
-import { getAllShifts, getShiftById, approveApplicationAPI, verifyShift, updateShift, saveDraftRequest, getDraftRequest, getDashboardOverview, getAllCarers, addCarerToPool } from "@/services/shift";
+import { getAllShifts, getShiftById, approveApplicationAPI, verifyShift, updateShift, saveDraftRequest, getDraftRequest, getDashboardOverview, getAllCarers, addCarerToPool, getMyPool } from "@/services/shift";
 import { Shift } from "../types/shifts";
 import { StateCreator } from "zustand";
 import { Store } from "@/types/store";
 import { showToaster } from "@/lib/utils";
 import { DashboardOverview } from "@/types/provider";
+import { WorkerpoolCardProps } from "@/types/workers";
 
 type ShiftActions = {
     createShift: (shift: Shift) => Promise<void>;
@@ -19,6 +20,7 @@ type ShiftActions = {
     getDashboardOverview: () => Promise<void>;
     getAllCarers: () => Promise<void>;
     addCarerToPool: (id: string) => Promise<void>;
+    getProvidersPool: () => Promise<void>;
 }
 
 export type ShiftSlice = {
@@ -29,6 +31,7 @@ export type ShiftSlice = {
     savedDraft: Partial<Shift> | null;
     dashboardOverview: DashboardOverview | null;
     carers: any[];
+    myPool: any[];
     isLoading: {
         fetching: boolean;
         creating: boolean;
@@ -54,6 +57,7 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
     savedDraft: null,
     dashboardOverview: null,
     carers: [],
+    myPool: [],
     isLoading: {
         fetching: false,
         creating: false,
@@ -261,6 +265,15 @@ export const createShiftSlice: StateCreator<Store, [['zustand/immer', never]], [
             }));
         }
 
-    }
+    },
 
-});  
+    getProvidersPool: async () => {
+        try {
+            const result = await getMyPool();
+            set({ myPool: result });
+        } catch (error) {
+            console.log("Error fetching providers pool:", error);
+            set({ myPool: [] });
+        }
+    },
+});
