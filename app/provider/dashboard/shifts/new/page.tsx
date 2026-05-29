@@ -37,6 +37,7 @@ export default function NewShift() {
         MyPool: state.myPool,
     })));
 
+    console.log("saved draft from store:", savedDraft);
 
     const getPool = useCallback(() => {
         getMyPool();
@@ -78,6 +79,8 @@ export default function NewShift() {
         // Add poolId for MyPool selection
         poolId: "",
     });
+
+    console.log('form state:', form);
     const [errors, setErrors] = useState({
         title: "",
         description: "",
@@ -136,7 +139,7 @@ export default function NewShift() {
         } else if (name === 'paymentFrequency') {
             if (!value.trim()) error = 'Payment frequency is required';
         } else if (name === 'poolId') {
-            if (!value) error = 'Please select a pool';
+            if (!value) error = '';
         }
         return error;
     };
@@ -265,31 +268,28 @@ export default function NewShift() {
         } else if (mode === "draft" && id) {
             const getSavedDraft = async () => {
                 await fetchDraft(id)
-                if (savedDraft) {
-                    setForm({
-                        title: savedDraft?.title || "",
-                        description: savedDraft?.description || "",
-                        state: savedDraft?.state || "",
-                        startDate: savedDraft?.startDate ? new Date(savedDraft.startDate) : undefined,
-                        endDate: savedDraft?.endDate ? new Date(savedDraft.endDate) : undefined,
-                        startTime: savedDraft?.startTime || "",
-                        endTime: savedDraft?.endTime || "",
-                        shiftType: savedDraft?.shiftType || "",
-                        numberOfCarers: savedDraft?.numberOfCarers || 0,
-                        skills: savedDraft?.skills || "",
-                        experience: savedDraft?.experience || "",
-                        genderPreference: savedDraft?.genderPreference || "",
-                        language: savedDraft?.language || "",
-                        amount: savedDraft?.amount !== undefined ? savedDraft.amount.toString() : "0",
-                        expenses: savedDraft?.expenses !== undefined ? savedDraft.expenses.toString() : "0",
-                        paymentFrequency: savedDraft?.paymentFrequency || "",
-                        isReoccurring: savedDraft?.isReoccurring || false,
-                        enhancedDBS: savedDraft?.enhancedDBS || false,
-                        rightToWork: savedDraft?.rightToWork || false,
-                        poolId: ''
-                    });
-
-                };
+                setForm({
+                    title: savedDraft?.title || "",
+                    description: savedDraft?.description || "",
+                    state: savedDraft?.state || "",
+                    startDate: savedDraft?.startDate ? new Date(savedDraft.startDate) : undefined,
+                    endDate: savedDraft?.endDate ? new Date(savedDraft.endDate) : undefined,
+                    startTime: savedDraft?.startTime || "",
+                    endTime: savedDraft?.endTime || "",
+                    shiftType: savedDraft?.shiftType || "",
+                    numberOfCarers: savedDraft?.numberOfCarers || 0,
+                    skills: savedDraft?.skills || "",
+                    experience: savedDraft?.experience || "",
+                    genderPreference: savedDraft?.genderPreference || "",
+                    language: savedDraft?.language || "",
+                    amount: savedDraft?.amount !== undefined ? savedDraft.amount.toString() : "0",
+                    expenses: savedDraft?.expenses !== undefined ? savedDraft.expenses.toString() : "0",
+                    paymentFrequency: savedDraft?.paymentFrequency || "",
+                    isReoccurring: savedDraft?.isReoccurring || false,
+                    enhancedDBS: savedDraft?.enhancedDBS || false,
+                    rightToWork: savedDraft?.rightToWork || false,
+                    poolId: savedDraft?.intendedCarerId || "",
+                });
             }
             getSavedDraft();
         } else {
@@ -462,30 +462,43 @@ export default function NewShift() {
                             />
                             {errors.numberOfCarers && <span className="text-xs text-red-500 mt-1 block">{errors.numberOfCarers}</span>}
                         </div>
-                        <div>
-                            <Label htmlFor="poolId" className="block text-sm font-medium text-primary mb-1">Select Pool</Label>
-                            <Select
-                                value={form.poolId}
-                                onValueChange={(value) => setForm((prev) => ({ ...prev, poolId: value }))}
-                            >
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Select carer" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {MyPool && MyPool.length > 0 ? (
-                                        MyPool.map((pool: { id: string; fullName: string }) => (
-                                            <SelectItem key={pool.id} value={pool.id}>
-                                                {pool.fullName}
-                                            </SelectItem>
-                                        ))
-                                    ) : (
-                                        <div className="px-4 py-2 text-gray-500">No Carer In Pool</div>
-                                    )}
-                                </SelectContent>
-                            </Select>
-                            {errors.poolId && <span className="text-xs text-red-500 mt-1 block">{errors.poolId}</span>}
-                        </div>
 
+                        {/* only show if the mode isnt not edit */}
+
+                        {mode !== "edit" && (
+                            <div className="flex items-center gap-4">
+                                <Label htmlFor="poolId" className="block text-sm font-medium text-primary mb-1">Select Pool</Label>
+                                <Select
+                                    value={form.poolId}
+                                    onValueChange={(value) => setForm((prev) => ({ ...prev, poolId: value }))}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select carer" />
+                                    </SelectTrigger>
+                                    <SelectContent className="w-full">
+                                        {MyPool && MyPool.length > 0 ? (
+                                            MyPool.map((pool: { id: string; fullName: string }) => (
+                                                <SelectItem key={pool.id} value={pool.id}>
+                                                    {pool.fullName}
+                                                </SelectItem>
+                                            ))
+                                        ) : (
+                                            <div className="px-4 py-2 text-gray-500">No Carer In Pool</div>
+                                        )}
+                                    </SelectContent>
+                                </Select>
+                                {form.poolId && (
+                                    <button
+                                        type="button"
+                                        className="text-xs text-red-500 underline cursor-pointer"
+                                        onClick={() => setForm((prev) => ({ ...prev, poolId: "" }))}
+                                    >
+                                        Clear
+                                    </button>
+                                )}
+                                {errors.poolId && <span className="text-xs text-red-500 mt-1 block">{errors.poolId}</span>}
+                            </div>
+                        )}
                     </>
                 )}
                 {step === 1 && (

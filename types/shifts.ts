@@ -25,6 +25,7 @@ export type Shift = {
   isReoccurring?: boolean;
   status: ShiftStatus;
   _id: string;
+  intendedCarerId?: string;
 };
 
 export type ShiftWithApplications = {
