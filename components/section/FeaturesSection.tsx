@@ -51,7 +51,7 @@ const howItWorkItems: HowItWorkItem[] = [
 
 export default function FeaturesSection() {
     return (
-        <section id="tools" className="w-full py-12">
+        <section id="tools" className="w-full py-12 px-4">
             <div className="text-center mb-12 max-w-3xl mx-auto">
                 <h2 className="text-4xl sm:text-5xl font-bold text-gray-800 leading-snug">
                     Simple <span className="text-secondary">Tools</span> for{' '}

@@ -5,10 +5,10 @@ import { AvatarUsers } from './avatar';
 
 export default function HeroSection() {
     return (
-        <section className='flex flex-col md:flex-row items-start px-8 mb-20'>
-            <div className='flex flex-col gap-4 w-full sm:w-1/2'>
+        <section className='flex flex-col md:flex-row items-start px-4 sm:px-8 mb-20 gap-4'>
+            <div className='flex flex-col gap-4 w-full lg:w-1/2'>
                 <h1
-                    className="text-4xl sm:text-5xl font-bold text-primary"
+                    className="text-2xl sm:text-5xl font-bold text-primary"
                     role="heading"
                     aria-level={1}
                 >
@@ -27,19 +27,19 @@ export default function HeroSection() {
                         Learn More
                     </button>
                 </div>
-                <div className="flex items-center gap-6 mt-6">
+                <div className="flex flex-row items-center gap-6 mt-6">
                     <AvatarUsers />
                     <p className='text-muted-foreground'>Trusted by <span className='text-white'>15,000+{" "}</span>users worldwide</p>
                 </div>
             </div>
-            <div className="w-full sm:w-1/2 relative">
+            <div className="hidden lg:block w-full lg:w-1/2 relative">
                 <Image
                     src={ProviderImage}
                     alt="Provider Image"
                     priority
-                    height={900}
-                    width={900}
-                // className="object-contain w-full h-auto"
+                    height={1000}
+                    width={1000}
+                    className="object-cover w-full"
                 />
             </div>
         </section>
