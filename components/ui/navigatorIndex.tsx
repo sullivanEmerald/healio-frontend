@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Underline from "../common/underline";
+import AppLogo from "../common/appLogo";
 import {
     Popover,
     PopoverTrigger,
@@ -35,22 +35,7 @@ export function NavigationBar() {
     return (
         <header className="fixed top-0 w-full border-b border-gray-700 bg-background backdrop-blur-sm z-50 px-4 sm:px-8">
             <div className="flex h-16 items-center justify-between">
-                {/* Logo */}
-                <div className="flex items-center space-x-8">
-                    <Link href="/" className="flex items-center space-x-2">
-                        {/* <Image
-                            src="/adlogo.svg"
-                            alt="Adminting Logo"
-                            width={32}
-                            height={32}
-                            className="w-auto h-12"
-                        /> */}
-                        <span className="font-bold text-xl bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
-                            Healio
-                        </span>
-                    </Link>
-                </div>
-
+                <AppLogo />
                 {/* Centered Nav */}
                 <nav className="hidden md:flex items-center space-x-6 flex-1 justify-center">
                     {navLinks.map((link) => (
@@ -67,7 +52,7 @@ export function NavigationBar() {
                 <div className="flex items-center space-x-4 relative">
                     <Popover open={open} onOpenChange={setOpen}>
                         <PopoverTrigger asChild>
-                            <button className="px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-primary flex items-center">
+                            <button className="hidden sm:block px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-primary flex items-center">
                                 Get Started
                                 <svg className="inline ml-2 w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"
                                 >

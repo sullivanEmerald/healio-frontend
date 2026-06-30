@@ -10,6 +10,7 @@ const analytics = {
     pending: 0,
     approved: 0,
     paid: 0,
+    published: 0,
 };
 
 export default function ChartAnalytics() {
