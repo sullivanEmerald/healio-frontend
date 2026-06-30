@@ -1,4 +1,5 @@
 import { NavigationBar } from "./ui/navigatorIndex"
+import Footer from "./ui/footer"
 
 interface LayoutProps {
     children: React.ReactNode
@@ -11,6 +12,7 @@ export function Layout({ children }: LayoutProps) {
             <main className="mt-30 sm:mt-40">
                 {children}
             </main>
+            <Footer />
         </div>
     )
 }
