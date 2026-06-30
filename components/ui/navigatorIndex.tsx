@@ -26,8 +26,8 @@ export function NavigationBar() {
     };
 
     return (
-        <header className="fixed top-0 w-full border-b bg-background/80 backdrop-blur-sm z-50">
-            <div className="container flex h-16 items-center justify-between px-4 max-w-7xl mx-auto">
+        <header className="fixed top-0 w-full border-b border-gray-700 bg-background backdrop-blur-sm z-50 px-8">
+            <div className="flex h-16 items-center justify-between">
                 {/* Logo */}
                 <div className="flex items-center space-x-8">
                     <Link href="/" className="flex items-center space-x-2">
@@ -87,7 +87,7 @@ export function NavigationBar() {
                             </PopoverHeader> */}
                             <div className=" flex flex-col gap-2">
                                 <button
-                                    className="flex items-center gap-2 w-full text-left hover:bg-gray-100 text-gray-700 rounded cursor-pointer"
+                                    className="flex items-center gap-2 w-full text-left hover:bg-primary/80 text-gray-700 rounded cursor-pointer"
                                     onClick={() => handleSelect('provider')}
                                 >
                                     <Briefcase className="w-4 h-4 text-primary" />

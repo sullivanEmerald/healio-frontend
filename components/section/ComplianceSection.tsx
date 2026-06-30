@@ -48,17 +48,12 @@ const Faq: React.FC = () => {
     };
 
     return (
-        <section id="faqs" className="py-2 px-4 md:px-6 lg:px-8 bg-white text-primary mt-10">
+        <section id="faqs" className="py-2 px-4 md:px-6 lg:px-8 bg-background text-primary mt-10">
             <div className="max-w-5xl mx-auto">
                 {/* Header */}
                 <div className="text-center mb-10">
                     <h2 className="text-3xl sm:text-4xl font-bold">Frequently Asked Questions</h2>
-                    {/* <p className="text-gray-600 mt-2 text-base max-w-xl mx-auto">
-            Get answers to common questions about how WorkRobin works for businesses and providers.
-          </p> */}
                 </div>
-
-                {/* Accordion Items */}
                 <div className="space-y-4">
                     {faqItems.map((item, index) => {
                         const isOpen = openIndex === index;
@@ -66,7 +61,7 @@ const Faq: React.FC = () => {
                         return (
                             <div
                                 key={index}
-                                className={`border rounded-xl bg-white overflow-hidden transition-shadow ${isOpen ? 'shadow-md' : 'shadow-sm'
+                                className={`border border-gray-700 bg-custom-background/10 rounded-xl overflow-hidden transition-shadow ${isOpen ? 'shadow-md' : 'shadow-sm'
                                     }`}
                             >
                                 <button
@@ -74,7 +69,7 @@ const Faq: React.FC = () => {
                                     className="w-full flex justify-between items-center px-6 py-4 text-left focus:outline-none"
                                     aria-expanded={isOpen}
                                 >
-                                    <span className="font-medium text-base sm:text-lg">{item.title}</span>
+                                    <span className="font-medium text-white sm:text-lg">{item.title}</span>
                                     <FaChevronDown
                                         className={`w-4 h-4 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''
                                             }`}

@@ -45,7 +45,7 @@ export default function AboutUs() {
                         className="object-contain w-full h-auto rounded-lg"
                     />
                 </div>
-                <div className="flex-1 flex flex-col gap-4 w-full md:max-w-[600px]">
+                {/* <div className="flex-1 flex flex-col gap-4 w-full md:max-w-[600px]">
                     {features.map((feature, idx) => (
                         <div key={feature.title} className="flex flex-col items-center md:items-start text-center md:text-left p-4 bg-white rounded-lg shadow-md h-full hover:shadow-lg transition-shadow duration-300">
                             {idx === 0 && <CalendarCheck size={36} className="text-primary mb-2 mx-auto" />}
@@ -55,7 +55,7 @@ export default function AboutUs() {
                             <p className="text-secondary text-base text-center">{feature.description}</p>
                         </div>
                     ))}
-                </div>
+                </div> */}
             </div>
         </section>
     );

@@ -51,7 +51,7 @@ const howItWorkItems: HowItWorkItem[] = [
 
 export default function FeaturesSection() {
     return (
-        <section id="tools" className="w-full bg-white">
+        <section id="tools" className="w-full py-12">
             <div className="text-center mb-12 max-w-3xl mx-auto">
                 <h2 className="text-4xl sm:text-5xl font-bold text-gray-800 leading-snug">
                     Simple <span className="text-secondary">Tools</span> for{' '}
@@ -66,15 +66,15 @@ export default function FeaturesSection() {
                 {howItWorkItems.map((item, index) => (
                     <div
                         key={index}
-                        className="bg-white shadow-md rounded-xl p-6 text-center hover:shadow-lg transition"
+                        className="bg-custom-background/10 border border-gray-700 shadow-md rounded-xl p-6 text-center hover:shadow-lg transition"
                     >
                         <div className="flex justify-center mb-4">
-                            <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center">
+                            <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center">
                                 {item.icon}
                             </div>
                         </div>
-                        <h3 className="text-lg font-semibold text-gray-800 ">{item.title}</h3>
-                        <p className="mt-2 text-sm text-gray-600">{item.description}</p>
+                        <h3 className="text-lg font-semibold text-white ">{item.title}</h3>
+                        <p className="mt-2 text-sm text-gray-500">{item.description}</p>
                     </div>
                 ))}
             </div>

@@ -1,11 +1,11 @@
-module.exports = {
-    theme: {
-        extend: {
-            colors: {
-                primary: '#0C287B',
-                secondary: '#094E43',
-            },
-        },
-    },
-    plugins: [],
-};
+// module.exports = {
+//     theme: {
+//         extend: {
+//             colors: {
+//                 primary: '#668f09',
+//                 secondary: '#094E43',
+//             },
+//         },
+//     },
+//     plugins: [],
+// };

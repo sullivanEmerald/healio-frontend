@@ -1,52 +1,45 @@
 import React from 'react';
 import Image from 'next/image';
-import ProviderImage from '@/public/images/shifts.png';
+import ProviderImage from '@/public/images/heroImage2.png';
+import { AvatarUsers } from './avatar';
 
 export default function HeroSection() {
     return (
-        <section className='flex flex-col md:flex-row gap-12 items-center py-8'>
-
-            <div className='flex-1 flex flex-col justify-center'>
+        <section className='flex flex-col md:flex-row items-start px-8 mb-20'>
+            <div className='flex flex-col gap-4 w-full sm:w-1/2'>
                 <h1
-                    className="text-4xl sm:text-5xl font-extrabold text-primary"
+                    className="text-4xl sm:text-5xl font-bold text-primary"
                     role="heading"
                     aria-level={1}
                 >
-                    Find and Deploy<br />
-                    <span className="text-secondary block mt-2">Skilled Professionals</span>
-                    <span className="block mt-1">on Demand</span>
+                    <span className='text-white'>Connet Your Home</span> With Professional Carers, Monitor{" "}
+                    <span className="text-white">And{" "}</span><span className='primary'>Track Compliance.</span>
                 </h1>
-                <p className="body-text mt-4 max-w-xl mx-auto md:mx-0">
-                    Healio connects care providers with qualified professionals, making it easy to create, manage, and fill shifts—streamlining healthcare staffing for organizations of any size.
+                <p className="text-muted-foreground text-md">
+                    Healio connects care providers with qualified professionals, making it easy to create, manage and fill shifts—streamlining healthcare staffing for organizations of any size.
                 </p>
 
-                {/* <div className="mt-6 flex justify-center md:justify-start">
-                    <ScrollLink
-                        to="wait-form"
-                        smooth={true}
-                        offset={-80}
-                        duration={500}
-                        className="cursor-pointer"
-                    >
-                        <MyButton
-                            data-testid="hero-get-started"
-                            aria-label="Get Started"
-                            className="bg-primary text-white hover:bg-primaryDark px-6 py-3 rounded-lg transition duration-300 shadow-md hover:shadow-lg"
-                        >
-                            Get Started
-                        </MyButton>
-                    </ScrollLink>
-                </div> */}
+                <div className="flex flex-col sm:flex-row gap-4 mt-4">
+                    <button className="px-6 py-3 bg-primary text-white rounded-lg shadow border border-primary hover:bg-transparent focus:outline-none focus:ring-2 focus:ring-primary transition">
+                        Get Started
+                    </button>
+                    <button className="px-6 py-3 bg-transparent text-white rounded-lg shadow border border-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-gray-600 transition">
+                        Learn More
+                    </button>
+                </div>
+                <div className="flex items-center gap-6 mt-6">
+                    <AvatarUsers />
+                    <p className='text-muted-foreground'>Trusted by <span className='text-white'>15,000+{" "}</span>users worldwide</p>
+                </div>
             </div>
-            <div className="max-w-[500px] w-full shadow-lg py-4 rounded-lg">
+            <div className="w-full sm:w-1/2 relative">
                 <Image
                     src={ProviderImage}
                     alt="Provider Image"
-                    layout="responsive"
                     priority
-                    width={700}
-                    height={475}
-                    className="object-contain w-full h-auto"
+                    height={900}
+                    width={900}
+                // className="object-contain w-full h-auto"
                 />
             </div>
         </section>
