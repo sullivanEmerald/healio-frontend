@@ -1,6 +1,6 @@
 "use client"
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import Input from "@/components/common/input";
+import Button from "@/components/common/button";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -127,23 +127,22 @@ export default function LoginPage() {
 
 
     return (
-        <>
-            <div className="mb-4">
-                <h2 className="text-2xl font-bold text-primary/80">
+        <div className="w-full">
+            <div className="mb-4 flex flex-col items-center">
+                <h2 className="text-2xl font-bold text-background">
                     Get Started As A {getAccountTypeDisplay(accountType)}
                 </h2>
                 <span className="text-gray-500  font-bold text-lg">Welcome to Healio</span>
             </div>
             <form className="space-y-6" onSubmit={handleSubmit} noValidate>
                 <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium text-primary mb-1">First Name</label>
                     <Input
                         id="firstName"
                         name="firstName"
+                        label="first Name"
                         type="text"
                         autoComplete="given-name"
                         required
-                        className="border-2 border-primary focus:border-primary focus:ring-primary rounded-lg px-4 py-6 text-primary placeholder:text-primary/60 bg-transparent"
                         placeholder="Enter your first name"
                         value={form.firstName}
                         onChange={handleChange}
@@ -152,14 +151,13 @@ export default function LoginPage() {
                     {errors.firstName && <span className="text-xs text-red-500 mt-1 block">{errors.firstName}</span>}
                 </div>
                 <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium text-primary mb-1">Last Name</label>
                     <Input
                         id="lastName"
                         name="lastName"
+                        label="Last Name"
                         type="text"
                         autoComplete="family-name"
                         required
-                        className="border-2 border-primary focus:border-primary focus:ring-primary rounded-lg px-4 py-6 text-primary placeholder:text-primary/60 bg-transparent"
                         placeholder="Enter your last name"
                         value={form.lastName}
                         onChange={handleChange}
@@ -168,14 +166,13 @@ export default function LoginPage() {
                     {errors.lastName && <span className="text-xs text-red-500 mt-1 block">{errors.lastName}</span>}
                 </div>
                 <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-primary mb-1">Business Email</label>
                     <Input
                         id="email"
                         name="businessEmail"
                         type="email"
                         autoComplete="email"
+                        label="Business Email"
                         required
-                        className="border-2 border-primary focus:border-primary focus:ring-primary rounded-lg px-4 py-6 text-primary placeholder:text-primary/60 bg-transparent"
                         placeholder="Enter your business email"
                         value={form.businessEmail}
                         onChange={handleChange}
@@ -184,14 +181,13 @@ export default function LoginPage() {
                     {errors.businessEmail && <span className="text-xs text-red-500 mt-1 block">{errors.businessEmail}</span>}
                 </div>
                 <div>
-                    <label htmlFor="phoneNumber" className="block text-sm font-medium text-primary mb-1">Phone Number</label>
                     <Input
                         id="phoneNumber"
                         name="phoneNumber"
+                        label="Phone Number"
                         type="text"
                         autoComplete="family-name"
                         required
-                        className="border-2 border-primary focus:border-primary focus:ring-primary rounded-lg px-4 py-6 text-primary placeholder:text-primary/60 bg-transparent"
                         placeholder="Enter your phone number"
                         value={form.phoneNumber}
                         onChange={handleChange}
@@ -200,14 +196,13 @@ export default function LoginPage() {
                     {errors.phoneNumber && <span className="text-xs text-red-500 mt-1 block">{errors.phoneNumber}</span>}
                 </div>
                 <div>
-                    <label htmlFor="password" className="block text-sm font-medium text-primary mb-1">Password</label>
                     <Input
                         id="password"
                         name="password"
+                        label="password"
                         type="password"
                         autoComplete="current-password"
                         required
-                        className="border-2 border-primary focus:border-primary focus:ring-primary rounded-lg px-4 py-6 text-primary placeholder:text-primary/60 bg-transparent"
                         placeholder="Enter your password"
                         value={form.password}
                         onChange={handleChange}
@@ -216,14 +211,13 @@ export default function LoginPage() {
                     {errors.password && <span className="text-xs text-red-500 mt-1 block">{errors.password}</span>}
                 </div>
                 <div>
-                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-primary mb-1">Confirm Password</label>
                     <Input
                         id="confirmPassword"
                         name="confirmPassword"
+                        label="Confirm Password"
                         type="password"
                         autoComplete="current-password"
                         required
-                        className="border-2 border-primary focus:border-primary focus:ring-primary rounded-lg px-4 py-6 text-primary placeholder:text-primary/60 bg-transparent"
                         placeholder="Confirm your password"
                         value={form.confirmPassword}
                         onChange={handleChange}
@@ -231,11 +225,13 @@ export default function LoginPage() {
                     />
                     {errors.confirmPassword && <span className="text-xs text-red-500 mt-1 block">{errors.confirmPassword}</span>}
                 </div>
-                <Button type="submit" className="w-full bg-primary hover:bg-[#183b9e] text-white font-semibold rounded-lg px-4 py-6 text-lg shadow" disabled={submitting}>
-                    {submitting ? 'Creating account...' : 'Create Account'}
-                </Button>
+                <div className="w-full flex">
+                    <Button type="submit" disabled={submitting} className="w-full mx-auto self-end">
+                        {submitting ? 'Creating account...' : 'Create Account'}
+                    </Button>
+                </div>
             </form>
-            <p className="text-center text-primary pt-2 mb-6">Already have an account? <Link href="/auth/login" className="text-red-500 underline">Login</Link></p>
-        </>
+            <p className="text-center text-muted-foreground pt-2 mb-6">Already have an account? <Link href="/auth/login" className="text-red-500 underline">Login</Link></p>
+        </div>
     );
 }

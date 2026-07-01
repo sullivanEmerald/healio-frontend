@@ -31,7 +31,7 @@ export const NotFoundComponent = ({
             className="mb-6"
             priority
             /> */}
-                <h2 className="text-2xl font-bold text-primary text-center">{title}</h2>
+                <h2 className="text-2xl font-bold text-black text-center">{title}</h2>
                 {subTitle && (
                     <p className="text-base text-gray-500">{subTitle}</p>
                 )}

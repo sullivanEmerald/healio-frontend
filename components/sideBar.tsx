@@ -24,8 +24,10 @@ export default function Sidebar({ items, role }: SidebarProps) {
                 {items.map((item) => (
                     <li key={item.to}>
                         <Link href={item.to} className="flex items-center gap-3 px-4 py-3 rounded-lg text-primary font-medium hover:bg-primary/10 transition group focus:outline-none focus:ring-2 focus:ring-primary">
-                            <item.icon className="w-6 h-6 text-primary group-hover:text-white group-hover:bg-primary rounded p-1 transition" />
-                            <span>{item.label}</span>
+                            <div className="rounded-full bg-gray-700">
+                                <item.icon className="w-6 h-6 text-white group-hover:text-white group-hover:bg-primary rounded p-1 transition" />
+                            </div>
+                            <span className="text-gray-700">{item.label}</span>
                         </Link>
                     </li>
                 ))}

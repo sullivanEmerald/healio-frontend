@@ -68,9 +68,9 @@ export default function ProviderHeader() {
     };
 
     return (
-        <header className="w-full flex items-center justify-between shadow px-4 py-3 sticky border-b bg-background/80 backdrop-blur-md top-0 z-30 h-16">
+        <header className="w-full flex items-center justify-between shadow px-4 py-3 sticky border-b backdrop-blur-md top-0 z-30 h-16">
             <div className="flex items-center gap-3">
-                <span className="text-lg font-bold text-primary tracking-tight">Hello, {getFirstName(user?.fullName)}</span>
+                <span className="text-lg font-bold text-gray-700 tracking-tight">Hello, {getFirstName(user?.fullName)}</span>
             </div>
             <div className="flex items-center gap-6">
                 {/* <div className="flex items-center bg-gray-100 rounded px-3 py-1">
