@@ -32,14 +32,14 @@ export default function HeroSection() {
                     <p className='text-muted-foreground'>Trusted by <span className='text-white'>15,000+{" "}</span>users worldwide</p>
                 </div>
             </div>
-            <div className="hidden lg:block w-full lg:w-1/2 relative">
+            <div className="hidden lg:flex w-full lg:w-1/2 justify-end">
                 <Image
                     src={ProviderImage}
                     alt="Provider Image"
                     priority
                     height={500}
                     width={500}
-                    className="object-cover w-[80%] mx-auto"
+                    className="object-cover w-[80%]"
                 />
             </div>
         </section>
