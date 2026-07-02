@@ -127,7 +127,7 @@ export default function LoginPage() {
 
 
     return (
-        <div className="w-full">
+        <div className="w-full mx-auto md:w-[90%]">
             <div className="mb-4 flex flex-col items-center">
                 <h2 className="text-2xl font-bold text-background">
                     Get Started As A {getAccountTypeDisplay(accountType)}

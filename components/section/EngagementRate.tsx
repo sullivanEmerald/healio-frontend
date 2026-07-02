@@ -20,7 +20,7 @@ const serviceUsage = [
 
 export default function EngagementRate() {
     return (
-        <section className="flex flex-row justify-between px-4 md:px-20 py-8 border-t border-b border-gray-700">
+        <section className="flex flex-row justify-between px-4 md:px-20 py-8 border-t border-b border-gray-700 relative">
             {serviceUsage.map((item, idx) => (
                 <div key={idx} className="flex flex-col items-start md:items-center">
                     <span className="text-2xl">{item.number}</span>

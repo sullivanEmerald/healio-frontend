@@ -66,7 +66,7 @@ export default function FeaturesSection() {
                 {howItWorkItems.map((item, index) => (
                     <div
                         key={index}
-                        className="bg-custom-background/10 border border-gray-700 shadow-md rounded-xl p-6 text-center hover:shadow-lg transition"
+                        className="bg-custom-background/10 border border-gray-700 shadow-sm shadow-gray-600 hover:shadow-md cursor-pointer rounded-xl p-6 text-center transition-transform hover:scale-105 duration-300"
                     >
                         <div className="flex justify-center mb-4">
                             <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center">

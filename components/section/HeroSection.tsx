@@ -1,11 +1,11 @@
 import React from 'react';
 import Image from 'next/image';
-import ProviderImage from '@/public/images/heroImage2.png';
+import ProviderImage from '@/public/images/greenBackground.png';
 import { AvatarUsers } from './avatar';
 
 export default function HeroSection() {
     return (
-        <section className='flex flex-col md:flex-row items-start px-4 sm:px-8 mb-20 gap-4'>
+        <section className='w-full flex flex-col md:flex-row items-start justify-between px-4 sm:px-8 mb-20 relative'>
             <div className='flex flex-col gap-4 w-full lg:w-1/2'>
                 <h1
                     className="text-2xl sm:text-5xl font-bold text-primary"
@@ -37,9 +37,9 @@ export default function HeroSection() {
                     src={ProviderImage}
                     alt="Provider Image"
                     priority
-                    height={1000}
-                    width={1000}
-                    className="object-cover w-full"
+                    height={500}
+                    width={500}
+                    className="object-cover w-[80%] mx-auto"
                 />
             </div>
         </section>

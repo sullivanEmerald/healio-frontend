@@ -1,6 +1,6 @@
 "use client"
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import Input from "@/components/common/input";
+import Button from "@/components/common/button";
 import Link from "next/link";
 import { useState } from "react";
 import { emailPattern } from "@/data/constants";
@@ -98,54 +98,55 @@ export default function LoginPage() {
     };
 
     return (
-        <>
+        <div className="w-full py-12 px-4 flex flex-col items-center justify-center">
             <h2 className="text-2xl font-bold text-black mb-2">Welcome Back {FullName ? `${FullName}` : ' to Healio'}</h2>
             <p className="text-muted-foreground mb-6">Please enter your credentials to continue</p>
-            <form className="space-y-6" onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-black mb-1">Email</label>
+            <form className="space-y-6 w-full md:w-[80%]" onSubmit={handleSubmit}>
+                <div className="relative ">
                     <Input
                         id="email"
                         name="email"
+                        label="Email"
                         type="email"
                         autoComplete="email"
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="border-2 border-gray-700 focus:border-gray-700 focus:ring-gray-700 rounded-lg px-4 py-6 text-primary !placeholder:text-black bg-transparent"
                         placeholder="Enter your email"
                     />
                     {errors.email && <span className="text-xs text-red-500 mt-1 block">{errors.email}</span>}
                 </div>
                 <div className="relative">
-                    <label htmlFor="password" className="block text-sm font-medium text-black mb-1">Password</label>
                     <Input
                         id="password"
                         name="password"
+                        label="Password"
                         type={showPassword ? "text" : "password"}
                         autoComplete="current-password"
                         value={formData.password}
                         onChange={handleChange}
+                        className=""
                         required
-                        className="border-2 border-gray-700 focus:border-gray-700 focus:ring-gray-700 rounded-lg px-4 py-6 text-primary !placeholder:text-black bg-transparent"
                         placeholder="Enter your password"
                     />
                     <button
                         type="button"
                         tabIndex={-1}
                         onClick={() => setShowPassword((prev) => !prev)}
-                        className="absolute right-4 top-12 transform -translate-y-1/2 text-primary focus:outline-none"
+                        className="absolute right-4 top-12 transform -translate-y-1/2 text-muted-foreground focus:outline-none"
                         aria-label={showPassword ? "Hide password" : "Show password"}
                     >
                         {showPassword ? <EyeOff size={22} /> : <Eye size={22} />}
                     </button>
                     {errors.password && <span className="text-xs text-red-500 mt-1 block">{errors.password}</span>}
                 </div>
-                <Button type="submit" className="w-full bg-primary text-white font-semibold rounded-lg px-4 py-6 text-lg shadow-sm shadow-primary hover:shadow-md transition duration-300" disabled={submitting}>
-                    {submitting ? <div className="flex items-center justify-center gap-2"><LineLoader /> <span>Logging in...</span></div> : "Login"}
-                </Button>
+                <div className="">
+                    <Button type="submit" disabled={submitting} className="w-full">
+                        {submitting ? <div className="flex items-center justify-center gap-2"><LineLoader /> <span>Logging in...</span></div> : "Login"}
+                    </Button>
+                </div>
             </form>
             <p className="text-center text-muted-foreground pt-2">Don't have an account? <Link href="/auth/account" className="text-primary text-bold">Create one</Link></p>
-        </>
+        </div>
     );
 }
