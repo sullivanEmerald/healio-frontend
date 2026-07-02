@@ -14,6 +14,7 @@ import { useState } from "react";
 import { Briefcase, UserCheck } from "lucide-react";
 import { navLinks } from "@/lib/custom";
 import AppNavigationLinks from "../common/navLinks";
+import Button from "../common/button";
 
 
 export function NavigationBar() {
@@ -36,13 +37,13 @@ export function NavigationBar() {
                 <div className="flex items-center space-x-4 relative">
                     <Popover open={open} onOpenChange={setOpen}>
                         <PopoverTrigger asChild>
-                            <button className="hidden sm:block px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-primary flex items-center">
+                            <Button className="hidden sm:block px-4 py-2 flex items-center justify-center">
                                 Get Started
                                 <svg className="inline ml-2 w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"
                                 >
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                                 </svg>
-                            </button>
+                            </Button>
                         </PopoverTrigger>
                         <PopoverContent className="z-50 w-40 rounded-lg bg-white border border-gray-200 shadow-lg p-2">
                             {/* <PopoverHeader>

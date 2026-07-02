@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import ProviderImage from '@/public/images/greenBackground.png';
 import { AvatarUsers } from './avatar';
+import Button from '../common/button';
 
 export default function HeroSection() {
     return (
@@ -20,12 +21,12 @@ export default function HeroSection() {
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 mt-4">
-                    <button className="px-6 py-3 bg-primary text-white rounded-lg shadow border border-primary hover:bg-transparent focus:outline-none focus:ring-2 focus:ring-primary transition">
+                    <Button className="">
                         Get Started
-                    </button>
-                    <button className="px-6 py-3 bg-transparent text-white rounded-lg shadow border border-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-gray-600 transition">
+                    </Button>
+                    <Button className="">
                         Learn More
-                    </button>
+                    </Button>
                 </div>
                 <div className="flex flex-row items-center gap-6 mt-6">
                     <AvatarUsers />
