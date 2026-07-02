@@ -1,4 +1,4 @@
 
 export default function Underline() {
-    return <hr className="border-primary/20 my-4" />;
+    return <hr className="border-gray-200 my-2" />;
 }

@@ -23,7 +23,7 @@ export default function CarerPoolCard({ worker }: { worker: WorkerpoolCardProps 
             </div>
             <div>
                 <p className="text-sm text-gray-500">
-                    {worker.state}, {worker.country}
+                    {worker.state} {worker.country}
                 </p>
             </div>
             {/* Stats */}

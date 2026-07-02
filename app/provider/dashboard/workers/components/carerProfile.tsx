@@ -30,9 +30,9 @@ export default function CarerProfile({ show, onHide, worker }: { show: boolean; 
                 <div className="flex items-center gap-4">
                     <Avatar name={worker?.fullName} size="40" round />
                     <div>
-                        <p className="font-semibold text-lg text-primary">{worker?.fullName}</p>
+                        <p className="font-semibold text-lg text-muted-foreground">{worker?.fullName}</p>
                         <p className="text-sm text-gray-500">
-                            {worker?.state}, {worker?.country}
+                            {worker?.state} {worker?.country}
                         </p>
                     </div>
                 </div>
@@ -46,7 +46,7 @@ export default function CarerProfile({ show, onHide, worker }: { show: boolean; 
                         </span>
                     ))}
                 </div>
-                <div className="grid grid-cols-2 gap-4 mt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
                     {worker?.isAvailable ? (
                         <span className="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700 font-medium flex items-center justify-center">
                             Available
@@ -58,11 +58,11 @@ export default function CarerProfile({ show, onHide, worker }: { show: boolean; 
                     )}
                     <div className="text-xs px-2 py-1 rounded-full bg-gray-100 font-medium text-center">
                         <p className="text-xs text-gray-500 mb-1">Jobs Completed</p>
-                        <span className="text-xs px-2 py-1 text-red-700 font-medium">{worker?.jobsCompleted || 0}</span>
+                        <span className="text-lg px-2 py-1 text-red-700 font-medium">{worker?.jobsCompleted || 0}</span>
                     </div>
                 </div>
                 <div>
-                    <p className="font-bold text-primary/80 text-lg">Rating:</p>
+                    <p className="font-bold text-muted-foreground text-lg">Rating:</p>
                     <Rating value={worker?.rating || 0} />
                 </div>
             </div>

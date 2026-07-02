@@ -15,7 +15,7 @@ export default function CarerMiniProfile({ show, onHide, header, carer, applicat
 
     return (
         <CustomDrawer show={show} onHide={onHide} header={`${carer.firstName} ${carer.lastName}'s Profile`}>
-            <main className="space-y-4 p-4 flex flex-col h-full overflow-y-auto">
+            <main className="space-y-4 p-4 flex flex-col h-full">
                 <div className="flex items-center gap-4">
                     <DisplayAvatar name={`${carer.firstName} ${carer.lastName}`} />
                 </div>

@@ -104,7 +104,7 @@ export default function ProviderHeader() {
                                     {to ? (
                                         <>
                                             <Link href={to} className="flex items-center gap-3 py-3 cursor-pointer hover:bg-gray-100 transition focus:outline-none focus:ring-2 focus:ring-primary">
-                                                <Icon size={18} className="text-primary" />
+                                                <Icon size={18} className="text-muted-foreground" />
                                                 <span className="text-sm font-medium text-gray-700">
                                                     {label}
                                                 </span>
@@ -112,8 +112,8 @@ export default function ProviderHeader() {
                                             <hr className="border-gray-200 mx-4" />
                                         </>
                                     ) : (
-                                        <button className="flex items-center gap-3 py-3 w-full cursor-pointer hover:bg-gray-100 transition border-none outline-none bg-transparent focus:outline-none focus:ring-2 focus:ring-primary" onClick={logout}>
-                                            <Icon size={18} className="text-primary" />
+                                        <button className="flex items-center gap-3 py-3 w-full cursor-pointer hover:bg-gray-100 transition border-none outline-none bg-transparent focus:outline-none" onClick={logout}>
+                                            <Icon size={18} className="text-muted-foreground" />
                                             <span className="text-sm font-medium text-gray-700">
                                                 {label}
                                             </span>

@@ -20,9 +20,9 @@ export default function CustomDrawer({
 }) {
     return (
         <Drawer open={show} onOpenChange={onHide} direction="right">
-            <DrawerContent className="rounded-l-2xl !max-w-[400px] !px-0 shadow-xl border border-primary flex flex-col h-full">
-                <DrawerHeader className="bg-primary text-white shadow-sm p-4 relative">
-                    <DrawerTitle className="text-white text-lg font-bold">{header}</DrawerTitle>
+            <DrawerContent className="bg-gray-300 h-screen w-full max-w-md overflow-y-auto overflow-x-hidden border shadow-md shadow-gray-400 outline-none rounded-l-lg">
+                <DrawerHeader className="bg-transparent text-muted-foreground shadow-sm relative">
+                    <DrawerTitle className="text-muted-foreground text-lg font-bold">{header}</DrawerTitle>
                     <CloseButton onClick={onHide} />
                 </DrawerHeader>
                 {children}

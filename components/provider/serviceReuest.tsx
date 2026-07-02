@@ -86,12 +86,10 @@ export function ServiceRequestCard({
                     </p>
                     <span className="text-xs bg-green-100 px-2 py-1 rounded text-gray-700">{shiftType || "-"}</span>
                 </div>
-                <Underline />
                 <div>
-                    <span className="font-medium text-gray-800 ml-2">Published:</span>
-                    <span className="font-medium text-red-800 ml-2">{moment(updatedAt).format("MMMM Do YYYY") || "-"}</span>
+                    <span className="text-sm text-muted-foreground">Published:</span>
+                    <span className="font-medium text-red-800 text-sm ml-2">{moment(updatedAt).format("MMMM Do YYYY") || "-"}</span>
                 </div>
-                <Underline />
                 <Button className="w-full" onClick={() => router.push(`/provider/dashboard/shifts/${_id}`)}>
                     View
                 </Button>

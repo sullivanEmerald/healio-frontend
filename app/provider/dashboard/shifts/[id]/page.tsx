@@ -60,15 +60,14 @@ export default function ShiftDetailsPage() {
                                 <h2 className="text-xl font-semibold mb-4 text-primary">General Information</h2>
                                 <Underline />
                                 <div className="space-y-4">
-                                    <div className=""><span className="font-medium">Title:</span> {shift.title}</div>
-                                    <div><span className="font-medium">Description:</span> {shift.description}</div>
-                                    <div><span className="font-medium">Postcode:</span> {shift.postcode}</div>
-                                    <div><span className="font-medium">Shift Type:</span> {shift.shiftType}</div>
-                                    <div><span className="font-medium">Number of Carers:</span> {shift.numberOfCarers}</div>
-                                    <div><span className="font-medium">Skills:</span> {shift.skills}</div>
-                                    <div><span className="font-medium">Experience:</span> {shift.experience}</div>
-                                    <div><span className="font-medium">Gender Preference:</span> {shift.genderPreference}</div>
-                                    <div><span className="font-medium">Language:</span> {shift.language}</div>
+                                    <div className="text-black text-lg font-medium flex flex-col"><span className="text-muted-foreground">Title:</span> {shift.title}</div>
+                                    <div className="text-black text-lg font-medium flex flex-col"><span className="text-muted-foreground">Description:</span> {shift.description}</div>
+                                    <div className="text-black text-lg font-medium flex flex-col"><span className="text-muted-foreground">Shift Type:</span> {shift.shiftType}</div>
+                                    <div className="text-black text-lg font-medium flex flex-col"><span className="text-muted-foreground">Number of Carers:</span> {shift.numberOfCarers}</div>
+                                    <div className="text-black text-lg font-medium flex flex-col"><span className="text-muted-foreground">Skills:</span> {shift.skills}</div>
+                                    <div className="text-black text-lg font-medium flex flex-col"><span className="text-muted-foreground">Experience:</span> {shift.experience}</div>
+                                    <div className="text-black text-lg font-medium flex flex-col"><span className="text-muted-foreground">Gender Preference:</span> {shift.genderPreference}</div>
+                                    <div className="text-black text-lg font-medium flex flex-col"><span className="text-muted-foreground">Language:</span> {shift.language}</div>
                                 </div>
                             </div>
                             <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
@@ -76,27 +75,35 @@ export default function ShiftDetailsPage() {
                                 <Underline />
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-2">
-                                        <span className="font-medium">Start Date:</span>
+                                        <span className="text-muted-foreground">Start Date:</span>
                                         <span className="text-green-600 font-semibold">{moment(shift.startDate).format("MMMM Do YYYY")}</span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <span className="font-medium">End Date:</span>
+                                        <span className="text-muted-foreground">End Date:</span>
                                         <span className="text-red-600 font-semibold">{moment(shift.endDate).format("MMMM Do YYYY")}</span>
                                     </div>
-                                    <div><span className="font-medium">Start Time:</span> {shift.startTime}</div>
-                                    <div><span className="font-medium">End Time:</span> {shift.endTime}</div>
                                     <div className="flex items-center gap-2">
-                                        <span className="font-medium">Amount:</span>
+                                        <span className="text-muted-foreground">Start Time:</span>
+                                        <span className="text-green-600 font-semibold">{shift.startTime}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-muted-foreground">End Time:</span>
+                                        <span className="text-red-600 font-semibold">{shift.endTime}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <span className="font-medium text-muted-foreground">Amount:</span>
                                         <span className="text-blue-600 font-bold">£{shift.amount || "0.00"}</span>
                                     </div>
-                                    <div><span className="font-medium">Expenses:</span> {shift.expenses}</div>
-                                    <div><span className="font-medium">Payment Frequency:</span> {shift.paymentFrequency}</div>
                                     <div className="flex items-center gap-2">
-                                        <span className="font-medium">Enhanced DBS:</span>
+                                        <span className="font-medium text-muted-foreground">Expenses:</span>
+                                        <span className="font-medium text-muted-foreground">{shift.expenses}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <span className="font-medium text-muted-foreground">Enhanced DBS:</span>
                                         <Badge variant={shift.enhancedDBS ? "default" : "outline"} className="capitalize">{shift.enhancedDBS ? "Required" : "Not Required"}</Badge>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <span className="font-medium">Right to Work:</span>
+                                        <span className="font-medium text-muted-foreground">Right to Work:</span>
                                         <Badge variant={shift.rightToWork ? "default" : "outline"} className="capitalize">{shift.rightToWork ? "Required" : "Not Required"}</Badge>
                                     </div>
                                 </div>
